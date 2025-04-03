@@ -1,0 +1,45 @@
+.container {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.info_container {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    height: 20px;
+}
+
+.info_text {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+}
+
+.svg {
+    fill: black;
+}
+
+.delete_button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #fa5256;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    transition: 500ms ease;
+}
+
+.delete_button:hover {
+    background-color: red;
+    color: #fff;
+}

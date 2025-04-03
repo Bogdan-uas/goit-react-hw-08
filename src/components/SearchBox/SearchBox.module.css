@@ -1,0 +1,23 @@
+.container {
+    margin-bottom: 32px;
+}
+
+.label {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+}
+
+.input {
+    border: 1px solid #808080;
+    border-radius: 4px;
+    padding: 4px 8px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    transition: 500ms ease-in-out;
+}
+
+.input:hover,
+.input:focus {
+    border: 1px solid black;
+}
