@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { instance } from "../../service/api";
+import { instance } from "../service/api";
 
 export const setToken = (token) => {
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
