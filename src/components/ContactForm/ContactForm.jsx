@@ -20,7 +20,10 @@ export default function ContactForm() {
         dispatch(addContact(values));
         toast.success('Successfully added', {
             duration: 4000,
-        })
+            style: {
+                borderRadius: '10px',
+                },
+            })
         actions.resetForm();
     };
 

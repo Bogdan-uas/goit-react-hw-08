@@ -11,7 +11,10 @@ export default function Contact({ contact }) {
         dispatch(deleteContact(id));
         toast.success('Successfully deleted', {
             duration: 4000,
-        })
+            style: {
+                borderRadius: '10px',
+                },
+            })
     };
 
     return (
