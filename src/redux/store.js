@@ -15,7 +15,7 @@ import { contactsReducer } from "./contacts/slice";
 import { filtersReducer } from "./filters/slice";
 import { authReducer } from "./auth/slice";
 
-const authPeristConfig = {
+const authPersistConfig = {
 key: "auth",
 storage,
 whitelist: ["token"],
@@ -23,10 +23,9 @@ whitelist: ["token"],
 
 export const store = configureStore({
 reducer: {
-    // phonebook: persistReducer(phonebookPeristConfig, phonebookReducer),
     phonebook: contactsReducer,
     filters: filtersReducer,
-    auth: persistReducer(authPeristConfig, authReducer),
+    auth: persistReducer(authPersistConfig, authReducer),
 },
 middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
