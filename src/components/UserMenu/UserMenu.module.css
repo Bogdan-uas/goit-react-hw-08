@@ -1,0 +1,38 @@
+.userMenu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.userdata {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.11;
+    text-transform: capitalize;
+    text-align: center;
+    color: #3c3c50;
+    transition: 500ms ease-in-out;
+}
+
+.userdata:hover {
+    color: black;
+}
+
+.button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #fa5256;
+    color: #f1f4fd;
+    border-radius: 8px;
+    margin-right: 8px;
+    border: none;
+    transition: 500ms ease;
+}
+
+.button:hover {
+    background-color: red;
+    color: #fff;
+}

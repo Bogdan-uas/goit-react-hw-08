@@ -65,8 +65,19 @@
 }
 
 .login_register_title {
-    margin-bottom: 32px;
+    margin-top: 256px;
+    margin-bottom: 16px;
     font-weight: 600;
     font-size: 24px;
     line-height: 1.11;
+}
+
+.register_login_form {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 220px;
 }

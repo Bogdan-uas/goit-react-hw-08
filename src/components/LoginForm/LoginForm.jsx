@@ -1,5 +1,4 @@
 import style from "../../components/ContactForm/ContactForm.module.css";
-import css from './LoginForm.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
@@ -28,8 +27,8 @@ export default function LoginForm() {
             onSubmit={handleSubmit}
             validationSchema={LoginSchema}
         >
-            <Form className={style.form}>
-                <h2 className={css.login_register_title}>Login</h2>
+            <Form className={style.register_login_form}>
+                <h2 className={style.login_register_title}>Login</h2>
                 <div className={style.name_number_container}>
                     <label htmlFor={emailFieldId} className={style.label}>Email</label>
                     <Field type="email" name="email" id={emailFieldId} className={style.input} />

@@ -1,12 +1,14 @@
-.main-title {
-    margin-bottom: 32px;
+.main_title {
     font-weight: 700;
-    font-size: 36px;
+    font-size: 32px;
     line-height: 1.11;
     text-transform: capitalize;
+    text-align: center;
+    margin-top: 64px;
 }
 
 .emoji {
     font-size: 48px;
     margin-bottom: 20px;
+    text-align: center;
 }

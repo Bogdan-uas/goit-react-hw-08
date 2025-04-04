@@ -29,8 +29,8 @@ export default function RegistrationForm() {
             onSubmit={handleSubmit}
             validationSchema={RegisterSchema}
         >
-            <Form className={style.form}>
-                <h2 className={css.login_register_title}>Register User</h2>
+            <Form className={style.register_login_form}>
+                <h2 className={style.login_register_title}>Register User</h2>
                 <div className={style.name_number_container}>
                     <label htmlFor={nameFieldId} className={style.label}>Name</label>
                     <Field type="name" name="name" id={nameFieldId} className={style.input} />
