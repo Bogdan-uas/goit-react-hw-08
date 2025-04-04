@@ -7,8 +7,8 @@ export default function SearchBox() {
     const dispatch = useDispatch();
     const filter = useSelector(selectFilter);
 
-    const handleFilterChange = (evt) => {
-        dispatch(setFilter(evt.target.value));
+    const handleFilterChange = (e) => {
+        dispatch(setFilter(e.target.value));
     };
 
     return (

@@ -8,11 +8,13 @@ export default function ContactList() {
 
     return (
         <ul className={style.list}>
-            {filteredContacts.map((contact) => (
-                <li className={style.item} key={contact.id}>
-                    <Contact id={contact.id} />
-                </li>
-            ))}
+            {Array.isArray(filteredContacts) &&
+                filteredContacts.map((contact) => (
+                    <li className={style.item} key={contact.id}>
+                        <Contact id={contact.id} />
+                    </li>
+                ))
+            }
         </ul>
     );
 }

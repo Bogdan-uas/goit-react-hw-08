@@ -1,16 +1,14 @@
 import style from "./Contact.module.css";
 import { BsPersonFill, BsTelephoneFill } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteContact } from "../../redux/contacts/operations.js";
-import { selectContacts } from "../../redux/contacts/selectors.js";
 
-export default function Contact({ id }) {
+export default function Contact({ contact }) {
     const dispatch = useDispatch();
-    const contact = useSelector(selectContacts).find(contact => contact.id === id);
 
-    if (!contact) return null;
-
-    const handleDelete = () => dispatch(deleteContact(id));
+    const onUserDelete = (id) => {
+        dispatch(deleteContact(id));
+    };
 
     return (
         <div className={style.container}>
@@ -22,7 +20,7 @@ export default function Contact({ id }) {
                 <BsTelephoneFill className={style.svg} size={16} />
                 <p className={style.info_text}>{contact.number}</p>
             </div>
-            <button className={style.delete_button} onClick={handleDelete}>
+            <button className={style.delete_button} onClick={() => onUserDelete(user.id)}>
                 Delete
             </button>
         </div>

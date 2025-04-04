@@ -1,0 +1,12 @@
+.main-title {
+    margin-bottom: 32px;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.11;
+    text-transform: capitalize;
+}
+
+.emoji {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
