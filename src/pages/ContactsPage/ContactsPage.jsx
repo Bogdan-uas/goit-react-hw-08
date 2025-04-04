@@ -17,10 +17,10 @@ export default function ContactsPage() {
 
     return (
         <div className="main-container">
-            {isLoading && <p>✋Loading...🤚</p>}
             <ContactForm />
             <SearchBox />
             <ContactList />
+            {isLoading && <p className="loading-text">✋Loading...🤚</p>}
         </div>
     );
 }

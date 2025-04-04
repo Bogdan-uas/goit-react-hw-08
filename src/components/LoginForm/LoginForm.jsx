@@ -15,9 +15,9 @@ export default function LoginForm() {
     const emailFieldId = useId();
     const passwordFieldId = useId();
 
-    const handleSubmit = (values, { resetForm }) => {
+    const handleSubmit = (values, actions) => {
         dispatch(apiLogin(values));
-        resetForm();
+        actions.resetForm();
         console.log(values)
     };
 

@@ -1,7 +1,6 @@
 .list {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     gap: 16px;
 }

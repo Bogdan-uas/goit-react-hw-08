@@ -11,7 +11,7 @@ export default function ContactList() {
             {Array.isArray(filteredContacts) &&
                 filteredContacts.map((contact) => (
                     <li className={style.item} key={contact.id}>
-                        <Contact id={contact.id} />
+                        <Contact contact={contact} />
                     </li>
                 ))
             }

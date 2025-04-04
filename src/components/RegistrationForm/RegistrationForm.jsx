@@ -17,9 +17,9 @@ export default function RegistrationForm() {
     const emailFieldId = useId();
     const passwordFieldId = useId();
 
-    const handleSubmit = (values, { resetForm }) => {
+    const handleSubmit = (values, actions) => {
         dispatch(apiRegister(values));
-        resetForm();
+        actions.resetForm();
         console.log(values)
     };
 

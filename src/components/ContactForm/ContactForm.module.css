@@ -7,9 +7,9 @@
     justify-content: center;
     gap: 16px;
     margin-bottom: 32px;
-    margin-top: 32px;
+    margin-top: 64px;
     border-radius: 8px;
-    height: 220px;
+    height: 260px;
 }
 
 .name_number_container {

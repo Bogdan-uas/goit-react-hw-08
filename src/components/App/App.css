@@ -3,3 +3,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.loading-text {
+  margin-top: 512px;
+}
