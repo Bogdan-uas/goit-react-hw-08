@@ -14,7 +14,7 @@ return (
     <div className={css.userMenu}>
     <p className={css.userdata}>Welcome, {user.name}!🗿</p>
     <button className={css.button} type="button" onClick={onLogout}>
-        <CiLogout className={css.icon} />
+        Log Out!<CiLogout className={css.icon} />
     </button>
     </div>
 );

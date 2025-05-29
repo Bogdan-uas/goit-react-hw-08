@@ -5,7 +5,9 @@ export default function HomePage() {
     return (
     <div>
 
-    <h1 className={css.main_title}>Add new contacts that you need to remember and have fun with them later!</h1>
+            <h1 className={css.main_title}>
+                Add your contacts, if you need, also new contacts. You can check then later, if you're calling the right number and also you can delete your contact that is no longer your contact.
+            </h1>
     <p className={css.emoji}>🥸</p>
     </div>
 );

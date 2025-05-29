@@ -4,6 +4,7 @@ import { useId } from "react";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { apiRegister } from "../../redux/auth/operations";
+import { NavLink } from "react-router-dom";
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Username is required!"),
@@ -47,6 +48,10 @@ export default function RegistrationForm() {
                     <ErrorMessage className={style.error_message} name="password" component="span" />
                 </div>
                 <button type="submit" className={style.button}>Sign up</button>
+                <p className={style.no_account_text}>
+                Already have an account?😱
+                </p>
+                <NavLink className={style.to_register_link} to="/login">Login</NavLink>
             </Form>
         </Formik>
     );
