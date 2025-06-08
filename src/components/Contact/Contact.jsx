@@ -17,10 +17,9 @@ const contactSchema = Yup.object().shape({
         .required("Number is required"),
 });
 
-export default function Contact({ contact }) {
+export default function Contact({ contact, isEditing, setEditingId, editingId }) {
     const dispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -37,62 +36,57 @@ export default function Contact({ contact }) {
         });
         setShowConfirmDelete(false);
     };
-    
+
     const cancelDelete = () => {
         setShowConfirmDelete(false);
     };
 
     const onSave = async () => {
         if (
-        editedName.trim() === contact.name &&
-        editedNumber.trim() === contact.number
+            editedName.trim() === contact.name &&
+            editedNumber.trim() === contact.number
         ) {
-        toast("Nothing to change!", {
-            icon: "❗",
-            duration: 4000,
-            style: {
-                borderRadius: "10px"
-            },
-        });
+            toast("Nothing to change!", {
+                icon: "❗",
+                duration: 4000,
+                style: { borderRadius: "10px" },
+            });
             return;
         }
-    
+
         try {
-        await contactSchema.validate(
-            {
-                name: editedName.trim(),
-                number: editedNumber.trim(),
-            },
-            { abortEarly: false }
-        );
-        dispatch(updateContact({
-            contactId: contact.id,
-            updates: {
-                name: editedName.trim(),
-                number: editedNumber.trim(),
-            },
-        }))
-            .unwrap()
-            .then(() => {
-            toast.success("Contact updated!", {
-                duration: 4000,
-                style: {
-                    borderRadius: "10px"
+            await contactSchema.validate(
+                {
+                    name: editedName.trim(),
+                    number: editedNumber.trim(),
                 },
+                { abortEarly: false }
+            );
+
+            dispatch(updateContact({
+                contactId: contact.id,
+                updates: {
+                    name: editedName.trim(),
+                    number: editedNumber.trim(),
+                },
+            }))
+                .unwrap()
+                .then(() => {
+                    toast.success("Contact updated!", {
+                        duration: 4000,
+                        style: { borderRadius: "10px" },
+                    });
+                    setEditingId(null);
                 });
-                setIsEditing(false);
-            });
         } catch (err) {
-        if (err.inner) {
-            err.inner.forEach((validationError) => {
-            toast.error(validationError.message, {
-                duration: 4000,
-                style: {
-                    borderRadius: "10px"
-                },
-            });
-            });
-        }
+            if (err.inner) {
+                err.inner.forEach((validationError) => {
+                    toast.error(validationError.message, {
+                        duration: 4000,
+                        style: { borderRadius: "10px" },
+                    });
+                });
+            }
         }
     };
 
@@ -124,7 +118,6 @@ export default function Contact({ contact }) {
                     )}
                 </div>
             </div>
-            
 
             <div className={style.button_group}>
                 {isEditing ? (
@@ -132,33 +125,46 @@ export default function Contact({ contact }) {
                         <button
                             className={style.cancel_button}
                             onClick={() => {
-                                setIsEditing(false);
+                                setEditingId(null);
                                 setEditedName(contact.name);
                                 setEditedNumber(contact.number);
                             }}
                         >
                             Cancel
                         </button>
-                        <button className={style.save_button} onClick={onSave}>Save</button>
+                        <button className={style.save_button} onClick={onSave}>
+                            Save
+                        </button>
                     </>
                 ) : (
                     <>
                         <button className={style.delete_button} onClick={handleDeleteClick}>
                             Delete
                         </button>
-                        <button className={style.edit_button} onClick={() => setIsEditing(true)}>
+                        <button
+                            className={style.edit_button}
+                            onClick={() => setEditingId(contact.id)}
+                            disabled={editingId !== null && editingId !== contact.id}
+                        >
                             Edit
                         </button>
                     </>
                 )}
             </div>
+
             {showConfirmDelete && (
                 <div className={style.confirm_modal}>
-                    <p className={style.info_text}>Are you sure, you want to delete {contact.name}?</p>
-                        <div className={style.deletion_confirmation_button_group}>
-                            <button className={style.save_button} onClick={cancelDelete}>Cancel</button>
-                            <button className={style.cancel_button} onClick={confirmDelete}>Confirm</button>
-                        </div>
+                    <p className={style.info_text}>
+                        Are you sure you want to delete {contact.name}?
+                    </p>
+                    <div className={style.deletion_confirmation_button_group}>
+                        <button className={style.save_button} onClick={cancelDelete}>
+                            Cancel
+                        </button>
+                        <button className={style.cancel_button} onClick={confirmDelete}>
+                            Confirm
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
