@@ -156,8 +156,8 @@ export default function Contact({ contact }) {
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>Are you sure, you want to delete {contact.name}?</p>
                         <div className={style.deletion_confirmation_button_group}>
-                            <button className={style.cancel_button} onClick={cancelDelete}>Cancel</button>
-                            <button className={style.save_button} onClick={confirmDelete}>Confirm</button>
+                            <button className={style.save_button} onClick={cancelDelete}>Cancel</button>
+                            <button className={style.cancel_button} onClick={confirmDelete}>Confirm</button>
                         </div>
                 </div>
             )}
