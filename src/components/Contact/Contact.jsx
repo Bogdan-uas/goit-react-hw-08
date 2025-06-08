@@ -53,7 +53,6 @@ export default function Contact({ contact }) {
                 borderRadius: "10px"
             },
         });
-            setIsEditing(false);
             return;
         }
     
