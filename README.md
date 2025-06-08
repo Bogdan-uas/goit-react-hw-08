@@ -1,3 +1,3 @@
 # goit-react-hw-08
 
-Sad😢, last React-Goit project
+A simple phone book, where you can add new contacts, delete them, look for a specific one.
