@@ -45,10 +45,6 @@ export default function ContactForm() {
                     <ErrorMessage className={style.error_message} name="number" component="span" />
                 </div>
                 <button type="submit" className={style.button}>Add contact</button>
-                <Toaster
-                position="top-center"
-                reverseOrder={false}
-                />
             </Form>
         </Formik>
     );

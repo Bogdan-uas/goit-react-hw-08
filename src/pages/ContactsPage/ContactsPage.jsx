@@ -5,6 +5,7 @@ import { selectIsLoading } from "../../redux/contacts/selectors.js";
 import ContactList from "../../components/ContactList/ContactList.jsx";
 import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import ContactForm from "../../components/ContactForm/ContactForm.jsx";
+import PageTitleSetter from "../../components/PageTitleSetter/PageTitleSetter.jsx";
 import "../../components/App/App.css"
 
 export default function ContactsPage() {
@@ -17,6 +18,7 @@ export default function ContactsPage() {
 
     return (
         <div className="main-container">
+            <PageTitleSetter title="Contacts Page" />
             <ContactForm />
             <SearchBox />
             <ContactList />

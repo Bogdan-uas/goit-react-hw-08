@@ -1,0 +1,35 @@
+.wrapper {
+    position: relative;
+    width: 18px;
+    height: 18px;
+}
+
+.eye {
+    font-size: 18px;
+    color: #333;
+}
+
+.svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.slash {
+    stroke: #333;
+    stroke-width: 2;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    transition: stroke-dashoffset 300ms ease-in-out;
+}
+
+.animate_in {
+    stroke-dashoffset: 0;
+}
+
+.animate_out {
+    stroke-dashoffset: 20; 
+}

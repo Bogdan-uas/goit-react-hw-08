@@ -12,6 +12,7 @@ import { apiRefreshUser } from "../../redux/auth/operations";
 import { useEffect } from "react";
 import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 const dispatch = useDispatch();
@@ -22,6 +23,7 @@ useEffect(() => {
 
 return (
     <Layout>
+    <Toaster position="top-center" reverseOrder={false} />
     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

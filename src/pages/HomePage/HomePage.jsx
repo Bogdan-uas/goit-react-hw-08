@@ -1,12 +1,13 @@
 import css from './HomePage.module.css'
-
+import PageTitleSetter from "../../components/PageTitleSetter/PageTitleSetter.jsx";
 
 export default function HomePage() {
     return (
-    <div>
+        <div>
+            <PageTitleSetter title="Home Page" />
 
             <h1 className={css.main_title}>
-                Add your contacts, if you need, also new contacts. You can check then later, if you're calling the right number and also you can delete your contact that is no longer your contact.
+                A simple phone book, where you can add new contacts, delete them, look for a specific one.
             </h1>
     <p className={css.emoji}>🥸</p>
     </div>

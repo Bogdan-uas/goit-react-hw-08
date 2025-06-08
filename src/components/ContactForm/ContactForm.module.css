@@ -64,7 +64,7 @@
 }
 
 .login_register_title {
-    margin-top: 256px;
+    margin-top: 356px;
     margin-bottom: 16px;
     font-weight: 600;
     font-size: 24px;
@@ -100,4 +100,23 @@
 
 .to_register_link:hover {
     color: #0d6aff;
+}
+
+.eye_button {
+    position: absolute;
+    right: 10px;
+    top: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    line-height: 1;
+    transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
+    opacity: 0.7;
+}
+
+.eye_button:hover {
+    transform: scale(1.1);
+    opacity: 1;
 }

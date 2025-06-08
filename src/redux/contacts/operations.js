@@ -37,3 +37,15 @@ async (contactId, thunkAPI) => {
     }
 }
 );
+
+export const updateContact = createAsyncThunk(
+"contacts/updateContact",
+async ({ contactId, updates }, thunkAPI) => {
+    try {
+        const response = await instance.patch(`/contacts/${contactId}`, updates);
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+}
+);

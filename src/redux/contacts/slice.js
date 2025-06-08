@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiLogout } from "../auth/operations";
-import { fetchContacts, addContact, deleteContact } from "./operations";
+import { fetchContacts, addContact, deleteContact, updateContact } from "./operations.js";
 
 export const INITIAL_STATE_CONTACTS = {
-items: [],
-loading: false,
-error: null,
+    items: [],
+    loading: false,
+    error: null,
 };
 
 const contactsSlice = createSlice({
@@ -43,7 +43,7 @@ extraReducers: (builder) => {
     })
     .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(
-        (contact) => contact.id !== action.payload.id
+            (contact) => contact.id !== action.payload.id
         );
         state.loading = false;
     })
@@ -51,10 +51,18 @@ extraReducers: (builder) => {
         state.loading = false;
         state.error = action.error.message;
     })
+    .addCase(updateContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+            (contact) => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+            state.items[index] = action.payload;
+        }
+    })
     .addCase(apiLogout.fulfilled, (state) => {
-    state.items = [];
-    state.loading = false;
-    state.error = null;
+        state.items = [];
+        state.loading = false;
+        state.error = null;
     });
 },
 });
