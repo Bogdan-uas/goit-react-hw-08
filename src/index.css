@@ -52,6 +52,11 @@ a {
   text-decoration: none;
 }
 
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
 .visually_hidden {
   position: absolute;
   width: 1px;
