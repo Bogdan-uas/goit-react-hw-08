@@ -129,17 +129,26 @@ export default function Contact({ contact, isEditing, setEditingId, editingId })
                                 setEditedName(contact.name);
                                 setEditedNumber(contact.number);
                             }}
+                            disabled={showConfirmDelete}
                         >
                             Cancel
                         </button>
-                        <button className={style.save_button} onClick={onSave}>
-                            Save
+                        <button
+                            className={style.save_button}
+                            onClick={onSave}
+                            disabled={showConfirmDelete}
+                            >
+                                Save
                         </button>
                     </>
                 ) : (
                     <>
-                        <button className={style.delete_button} onClick={handleDeleteClick}>
-                            Delete
+                        <button
+                            className={style.delete_button}
+                            onClick={handleDeleteClick}
+                            disabled={showConfirmDelete}
+                        >
+                           Delete
                         </button>
                         <button
                             className={style.edit_button}
@@ -147,7 +156,7 @@ export default function Contact({ contact, isEditing, setEditingId, editingId })
                             if (editingId && editingId !== contact.id) {
                                 toast.error("You can only edit one contact at a time.", {
                                 duration: 4000,
-                                style: { 
+                                style: {
                                     borderRadius: "10px" 
                                 },
                             });
@@ -155,8 +164,9 @@ export default function Contact({ contact, isEditing, setEditingId, editingId })
                                 setEditingId(contact.id);
                             }
                             }}
+                            disabled={showConfirmDelete}
                         >
-                          Edit
+                         Edit
                         </button>
                     </>
                 )}
