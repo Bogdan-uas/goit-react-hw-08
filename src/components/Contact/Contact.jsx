@@ -143,10 +143,20 @@ export default function Contact({ contact, isEditing, setEditingId, editingId })
                         </button>
                         <button
                             className={style.edit_button}
-                            onClick={() => setEditingId(contact.id)}
-                            disabled={editingId !== null && editingId !== contact.id}
+                            onClick={() => {
+                            if (editingId && editingId !== contact.id) {
+                                toast.error("You can only edit one contact at a time.", {
+                                duration: 4000,
+                                style: { 
+                                    borderRadius: "10px" 
+                                },
+                            });
+                            } else {
+                                setEditingId(contact.id);
+                            }
+                            }}
                         >
-                            Edit
+                          Edit
                         </button>
                     </>
                 )}
