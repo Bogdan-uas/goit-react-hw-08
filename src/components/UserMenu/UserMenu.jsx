@@ -60,7 +60,7 @@ export default function UserMenu() {
 
             {isLogoutModalOpen && (
                 <div className={css.logout_modal}>
-                    <p className={css.logout_text}>Are you sure you want to log out?</p>
+                    <p className={css.logout_text}>Are you sure you want to <b>log out?</b></p>
                     <div className={css.logout_buttons}>
                         <button className={css.cancel_button} onClick={cancelLogout}>
                             Cancel
