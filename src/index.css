@@ -15,11 +15,16 @@
   flex-direction: column;
 }
 
+*:disabled {
+  cursor: not-allowed;
+}
+
 body {
   margin: 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
   font-family: sans-serif;
   line-height: 1.5;
 }

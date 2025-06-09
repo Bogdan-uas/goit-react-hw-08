@@ -7,7 +7,7 @@
     margin-top: 64px;
     color: #3c3c50;
     margin-right: 16px;
-    transition: 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
 }
 
 .link:hover {

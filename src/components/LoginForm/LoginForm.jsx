@@ -36,7 +36,7 @@ export default function LoginForm() {
             console.log(values);
         } catch (error) {
             toast.error("No one has registered under this data yet!", {
-            duration: 4000,
+            duration: 6000,
             style: {
                 borderRadius: '10px',
                 textAlign: 'center',

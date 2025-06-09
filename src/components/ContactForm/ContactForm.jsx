@@ -13,60 +13,78 @@ const FeedbackSchema = Yup.object().shape({
 });
 
 export default function ContactForm() {
-const dispatch = useDispatch();
-const isModalOpen = useSelector(selectIsModalOpen);
-const isEditingGlobal = useSelector(selectIsEditingGlobal);
-const nameFieldId = useId();
-const numberFieldId = useId();
+    const dispatch = useDispatch();
+    const isModalOpen = useSelector(selectIsModalOpen);
+    const isEditingGlobal = useSelector(selectIsEditingGlobal);
+    const isLocked = isModalOpen || isEditingGlobal;
 
-const handleSubmit = (values, actions) => {
-    dispatch(addContact(values));
-    toast.success('Successfully added a contact!', {
-        duration: 4000,
-        style: { borderRadius: '10px', textAlign: 'center' },
-    });
-    actions.resetForm();
-};
+    const nameFieldId = useId();
+    const numberFieldId = useId();
 
-return (
-    <Formik
-        initialValues={{ name: "", number: "" }}
-        onSubmit={handleSubmit}
-        validationSchema={FeedbackSchema}
-    >
-    <Form className={style.form}>
-        <div className={style.name_number_container}>
-            <label htmlFor={nameFieldId} className={style.label}>Name</label>
-            <Field type="text" name="name" id={nameFieldId} className={style.input} />
-            <ErrorMessage className={style.error_message} name="name" component="span" />
-        </div>
-        <div className={style.name_number_container}>
-            <label htmlFor={numberFieldId} className={style.label}>Number</label>
-            <Field type="text" name="number" id={numberFieldId} className={style.input} />
-            <ErrorMessage className={style.error_message} name="number" component="span" />
-        </div>
-        <button
-            type="submit"
-            className={style.button}
-            disabled={isModalOpen || isEditingGlobal}
-            onClick={(e) => {
-            if (isModalOpen || isEditingGlobal) {
-            e.preventDefault();
+    const handleSubmit = (values, actions) => {
+        if (isLocked) {
             toast.error(
                 isModalOpen
                     ? "Close the modal first."
                     : "You can't add while editing.",
                 {
                     duration: 4000,
-                    style: { borderRadius: '10px', textAlign: 'center' },
+                    style: { borderRadius: "10px", textAlign: "center" },
                 }
             );
-            }
-        }}
+            return;
+        }
+
+        dispatch(addContact(values));
+        toast.success("Successfully added a contact!", {
+            duration: 4000,
+            style: { borderRadius: "10px", textAlign: "center" },
+        });
+        actions.resetForm();
+    };
+
+    return (
+        <Formik
+            initialValues={{ name: "", number: "" }}
+            validationSchema={FeedbackSchema}
+            onSubmit={handleSubmit}
         >
-            Add contact
-        </button>
-    </Form>
-    </Formik>
-);
+            {({ handleSubmit }) => (
+                <Form className={style.form} onSubmit={handleSubmit}>
+                    <div className={style.name_number_container}>
+                        <label htmlFor={nameFieldId} className={style.label}>Name</label>
+                        <Field type="text" name="name" id={nameFieldId} className={style.input} />
+                        <ErrorMessage className={style.error_message} name="name" component="span" />
+                    </div>
+
+                    <div className={style.name_number_container}>
+                        <label htmlFor={numberFieldId} className={style.label}>Number</label>
+                        <Field type="text" name="number" id={numberFieldId} className={style.input} />
+                        <ErrorMessage className={style.error_message} name="number" component="span" />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className={`${style.button} ${isLocked ? style.disabled : ""}`}
+                        onClick={(e) => {
+                            if (isLocked) {
+                                e.preventDefault();
+                                toast.error(
+                                    isModalOpen
+                                        ? "Close the modal first."
+                                        : "You can't add while editing.",
+                                    {
+                                        duration: 4000,
+                                        style: { borderRadius: "10px", textAlign: "center" },
+                                    }
+                                );
+                            }
+                        }}
+                    >
+                        Add contact
+                    </button>
+                </Form>
+            )}
+        </Formik>
+    );
 }

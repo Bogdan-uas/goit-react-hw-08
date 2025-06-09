@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function ContactList() {
     const filteredContacts = useSelector(selectFilteredContacts);
-    const [editingId, setEditingId] = useState(null);
     const [contactIdToDelete, setContactIdToDelete] = useState(null);
 
     return (
@@ -16,10 +15,6 @@ export default function ContactList() {
                     <li className={style.item} key={contact.id}>
                         <Contact
                             contact={contact}
-                            isEditing={editingId === contact.id}
-                            isAnotherEditing={editingId !== null && editingId !== contact.id}
-                            setEditingId={setEditingId}
-                            editingId={editingId}
                             contactIdToDelete={contactIdToDelete}
                             setContactIdToDelete={setContactIdToDelete}
                         />

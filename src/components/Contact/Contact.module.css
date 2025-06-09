@@ -51,7 +51,7 @@
     color: #f1f4fd;
     border-radius: 8px;
     border: none;
-    transition: 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
 }
 
 .delete_button:hover,
@@ -71,7 +71,7 @@
     color: #f1f4fd;
     border-radius: 8px;
     border: none;
-    transition: 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
 }
 
 .edit_button:hover,
@@ -87,7 +87,7 @@
     line-height: 1.5;
     font-size: 14px;
     letter-spacing: 0.04em;
-    transition: 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
 }
 
 .edit_input:hover,

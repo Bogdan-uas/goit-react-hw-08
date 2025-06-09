@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
 import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
 import { startEditing, stopEditing } from "../../redux/ui/editSlice.js";
-import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors.js";
+import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId } from "../../redux/ui/selectors.js";
 import { useState } from "react";
 
 const contactSchema = Yup.object().shape({
@@ -20,20 +20,16 @@ const contactSchema = Yup.object().shape({
         .required("Number is required"),
 });
 
-export default function Contact({
-    contact,
-    editingId,
-    setEditingId,
-    contactIdToDelete,
-    setContactIdToDelete,
-}) {
+export default function Contact({ contact, contactIdToDelete, setContactIdToDelete }) {
     const dispatch = useDispatch();
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
+    const [isEmptyDeleteModalOpen, setIsEmptyDeleteModalOpen] = useState(false);
 
     const isAnyModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
-    const isEditing = editingId === contact.id;
+    const globalEditingId = useSelector(selectEditingId);
+    const isEditing = globalEditingId === contact.id;
     const isDeletionModalOpen = contactIdToDelete === contact.id;
 
     const handleDeleteClick = () => {
@@ -57,10 +53,16 @@ export default function Contact({
     };
 
     const onSave = async () => {
-        if (
-            editedName.trim() === contact.name &&
-            editedNumber.trim() === contact.number
-        ) {
+        const trimmedName = editedName.trim();
+        const trimmedNumber = editedNumber.trim();
+
+        if (trimmedName === "" && trimmedNumber === "") {
+            dispatch(openModal());
+            setIsEmptyDeleteModalOpen(true);
+            return;
+        }
+
+        if (trimmedName === contact.name && trimmedNumber === contact.number) {
             toast("Nothing to change!", {
                 icon: "❗",
                 duration: 4000,
@@ -71,15 +73,15 @@ export default function Contact({
 
         try {
             await contactSchema.validate(
-                { name: editedName.trim(), number: editedNumber.trim() },
+                { name: trimmedName, number: trimmedNumber },
                 { abortEarly: false }
             );
 
             dispatch(updateContact({
                 contactId: contact.id,
                 updates: {
-                    name: editedName.trim(),
-                    number: editedNumber.trim(),
+                    name: trimmedName,
+                    number: trimmedNumber,
                 },
             }))
                 .unwrap()
@@ -88,7 +90,6 @@ export default function Contact({
                         duration: 4000,
                         style: { borderRadius: "10px", textAlign: "center" },
                     });
-                    setEditingId(null);
                     dispatch(stopEditing());
                 });
         } catch (err) {
@@ -138,7 +139,6 @@ export default function Contact({
                         <button
                             className={`${style.cancel_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={() => {
-                                setEditingId(null);
                                 setEditedName(contact.name);
                                 setEditedNumber(contact.number);
                                 dispatch(stopEditing());
@@ -168,10 +168,7 @@ export default function Contact({
                                             : "You can't delete while editing.",
                                         {
                                             duration: 4000,
-                                            style: {
-                                                borderRadius: "10px",
-                                                textAlign: "center",
-                                            },
+                                            style: { borderRadius: "10px", textAlign: "center" },
                                         }
                                     );
                                 } else {
@@ -185,7 +182,7 @@ export default function Contact({
                         <button
                             className={`${style.edit_button} ${(isAnyModalOpen || isEditingGlobal) ? style.disabled : ""}`}
                             onClick={(e) => {
-                                if (isAnyModalOpen || (editingId && editingId !== contact.id)) {
+                                if (isAnyModalOpen || isEditingGlobal) {
                                     e.preventDefault();
                                     toast.error("You can only edit one contact at a time.", {
                                         duration: 4000,
@@ -195,7 +192,6 @@ export default function Contact({
                                         },
                                     });
                                 } else {
-                                    setEditingId(contact.id);
                                     dispatch(startEditing(contact.id));
                                 }
                             }}
@@ -214,15 +210,45 @@ export default function Contact({
                         <b className={style.info_text}>{contact.name}</b>?
                     </p>
                     <div className={style.deletion_confirmation_button_group}>
+                        <button className={style.save_button} onClick={cancelDelete}>
+                            Cancel
+                        </button>
+                        <button className={style.cancel_button} onClick={confirmDelete}>
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            )}
+            {isEmptyDeleteModalOpen && (
+                <div className={style.confirm_modal}>
+                    <p className={style.info_text}>
+                        Both fields are empty. Do you want to <b>delete</b> this contact?
+                    </p>
+                    <div className={style.deletion_confirmation_button_group}>
                         <button
                             className={style.save_button}
-                            onClick={cancelDelete}
+                            onClick={() => {
+                                setEditedName(contact.name);
+                                setEditedNumber(contact.number);
+                                dispatch(closeModal());
+                                setIsEmptyDeleteModalOpen(false);
+                                dispatch(stopEditing());
+                            }}
                         >
                             Cancel
                         </button>
                         <button
                             className={style.cancel_button}
-                            onClick={confirmDelete}
+                            onClick={() => {
+                                dispatch(deleteContact(contact.id));
+                                toast.success("Contact deleted (fields were empty)", {
+                                    duration: 4000,
+                                    style: { borderRadius: "10px", textAlign: "center" },
+                                });
+                                dispatch(closeModal());
+                                setIsEmptyDeleteModalOpen(false);
+                                dispatch(stopEditing());
+                            }}
                         >
                             Confirm
                         </button>

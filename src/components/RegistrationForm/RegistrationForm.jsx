@@ -32,7 +32,7 @@ export default function RegistrationForm() {
             console.log(values);
         } catch (error) {
             toast.error("Some of the data had been earlier used by another user!", {
-            duration: 4000,
+            duration: 6000,
             style: {
                 borderRadius: '10px',
                 textAlign: 'center',
