@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "../../redux/contacts/operations.js";
-import { selectIsLoading } from "../../redux/contacts/selectors.js";
+import { selectIsLoading, selectContacts } from "../../redux/contacts/selectors.js";
 import ContactList from "../../components/ContactList/ContactList.jsx";
 import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import ContactForm from "../../components/ContactForm/ContactForm.jsx";
@@ -11,6 +11,8 @@ import "../../components/App/App.css"
 export default function ContactsPage() {
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsLoading);
+    const contacts = useSelector(selectContacts);
+    const hasContacts = contacts.length > 0; 
 
     useEffect(() => {
         dispatch(fetchContacts());
@@ -20,7 +22,9 @@ export default function ContactsPage() {
         <div className="main-container">
             <PageTitleSetter title="Contacts Page" />
             <ContactForm />
-            <SearchBox />
+            {hasContacts && (
+                <SearchBox />
+            )}
             <ContactList />
             {isLoading && <p className="loading-text">✋Loading...🤚</p>}
         </div>

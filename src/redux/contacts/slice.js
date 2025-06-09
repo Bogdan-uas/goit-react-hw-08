@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiLogout } from "../auth/operations";
-import { fetchContacts, addContact, deleteContact, updateContact } from "./operations.js";
+import { fetchContacts, addContact, deleteContact, updateContact, deleteAllContacts } from "./operations.js";
 
 export const INITIAL_STATE_CONTACTS = {
     items: [],
@@ -63,6 +63,10 @@ extraReducers: (builder) => {
         state.items = [];
         state.loading = false;
         state.error = null;
+    })
+    .addCase(deleteAllContacts.fulfilled, (state, action) => {
+        const deletedIds = action.payload.map(contact => contact.id);
+        state.items = state.items.filter(contact => !deletedIds.includes(contact.id));
     });
 },
 });

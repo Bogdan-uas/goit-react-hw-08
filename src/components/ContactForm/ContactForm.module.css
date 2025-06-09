@@ -1,14 +1,20 @@
-.form {
+.main_container {
     border: 1px solid black;
     padding: 28px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+    margin-top: 128px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 32px;
-    margin-top: 128px;
-    border-radius: 8px;
 }
 
 .name_number_container {
@@ -124,4 +130,8 @@
 .disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.delete_button {
+    margin-top: 32px;
 }

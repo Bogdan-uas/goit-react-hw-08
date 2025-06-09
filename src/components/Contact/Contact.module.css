@@ -101,7 +101,7 @@
 }
 
 .confirm_modal {
-    position: absolute;
+    position: fixed;
     top: 7%;
     left: 50%;
     transform: translate(-50%, -50%);

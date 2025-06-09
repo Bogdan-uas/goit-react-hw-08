@@ -49,3 +49,21 @@ async ({ contactId, updates }, thunkAPI) => {
     }
 }
 );
+export const deleteAllContacts = createAsyncThunk(
+    "contacts/deleteAllContacts",
+    async (_, thunkAPI) => {
+    try {
+        const { data: contacts } = await instance.get("/contacts");
+        const deletedContacts = [];
+
+        for (const contact of contacts) {
+            const { data: deleted } = await instance.delete(`/contacts/${contact.id}`);
+            deletedContacts.push(deleted);
+        }
+
+        return deletedContacts;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+    }
+);
