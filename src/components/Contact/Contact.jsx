@@ -16,7 +16,7 @@ const contactSchema = Yup.object().shape({
         .required("Name is required"),
     number: Yup.string()
         .matches(/^\+?[0-9\s-]{3,}$/, "Invalid number format")
-        .min(9, "Must be a valid number!")
+        .min(9, "Must remain a valid number!")
         .required("Number is required"),
 });
 
