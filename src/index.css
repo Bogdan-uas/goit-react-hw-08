@@ -57,6 +57,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
+button:disabled:hover,
+button:disabled:focus {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
 .visually_hidden {
   position: absolute;
   width: 1px;
