@@ -10,8 +10,15 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
-    email: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Email is required!"),
-    password: Yup.string().min(3, "Too Short!").max(35, "Too Long!").required("Password is required!"),
+    email: Yup.string()
+        .min(3, "Too Short!")
+        .max(50, "Too Long!")
+        .email("Invalid email format")
+        .required("Email is required!"),
+    password: Yup.string()
+        .min(3, "Too Short!")
+        .max(35, "Too Long!")
+        .required("Password is required!"),
 });
 
 export default function LoginForm() {
@@ -28,10 +35,11 @@ export default function LoginForm() {
             actions.resetForm();
             console.log(values);
         } catch (error) {
-            toast.error("No one has registered under this data yet or invalid data!", {
+            toast.error("No one has registered under this data yet!", {
             duration: 4000,
             style: {
                 borderRadius: '10px',
+                textAlign: 'center',
             },
             });
             navigate("/register");

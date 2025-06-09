@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Username is required!"),
-    email: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Email is required!"),
+    email: Yup.string().min(3, "Too Short!").max(50, "Too Long!").email("Invalid email format").required("Email is required!"),
     password: Yup.string().min(3, "Too Short!").max(35, "Too Long!").required("Password is required!"),
 });
 
@@ -31,10 +31,11 @@ export default function RegistrationForm() {
             setPasswordValue("");
             console.log(values);
         } catch (error) {
-            toast.error("This user is already registered!", {
+            toast.error("Some of the data had been earlier used by another user!", {
             duration: 4000,
             style: {
                 borderRadius: '10px',
+                textAlign: 'center',
             },
             });
             navigate("/login");
@@ -49,7 +50,7 @@ export default function RegistrationForm() {
         >
         {({ values, handleChange }) => (
             <Form className={style.register_login_form}>
-            <h2 className={style.login_register_title}>Register User</h2>
+            <h2 className={style.login_register_title}>Register</h2>
     
             <div className={style.name_number_container}>
                 <label htmlFor={nameFieldId} className={style.label}>Name</label>

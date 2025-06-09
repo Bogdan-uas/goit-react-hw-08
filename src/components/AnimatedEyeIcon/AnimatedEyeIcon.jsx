@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { FaEye } from "react-icons/fa";
+import { BsEye } from "react-icons/bs";
 import styles from "./AnimatedEyeIcon.module.css";
 
 export default function AnimatedEyeIcon({ active }) {
@@ -18,7 +18,7 @@ useEffect(() => {
 
 return (
     <div className={styles.wrapper}>
-    <FaEye className={styles.eye} />
+    <BsEye className={styles.eye} />
     <svg className={styles.svg} viewBox="0 0 18 18">
         <line
             ref={slashRef}

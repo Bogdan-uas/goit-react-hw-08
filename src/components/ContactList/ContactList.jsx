@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function ContactList() {
     const filteredContacts = useSelector(selectFilteredContacts);
     const [editingId, setEditingId] = useState(null);
+    const [contactIdToDelete, setContactIdToDelete] = useState(null);
 
     return (
         <ul className={style.list}>
@@ -16,12 +17,14 @@ export default function ContactList() {
                         <Contact
                             contact={contact}
                             isEditing={editingId === contact.id}
+                            isAnotherEditing={editingId !== null && editingId !== contact.id}
                             setEditingId={setEditingId}
                             editingId={editingId}
+                            contactIdToDelete={contactIdToDelete}
+                            setContactIdToDelete={setContactIdToDelete}
                         />
                     </li>
-                ))
-            }
+                ))}
         </ul>
     );
 }

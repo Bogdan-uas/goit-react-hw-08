@@ -7,7 +7,7 @@ export default function HomePage() {
             <PageTitleSetter title="Home Page" />
 
             <h1 className={css.main_title}>
-                A simple phone book, where you can add new contacts, delete them, look for a specific one.
+                A simple phone book, where you can add new contacts, delete them, look for or edit a specific one.
             </h1>
     <p className={css.emoji}>🥸</p>
     </div>
