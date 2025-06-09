@@ -51,7 +51,7 @@
     color: #f1f4fd;
     border-radius: 8px;
     border: none;
-    transition: 500ms ease;
+    transition: 500ms ease-in-out;
 }
 
 .delete_button:hover,
@@ -71,7 +71,7 @@
     color: #f1f4fd;
     border-radius: 8px;
     border: none;
-    transition: 500ms ease;
+    transition: 500ms ease-in-out;
 }
 
 .edit_button:hover,
@@ -114,7 +114,7 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    animation: fadeInScale 0.25s ease-out forwards;
+    animation: fadeInScale 0.25s ease-in-out forwards;
     opacity: 0; 
 }
 
