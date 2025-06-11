@@ -25,7 +25,7 @@ export default function UserMenu() {
         }
 
         if (isAnyModalOpen) {
-            toast.error("Close the current modal before logging out.", {
+            toast.error("Close the current modal before logging out!", {
                 duration: 6000,
                 style: { borderRadius: "10px", textAlign: "center" },
             });
