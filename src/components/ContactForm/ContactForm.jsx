@@ -3,6 +3,7 @@ import css from "../Contact/Contact.module.css"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContacts } from "../../redux/contacts/selectors";
 import toast from "react-hot-toast";
@@ -20,6 +21,11 @@ const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
     number: Yup.string().min(9, "Must be a valid number!").required("Required"),
 });
+
+const normalizeIntlNumber = (number) => {
+    const parsed = parsePhoneNumberFromString(number);
+    return parsed ? parsed.number : number;
+};
 
 export default function ContactForm() {
     const dispatch = useDispatch();
@@ -44,16 +50,47 @@ const handleSubmit = (values, actions) => {
                 style: { borderRadius: "10px", textAlign: "center" },
             }
         );
-    return;
-}
+        return;
+    }
 
+    const inputName = values.name.trim().toLowerCase();
+    const inputNumber = normalizeIntlNumber(values.number);
+
+    const isExactDuplicate = contacts.some((contact) => {
+        return (
+            contact.name.trim().toLowerCase() === inputName &&
+            normalizeIntlNumber(contact.number) === inputNumber
+        );
+    });
+
+    const isNumberDuplicate = contacts.some((contact) => {
+        return normalizeIntlNumber(contact.number) === inputNumber;
+    });
+
+    if (isExactDuplicate) {
+        toast.error("You can't create a contact with identical data", {
+            duration: 5000,
+            style: { borderRadius: "10px", textAlign: "center" },
+        });
+        return;
+    }
+
+    if (isNumberDuplicate) {
+        dispatch(addContact(values));
+        toast("Warning: A contact with this phone number already exists! (A contact was still successfully added!)", {
+            icon: "❗",
+            duration: 6000,
+            style: { borderRadius: "10px", textAlign: "center" },
+        });
+    } else {
         dispatch(addContact(values));
         toast.success("Successfully added a contact!", {
             duration: 4000,
             style: { borderRadius: "10px", textAlign: "center" },
-        });
-        actions.resetForm();
-    };
+    });
+    }
+    actions.resetForm();
+};
 
 const handleDeleteAllConfirm = () => {
     dispatch(deleteAllContacts())

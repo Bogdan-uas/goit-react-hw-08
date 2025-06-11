@@ -114,6 +114,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             className={style.edit_input}
                             value={editedName}
                             onChange={(e) => setEditedName(e.target.value)}
+                            placeholder="(Edited Name)"
                         />
                     ) : (
                         <p className={style.info_text}>{contact.name}</p>
@@ -126,6 +127,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             className={style.edit_input}
                             value={editedNumber}
                             onChange={(e) => setEditedNumber(e.target.value)}
+                            placeholder="(Edited Number)"
                         />
                     ) : (
                         <p className={style.info_text}>{contact.number}</p>
@@ -231,7 +233,6 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                 setEditedNumber(contact.number);
                                 dispatch(closeModal());
                                 setIsEmptyDeleteModalOpen(false);
-                                dispatch(stopEditing());
                             }}
                         >
                             Cancel

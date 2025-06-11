@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
     "formik": "^2.4.6",
+    "libphonenumber-js": "^1.12.9",
     "modern-normalize": "^3.0.1",
     "nanoid": "^5.1.5",
     "react": "^19.0.0",
