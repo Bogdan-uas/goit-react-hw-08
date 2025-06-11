@@ -181,13 +181,15 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             onClick={(e) => {
                                 if (isAnyModalOpen || isEditingGlobal) {
                                     e.preventDefault();
-                                    toast.error("You can only edit one contact at a time.", {
-                                        duration: 4000,
-                                        style: {
-                                            borderRadius: "10px",
-                                            textAlign: "center",
-                                        },
-                                    });
+                                    toast.error(
+                                        isAnyModalOpen
+                                            ? "Close the modal first."
+                                            : "You can't edit other contact while editing one.",
+                                        {
+                                            duration: 4000,
+                                            style: { borderRadius: "10px", textAlign: "center" },
+                                        }
+                                    );
                                 } else {
                                     dispatch(startEditing(contact.id));
                                 }
