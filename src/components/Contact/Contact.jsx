@@ -143,14 +143,12 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                 setEditedNumber(contact.number);
                                 dispatch(stopEditing());
                             }}
-                            disabled={isAnyModalOpen}
                         >
                             Cancel
                         </button>
                         <button
                             className={`${style.save_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={onSave}
-                            disabled={isAnyModalOpen}
                         >
                             Save
                         </button>
@@ -175,7 +173,6 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                     handleDeleteClick();
                                 }
                             }}
-                            disabled={isAnyModalOpen}
                         >
                             Delete
                         </button>
@@ -195,7 +192,6 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                     dispatch(startEditing(contact.id));
                                 }
                             }}
-                            disabled={isAnyModalOpen}
                         >
                             Edit
                         </button>
