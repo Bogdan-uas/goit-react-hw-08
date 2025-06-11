@@ -163,7 +163,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                     toast.error(
                                         isAnyModalOpen
                                             ? "Close the modal first."
-                                            : "You can't delete while editing.",
+                                            : "You can't delete while editing a contact!",
                                         {
                                             duration: 4000,
                                             style: { borderRadius: "10px", textAlign: "center" },
@@ -184,7 +184,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                     toast.error(
                                         isAnyModalOpen
                                             ? "Close the modal first."
-                                            : "You can't edit other contact while editing one.",
+                                            : "You can't edit other contact while editing one!",
                                         {
                                             duration: 4000,
                                             style: { borderRadius: "10px", textAlign: "center" },
@@ -217,6 +217,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                     </div>
                 </div>
             )}
+            
             {isEmptyDeleteModalOpen && (
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>
