@@ -57,7 +57,7 @@ export default function SearchBox() {
 
     const handleSearchByChange = (value) => {
         if (isLocked) {
-            toast.error("You can't change search method while editing or confirming!", {
+            toast.error("You can't change search method while editing or confirming an action!", {
                 duration: 6000,
                 style: { borderRadius: "10px", textAlign: "center" },
             });
