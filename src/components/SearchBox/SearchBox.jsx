@@ -25,10 +25,15 @@ export default function SearchBox() {
         setInputValue(value);
 
         if (isLocked) {
-            toast.error("You can't search while editing or confirming an action!", {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+            toast.error(
+                isModalOpen
+                    ? "Close the current modal before searching!"
+                    : "You can't search some other contacts while editing one!",
+                {
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                }
+            );
             return;
         }
 
@@ -57,10 +62,15 @@ export default function SearchBox() {
 
     const handleSearchByChange = (value) => {
         if (isLocked) {
-            toast.error("You can't change search method while editing or confirming an action!", {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+            toast.error(
+                isModalOpen
+                    ? "Close the current modal before changing search mode!"
+                    : "You can't change search method while editing a contact!",
+                {
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                }
+            );
             return;
         }
 
@@ -71,10 +81,15 @@ export default function SearchBox() {
 
     const handleInputWrapperClick = () => {
         if (isLocked) {
-            toast.error("You can't search while editing or confirming an action!", {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+            toast.error(
+                isModalOpen
+                    ? "Close the current modal before searching!"
+                    : "You can't search some other contacts while editing one!",
+                {
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                }
+            );
         }
     };
 
@@ -95,8 +110,9 @@ export default function SearchBox() {
                         value="name"
                         checked={searchBy === "name"}
                         readOnly
+                        className={isLocked ? style.disabled : ""}
                     />
-                    <span className={style.span}>Find a contact by name</span>
+                    <span className={`${style.span} ${isLocked ? style.disabled : ""}`}>Find a contact by name</span>
                 </div>
 
                 <div
@@ -108,8 +124,9 @@ export default function SearchBox() {
                         value="number"
                         checked={searchBy === "number"}
                         readOnly
+                        className={isLocked ? style.disabled : ""}
                     />
-                    <span className={style.span}>Find a contact by number</span>
+                    <span className={`${style.span} ${isLocked ? style.disabled : ""}`}>Find a contact by number</span>
                 </div>
             </div>
 
@@ -122,7 +139,7 @@ export default function SearchBox() {
                     placeholder={`Search by ${searchBy}`}
                     value={inputValue}
                     onChange={handleFilterChange}
-                    className={style.input}
+                    className={`${style.input} ${isLocked ? style.disabled : ""}`}
                     readOnly={isLocked}
                 />
             </div>

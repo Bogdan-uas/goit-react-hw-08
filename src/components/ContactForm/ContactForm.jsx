@@ -11,6 +11,11 @@ import { addContact, deleteAllContacts } from "../../redux/contacts/operations.j
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { openModal, closeModal } from "../../redux/ui/modalSlice";
 
+const initialValues = {
+    name: "",
+    number: ""
+}
+
 const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
     number: Yup.string().min(9, "Must be a valid number!").required("Required"),
@@ -72,7 +77,7 @@ const handleDeleteAllConfirm = () => {
 return (
     <div className={style.main_container}>
     <Formik
-        initialValues={{ name: "", number: "" }}
+        initialValues={initialValues}
         validationSchema={FeedbackSchema}
         onSubmit={handleSubmit}
     >
@@ -96,8 +101,8 @@ return (
                     e.preventDefault();
                     toast.error(
                     isModalOpen
-                        ? "Close the modal first."
-                        : "You can't add while editing.",
+                        ? "Close the current modal before adding another contacts!"
+                        : "You can't add another contacts while editing!",
                     {
                         duration: 4000,
                         style: { borderRadius: "10px", textAlign: "center" },
@@ -116,11 +121,10 @@ return (
         <button
             type="button"
             className={`${css.delete_button} ${style.delete_button} ${isLocked ? style.disabled : ""}`}
-            disabled={isLocked}
             onClick={() => {
             if (isLocked) {
                 toast.error(
-                isModalOpen ? "Close the modal first." : "You can't delete while editing.",
+                isModalOpen ? "Close the current modal before deleting all contacts!" : "You can't delete all contacts while editing!",
                 {
                     duration: 4000,
                     style: { borderRadius: "10px", textAlign: "center" },
