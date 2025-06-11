@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { addContact, deleteAllContacts } from "../../redux/contacts/operations.js";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
+import { openModal, closeModal } from "../../redux/ui/modalSlice";
 
 const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -57,6 +58,7 @@ const handleDeleteAllConfirm = () => {
                 duration: 4000,
                 style: { borderRadius: "10px", textAlign: "center" },
             });
+            dispatch(closeModal());
             setShowDeleteAllModal(false);
         })
         .catch((error) => {
@@ -125,6 +127,7 @@ return (
                 }
             );
             } else {
+                dispatch(openModal());
                 setShowDeleteAllModal(true);
             }
         }}
@@ -144,7 +147,11 @@ return (
         <div className={css.deletion_confirmation_button_group}>
             <button
                 className={css.save_button}
-                onClick={() => setShowDeleteAllModal(false)}
+                onClick={() => {
+                    dispatch(closeModal())
+                    setShowDeleteAllModal(false)
+                }
+                }
             >
                 Cancel
             </button>
