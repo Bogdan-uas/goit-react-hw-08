@@ -79,7 +79,7 @@ const handleSubmit = (values, actions) => {
         dispatch(addContact(values));
         toast("Warning: A contact with this phone number already exists! (A contact was still successfully added!)", {
             icon: "❗",
-            duration: 6000,
+            duration: 8000,
             style: { borderRadius: "10px", textAlign: "center" },
         });
     } else {

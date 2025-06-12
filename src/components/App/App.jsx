@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsModalOpen } from "../../redux/ui/selectors.js";
 
 import "./App.css";
 
@@ -16,6 +17,15 @@ import { Toaster } from 'react-hot-toast';
 
 function App() {
 const dispatch = useDispatch();
+const isAnyModalOpen = useSelector(selectIsModalOpen);
+
+const handleIsModalOpen = (t, r) => {
+    if (isAnyModalOpen) {
+        return r;
+    } else {
+        return t;
+    }
+}
 
 useEffect(() => {
     dispatch(apiRefreshUser());
@@ -23,7 +33,9 @@ useEffect(() => {
 
 return (
     <Layout>
-    <Toaster position="top-center" reverseOrder={false} />
+    {
+        handleIsModalOpen(<Toaster position="top-center" reverseOrder={true} />, <Toaster position="top-right" reverseOrder={true} />)
+    }
     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

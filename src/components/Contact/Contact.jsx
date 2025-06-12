@@ -241,7 +241,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             className={style.cancel_button}
                             onClick={() => {
                                 dispatch(deleteContact(contact.id));
-                                toast.success("Contact deleted (fields were empty)", {
+                                toast.success("Contact deleted! (fields were empty)", {
                                     duration: 4000,
                                     style: { borderRadius: "10px", textAlign: "center" },
                                 });
