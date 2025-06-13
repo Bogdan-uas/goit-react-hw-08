@@ -1,7 +1,7 @@
 import style from "./ContactForm.module.css";
 import css from "../Contact/Contact.module.css"
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useId } from "react";
+import { useId, useRef, useEffect } from "react";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,9 @@ export default function ContactForm() {
     const contacts = useSelector(selectContacts);
     const hasContacts = contacts.length > 0; 
     const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+
+    const deleteAllButtonRef = useRef(null);
+    const modalRef = useRef(null);
 
     const nameFieldId = useId();
     const numberFieldId = useId();
@@ -90,7 +93,24 @@ const handleSubmit = (values, actions) => {
     });
     }
     actions.resetForm();
-};
+    };
+    
+    useEffect(() => {
+        if (showDeleteAllModal && modalRef.current) {
+            modalRef.current.focus();
+        }
+    }, [showDeleteAllModal]);
+    
+    const handleModalKeyDown = (e) => {
+        if (e.key === "Escape") {
+            e.preventDefault();
+            dispatch(closeModal());
+            setShowDeleteAllModal(false);
+            if (deleteAllButtonRef.current) {
+            deleteAllButtonRef.current.focus();
+        }
+        }
+    };
 
 const handleDeleteAllConfirm = () => {
     dispatch(deleteAllContacts())
@@ -156,6 +176,7 @@ return (
 
     {hasContacts && (
         <button
+            ref={deleteAllButtonRef}
             type="button"
             className={`${css.delete_button} ${style.delete_button} ${isLocked ? style.disabled : ""}`}
             onClick={() => {
@@ -177,10 +198,18 @@ return (
         </button>
     )}
 
-    {showDeleteAllModal && (
-        <div className={css.confirm_modal}>
-        <p className={css.info_text}>
-        Are you sure you want to delete <b>ALL</b> contacts?
+{showDeleteAllModal && (
+        <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="deleteAllTitle"
+            tabIndex={-1}
+            ref={modalRef}
+            onKeyDown={handleModalKeyDown}
+            className={css.confirm_modal}
+        >
+        <p id="deleteAllTitle" className={css.info_text}>
+            Are you sure you want to delete <b>ALL</b> contacts?
         </p>
         <span className={css.info_text}>
             You won't be able to restore them!
@@ -189,17 +218,16 @@ return (
             <button
                 className={css.save_button}
                 onClick={() => {
-                    dispatch(closeModal())
-                    setShowDeleteAllModal(false)
+                dispatch(closeModal());
+                setShowDeleteAllModal(false);
+                if (deleteAllButtonRef.current) {
+                    deleteAllButtonRef.current.focus();
                 }
-                }
+            }}
             >
                 Cancel
             </button>
-            <button
-                className={css.cancel_button}
-                onClick={handleDeleteAllConfirm}
-            >
+            <button className={css.cancel_button} onClick={handleDeleteAllConfirm}>
                 Confirm
             </button>
         </div>

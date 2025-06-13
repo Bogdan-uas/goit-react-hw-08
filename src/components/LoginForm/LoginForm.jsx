@@ -34,6 +34,23 @@ export default function LoginForm() {
             await dispatch(apiLogin(values)).unwrap();
             actions.resetForm();
             console.log(values);
+            toast.success("Successfully logged in!", {
+                duration: 6000,
+                style: {
+                    borderRadius: '10px',
+                    textAlign: 'center',
+                },
+            });
+            setTimeout(() => {
+                toast("Tip: All modals can be closed by pressing Escape!", {
+                icon: '🗿',
+                duration: 4000,
+                style: {
+                    borderRadius: '10px',
+                    textAlign: 'center',
+                },
+            });
+            }, 4000);
         } catch (error) {
             toast.error("No one has registered under this data yet!", {
             duration: 6000,

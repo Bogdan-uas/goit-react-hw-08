@@ -6,8 +6,8 @@ import * as Yup from "yup";
 import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
 import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
 import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice.js";
-import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId, selectModal } from "../../redux/ui/selectors.js";
-import { useState, useEffect } from "react";
+import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId } from "../../redux/ui/selectors.js";
+import { useState, useRef, useEffect } from "react";
 
 const contactSchema = Yup.object().shape({
     name: Yup.string()
@@ -27,17 +27,15 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
     const [isEmptyDeleteModalOpen, setIsEmptyDeleteModalOpen] = useState(false);
     const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
 
+    const nameInputRef = useRef(null);
+
     const isAnyModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
     const globalEditingId = useSelector(selectEditingId);
-    const modal = useSelector(selectModal);
     const isEditing = globalEditingId === contact.id;
     const isDeletionModalOpen = contactIdToDelete === contact.id;
 
-    const handleDeleteClick = () => {
-        dispatch(openModal());
-        setContactIdToDelete(contact.id);
-    };
+    const hasChanges = () => editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
 
     const confirmDelete = () => {
         dispatch(deleteContact(contact.id));
@@ -107,12 +105,80 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
         }
     };
 
-    useEffect(() => {
-        const hasChanged =
-            editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+useEffect(() => {
+    if (isEditing && nameInputRef.current) {
+        nameInputRef.current.focus();
+    }
+}, [isEditing]);
+
+useEffect(() => {
+    const handleKeyDown = (e) => {
+    if (isEditing && e.key === "Escape") {
+        e.preventDefault();
+        if (hasChanges()) {
+            dispatch(openModal());
+            setShowExitConfirmModal(true);
+        } else {
+            dispatch(stopEditing());
+        }
+    }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+}, [isEditing, editedName, editedNumber]);
+
+useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (isDeletionModalOpen && e.key === "Escape") {
+            e.preventDefault();
+            dispatch(closeModal());
+            setContactIdToDelete(null);
+        }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+}, [isDeletionModalOpen, dispatch, setContactIdToDelete]);
     
-        dispatch(setUnsavedChanges(isEditing && hasChanged));
-    }, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
+useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (isEditing && isAnyModalOpen && showExitConfirmModal && e.key === "Escape") {
+            e.preventDefault();
+            dispatch(closeModal());
+            setShowExitConfirmModal(false);
+        }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+}, [isEditing, isAnyModalOpen, showExitConfirmModal, dispatch]);
+
+useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (isEmptyDeleteModalOpen && e.key === "Escape") {
+            e.preventDefault();
+            setEditedName(contact.name);
+            setEditedNumber(contact.number);
+            dispatch(closeModal());
+            setIsEmptyDeleteModalOpen(false);
+        }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+}, [isEmptyDeleteModalOpen, dispatch]);
+
+useEffect(() => {
+    const hasChanged = editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+    dispatch(setUnsavedChanges(isEditing && hasChanged));
+}, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
+
+useEffect(() => {
+    if (!isEditing) {
+        setEditedName(contact.name);
+        setEditedNumber(contact.number);
+    }
+}, [isEditing, contact.name, contact.number]);
 
     return (
         <div className={style.container}>
@@ -120,12 +186,15 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                 <div className={style.info_container}>
                     <BsPersonFill className={style.svg} size={18} />
                     {isEditing ? (
-                        <input
-                            className={style.edit_input}
-                            value={editedName}
-                            onChange={(e) => setEditedName(e.target.value)}
-                            placeholder="(Edited Name)"
-                        />
+                            <input
+                                id={`name-edit-${contact.id}`}
+                                ref={nameInputRef}
+                                className={style.edit_input}
+                                value={editedName}
+                                onChange={(e) => setEditedName(e.target.value)}
+                                placeholder="(Edited Name)"
+                                aria-describedby={`edit-name-error-${contact.id}`}
+                            />
                     ) : (
                         <p className={style.info_text}>{contact.name}</p>
                     )}
@@ -133,12 +202,13 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                 <div className={style.info_container}>
                     <BsTelephoneFill className={style.svg} size={16} />
                     {isEditing ? (
-                        <input
-                            className={style.edit_input}
-                            value={editedNumber}
-                            onChange={(e) => setEditedNumber(e.target.value)}
-                            placeholder="(Edited Number)"
-                        />
+                            <input
+                                id={`number-edit-${contact.id}`}
+                                className={style.edit_input}
+                                value={editedNumber}
+                                onChange={(e) => setEditedNumber(e.target.value)}
+                                placeholder="(Edited Number)"
+                            />
                     ) : (
                         <p className={style.info_text}>{contact.number}</p>
                     )}
@@ -151,8 +221,26 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         <button
                             className={`${style.cancel_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={() => {
-                                dispatch(openModal());
-                                setShowExitConfirmModal(true);
+                                const nameEmpty = editedName.trim() === "";
+                                const numberEmpty = editedNumber.trim() === "";
+                            
+                                if (nameEmpty && numberEmpty) {
+                                    setEditedName(contact.name);
+                                    setEditedNumber(contact.number);
+                                    dispatch(stopEditing());
+                                    dispatch(setUnsavedChanges(false));
+                                    return;
+                                }
+                            
+                                if (hasChanges()) {
+                                    dispatch(openModal());
+                                    setShowExitConfirmModal(true);
+                                } else {
+                                    setEditedName(contact.name);
+                                    setEditedNumber(contact.number);
+                                    dispatch(closeModal());
+                                    dispatch(stopEditing());
+                                }
                             }}
                         >
                             Cancel
@@ -181,7 +269,8 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                         }
                                     );
                                 } else {
-                                    handleDeleteClick();
+                                    dispatch(openModal());
+                                    setContactIdToDelete(contact.id);
                                 }
                             }}
                         >
@@ -264,6 +353,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                     </div>
                 </div>
             )}
+
             {isEditing && isAnyModalOpen && showExitConfirmModal && (
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>

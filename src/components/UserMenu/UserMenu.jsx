@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { selectUser } from "../../redux/auth/selectors";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { apiLogout } from "../../redux/auth/operations";
 import { openModal, closeModal } from "../../redux/ui/modalSlice";
 import { CiLogout } from "react-icons/ci";
-import css from "./UserMenu.module.css";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import css from "./UserMenu.module.css";
 
 export default function UserMenu() {
     const dispatch = useDispatch();
@@ -46,6 +46,22 @@ export default function UserMenu() {
         dispatch(closeModal());
         setIsLogoutModalOpen(false);
     };
+
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === "Escape") {
+                cancelLogout();
+            }
+        };
+
+        if (isLogoutModalOpen) {
+            window.addEventListener("keydown", handleEscape);
+        }
+
+        return () => {
+            window.removeEventListener("keydown", handleEscape);
+        };
+    }, [isLogoutModalOpen]);
 
     return (
         <div className={css.userMenu}>

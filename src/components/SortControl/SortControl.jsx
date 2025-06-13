@@ -50,13 +50,9 @@ export default function SortControl() {
 
     if (contacts.length === 0) return null;
 
-    const textFunction = (o, p) => {
-        if (showOptions === true) {
-            return p;
-        } else {
-            return  o;
-        }
-    }
+    const textFunction = (option1, option2) => {
+        return showOptions ? option2 : option1;
+    };
 
     return (
         <div className={style.container}>
@@ -64,8 +60,14 @@ export default function SortControl() {
                 onClick={handleToggle}
                 className={`${style.sort_button} ${isLocked ? style.disabled : ""}`}
             >
-                {textFunction(<p>Do you want to sort the contacts?</p>, <p>If you don't want to sort already, click it again!</p>)}
+                {textFunction(
+                    <p>Do you want to sort the contacts?</p>,
+                    <p>If you don't want to sort already, click it again!</p>
+                )}
             </button>
+            {showOptions && (
+                <p className={style.info_text}>(It will save your current sorting method!)</p>
+            )}
 
             {showOptions && (
                 <div className={style.radio_group}>
