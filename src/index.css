@@ -29,6 +29,25 @@ body {
   line-height: 1.5;
 }
 
+body {
+  --bg: white;
+  --modal_bg: white;
+  --text: #2e2f42;
+  --hover: black;
+  --shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  --bg: #121212;
+  --modal_bg: #121212;
+  --text: #f1f1f1;
+  --hover: #8a8a8a;
+  --shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
 h1,
 h2,
 h3,

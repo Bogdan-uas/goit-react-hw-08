@@ -5,11 +5,11 @@
     text-transform: capitalize;
     text-align: center;
     margin-top: 64px;
-    color: #3c3c50;
+    color: var(--text);
     margin-right: 16px;
     transition: all 500ms ease-in-out;
 }
 
 .link:hover {
-    color: black;
+    color: var(--hover);
 }

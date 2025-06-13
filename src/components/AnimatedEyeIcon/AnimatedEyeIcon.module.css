@@ -6,7 +6,7 @@
 
 .eye {
     font-size: 18px;
-    color: #333;
+    color: var(--text);
 }
 
 .svg {
@@ -19,7 +19,7 @@
 }
 
 .slash {
-    stroke: #333;
+    stroke: var(--text);
     stroke-width: 2;
     stroke-dasharray: 20;
     stroke-dashoffset: 20;

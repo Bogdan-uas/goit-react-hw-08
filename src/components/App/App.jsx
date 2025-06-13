@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsModalOpen } from "../../redux/ui/selectors.js";
+import { selectIsModalOpen, selectDarkMode } from "../../redux/ui/selectors.js";
 
 import "./App.css";
 
@@ -13,29 +13,52 @@ import { apiRefreshUser } from "../../redux/auth/operations";
 import { useEffect } from "react";
 import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 function App() {
 const dispatch = useDispatch();
 const isAnyModalOpen = useSelector(selectIsModalOpen);
+const darkMode = useSelector(selectDarkMode);
 
-const handleIsModalOpen = (t, r) => {
-    if (isAnyModalOpen) {
-        return r;
-    } else {
-        return t;
-    }
-}
+const handleIsModalOpen = (t, r) => (isAnyModalOpen ? r : t);
 
 useEffect(() => {
     dispatch(apiRefreshUser());
 }, [dispatch]);
 
+useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+}, [darkMode]);
+
 return (
     <Layout>
-    {
-        handleIsModalOpen(<Toaster position="top-center" reverseOrder={true} />, <Toaster position="top-right" reverseOrder={true} />)
-    }
+{handleIsModalOpen(
+    <Toaster
+        position="top-center"
+        reverseOrder={true}
+        toastOptions={{
+            style: {
+                background: 'var(--modal_bg)',
+                color: 'var(--text)',
+                borderRadius: '10px',
+                boxShadow: 'var(--shadow)',
+            }
+        }}
+    />,
+    <Toaster
+        position="top-right"
+        reverseOrder={true}
+        toastOptions={{
+            style: {
+                background: 'var(--modal_bg)',
+                color: 'var(--text)',
+                borderRadius: '10px',
+                boxShadow: 'var(--shadow)',
+            }
+        }}
+    />
+)}
+
     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

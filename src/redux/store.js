@@ -16,6 +16,7 @@ import { filtersReducer } from "./filters/slice";
 import { authReducer } from "./auth/slice";
 import modalReducer from "./ui/modalSlice";
 import editReducer from './ui/editSlice';
+import themeReducer from "./ui/themeSlice";
 
 const authPersistConfig = {
 key: "auth",
@@ -30,6 +31,7 @@ export const store = configureStore({
         auth: persistReducer(authPersistConfig, authReducer),
         modal: modalReducer,
         edit: editReducer,
+        theme: themeReducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

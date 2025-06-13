@@ -14,7 +14,7 @@
     line-height: 1.5;
     letter-spacing: 0.04em;
     text-align: center;
-    color: #2e2f42;
+    color: var(--text);
     margin-top: 4px;
 }
 
@@ -24,7 +24,7 @@
     position: relative;
     cursor: pointer;
     font-size: 16px;
-    color: #2e2f42;
+    color: var(--text);
     padding-left: 28px;
     user-select: none;
     transition: all 500ms ease-in-out;
@@ -50,7 +50,7 @@
     height: 16px;
     border-radius: 50%;
     border: 2px solid #747bff;
-    background-color: white;
+    background-color: var(--bg);
 }
 
 .radio_label::after {
@@ -63,7 +63,7 @@
     height: 8px;
     border-radius: 50%;
     background-color: #0d6aff;
-    transition: transform 0.3s ease;
+    transition: all 500ms ease-in-out;
 }
 
 input[type="radio"]:checked+.span::before {
@@ -92,7 +92,7 @@ input[type="radio"]:checked+.span::after {
     height: 16px;
     border-radius: 50%;
     border: 2px solid #747bff;
-    background-color: white;
+    background-color: var(--bg);
 }
 
 .span::after {
@@ -102,7 +102,7 @@ input[type="radio"]:checked+.span::after {
     border-radius: 50%;
     background-color: #0d6aff;
     transform: translateY(-50%) scale(0);
-    transition: transform 0.3s ease;
+    transition: all 500ms ease-in-out;
 }
 
 input[type="radio"]:checked+.span::after {

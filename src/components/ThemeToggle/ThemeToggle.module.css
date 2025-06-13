@@ -1,0 +1,58 @@
+.main_container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 32px;
+}
+
+.switch {
+    width: 70px;
+    height: 32px;
+    background-color: #808080;
+    border-radius: 999px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 500ms ease-in-out;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.slider {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: transform 500ms ease-in-out;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.active .slider {
+    transform: translateX(38px);
+}
+
+.icon {
+    z-index: 2;
+    font-size: 14px;
+    color: white;
+    position: relative;
+}
+
+.active {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.info_text {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text);
+}

@@ -64,7 +64,8 @@ export default function UserMenu() {
     }, [isLogoutModalOpen]);
 
     return (
-        <div className={css.userMenu}>
+        <>
+            <div className={css.userMenu}>
             <p className={css.userdata}>Welcome, {user.name}! 🗿</p>
             <button
                 className={`${css.button} ${(isAnyModalOpen || isEditingGlobal) ? css.disabled : ""}`}
@@ -87,6 +88,7 @@ export default function UserMenu() {
                     </div>
                 </div>
             )}
-        </div>
+        </div >
+        </>
     );
 }

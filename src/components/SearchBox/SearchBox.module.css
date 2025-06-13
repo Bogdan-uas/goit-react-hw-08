@@ -9,6 +9,8 @@
 
 .input {
     border: 1px solid #808080;
+    background-color: var(--bg);
+    color: var(--text);
     border-radius: 4px;
     padding: 4px 8px;
     line-height: 1.5;
@@ -18,7 +20,7 @@
 
 .input:hover,
 .input:focus {
-    border: 1px solid black;
+    border: 1px solid var(--hover);
 }
 
 .radio_group {
@@ -35,7 +37,7 @@
     position: relative;
     cursor: pointer;
     font-size: 16px;
-    color: #2e2f42;
+    color: var(--text);
     padding-left: 28px;
     user-select: none;
     transition: all 500ms ease-in-out;
@@ -61,7 +63,7 @@
     height: 16px;
     border-radius: 50%;
     border: 2px solid #747bff;
-    background-color: white;
+    background-color: var(--bg);
     box-sizing: border-box;
     transition: all 500ms ease-in-out;
 }
@@ -106,7 +108,7 @@
     height: 16px;
     border-radius: 50%;
     border: 2px solid #747bff;
-    background-color: white;
+    background-color: var(--bg);
     transition: all 500ms ease-in-out;
 }
 

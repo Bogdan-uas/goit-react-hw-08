@@ -4,6 +4,8 @@
     line-height: 1.11;
     text-align: center;
     margin-top: 64px;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 .emoji {
