@@ -6,6 +6,7 @@ import ContactList from "../../components/ContactList/ContactList.jsx";
 import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import ContactForm from "../../components/ContactForm/ContactForm.jsx";
 import PageTitleSetter from "../../components/PageTitleSetter/PageTitleSetter.jsx";
+import SortControl from "../../components/SortControl/SortControl.jsx";
 import "../../components/App/App.css"
 
 export default function ContactsPage() {
@@ -25,6 +26,7 @@ export default function ContactsPage() {
             {hasContacts && (
                 <SearchBox />
             )}
+            <SortControl />
             <ContactList />
             {isLoading && <p className="loading-text">✋Loading...🤚</p>}
         </div>

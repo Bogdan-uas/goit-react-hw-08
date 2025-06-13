@@ -5,9 +5,9 @@ import toast from "react-hot-toast";
 import * as Yup from "yup";
 import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
 import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
-import { startEditing, stopEditing } from "../../redux/ui/editSlice.js";
-import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId } from "../../redux/ui/selectors.js";
-import { useState } from "react";
+import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice.js";
+import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId, selectModal } from "../../redux/ui/selectors.js";
+import { useState, useEffect } from "react";
 
 const contactSchema = Yup.object().shape({
     name: Yup.string()
@@ -25,10 +25,12 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
     const [isEmptyDeleteModalOpen, setIsEmptyDeleteModalOpen] = useState(false);
+    const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
 
     const isAnyModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
     const globalEditingId = useSelector(selectEditingId);
+    const modal = useSelector(selectModal);
     const isEditing = globalEditingId === contact.id;
     const isDeletionModalOpen = contactIdToDelete === contact.id;
 
@@ -91,6 +93,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         style: { borderRadius: "10px", textAlign: "center" },
                     });
                     dispatch(stopEditing());
+                    dispatch(setUnsavedChanges(false));
                 });
         } catch (err) {
             if (err.inner) {
@@ -103,6 +106,13 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
             }
         }
     };
+
+    useEffect(() => {
+        const hasChanged =
+            editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+    
+        dispatch(setUnsavedChanges(isEditing && hasChanged));
+    }, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
 
     return (
         <div className={style.container}>
@@ -141,9 +151,8 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         <button
                             className={`${style.cancel_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={() => {
-                                setEditedName(contact.name);
-                                setEditedNumber(contact.number);
-                                dispatch(stopEditing());
+                                dispatch(openModal());
+                                setShowExitConfirmModal(true);
                             }}
                         >
                             Cancel
@@ -254,6 +263,37 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         </button>
                     </div>
                 </div>
+            )}
+            {isEditing && isAnyModalOpen && showExitConfirmModal && (
+                <div className={style.confirm_modal}>
+                    <p className={style.info_text}>
+                        You have unsaved changes. Are you sure you want to <b>cancel editing</b>?
+                    </p>
+                <div className={style.deletion_confirmation_button_group}>
+                <button
+                    className={style.save_button}
+                    onClick={() => {
+                        dispatch(closeModal());
+                        setShowExitConfirmModal(false);
+                    }}
+                >
+                    Keep Editing
+                </button>
+                <button
+                    className={style.cancel_button}
+                    onClick={() => {
+                        setEditedName(contact.name);
+                        setEditedNumber(contact.number);
+                        dispatch(stopEditing());
+                        dispatch(setUnsavedChanges(false));
+                        dispatch(closeModal());
+                        setShowExitConfirmModal(false);
+                    }}
+                >
+                    Discard Changes
+                </button>
+        </div>
+    </div>
             )}
         </div>
     );

@@ -1,0 +1,125 @@
+.container {
+    margin-bottom: 32px;
+}
+
+.radio_group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.radio_label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    color: #2e2f42;
+    padding-left: 28px;
+    user-select: none;
+    transition: all 500ms ease-in-out;
+}
+
+.radio_label:hover {
+    color: #0d6aff;
+}
+
+.radio_label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.radio_label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #747bff;
+    background-color: white;
+}
+
+.radio_label::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0d6aff;
+    transition: transform 0.3s ease;
+}
+
+input[type="radio"]:checked+.span::before {
+    border-color: #0d6aff;
+}
+
+input[type="radio"]:checked+.span::after {
+    transform: translateY(-50%) scale(1);
+}
+
+.span {
+    position: relative;
+}
+
+.span::before,
+.span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.span::before {
+    left: -28px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #747bff;
+    background-color: white;
+}
+
+.span::after {
+    left: -24px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0d6aff;
+    transform: translateY(-50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+input[type="radio"]:checked+.span::after {
+    transform: translateY(-50%) scale(1);
+}
+
+.sort_button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #747bff;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    transition: all 500ms ease-in-out;
+}
+
+.sort_button:hover {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

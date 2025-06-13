@@ -5,11 +5,15 @@ name: "edit",
 initialState: {
     isEditingGlobal: false,
     editingId: null,
+    hasUnsavedChanges: false,
 },
 reducers: {
     startEditing: (state, action) => {
         state.isEditingGlobal = true;
         state.editingId = action.payload;
+    },
+    setUnsavedChanges: (state, action) => {
+        state.hasUnsavedChanges = action.payload;
     },
     stopEditing: (state) => {
         state.isEditingGlobal = false;
@@ -18,5 +22,5 @@ reducers: {
 },
 });
 
-export const { startEditing, stopEditing } = editSlice.actions;
+export const { startEditing, stopEditing, setUnsavedChanges } = editSlice.actions;
 export default editSlice.reducer;

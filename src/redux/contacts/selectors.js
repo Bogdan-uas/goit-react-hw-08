@@ -1,21 +1,29 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { selectFilter, selectSearchBy } from "../filters/selectors";
+import { selectFilter, selectSearchBy, selectSortOrder } from "../filters/selectors";
 
 export const selectContacts = (state) => state.phonebook.items;
 export const selectIsLoading = (state) => state.phonebook.loading;
 export const selectError = (state) => state.phonebook.error;
 
 export const selectFilteredContacts = createSelector(
-[selectContacts, selectFilter, selectSearchBy],
-(contacts, filter, searchBy) => {
+[selectContacts, selectFilter, selectSearchBy, selectSortOrder],
+(contacts, filter, searchBy, sortOrder) => {
     const lowerCaseFilter = filter.toLowerCase();
 
-    return contacts.filter((contact) => {
-    if (searchBy === "name") {
-        return contact.name.toLowerCase().includes(lowerCaseFilter);
-    } else {
-        return contact.number.toLowerCase().includes(lowerCaseFilter);
-    }
+    let filteredContacts = contacts.filter((contact) => {
+        return contact[searchBy].toLowerCase().includes(lowerCaseFilter);
     });
+
+    if (sortOrder === "asc") {
+    filteredContacts = [...filteredContacts].sort((a, b) =>
+        a.name.localeCompare(b.name)
+    );
+    } else if (sortOrder === "desc") {
+    filteredContacts = [...filteredContacts].sort((a, b) =>
+        b.name.localeCompare(a.name)
+    );
+    }
+
+    return filteredContacts;
 }
 );
