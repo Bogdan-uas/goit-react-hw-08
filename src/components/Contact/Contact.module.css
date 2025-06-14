@@ -108,7 +108,7 @@
 
 .edit_input:hover,
 .edit_input:focus {
-    border: 1px solid var(--bg);
+    border: 1px solid var(--hover);
 }
 
 .deletion_confirmation_button_group {
