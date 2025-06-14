@@ -37,7 +37,7 @@ body {
   --shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 500ms ease-in-out;
 }
 
 body.dark {
