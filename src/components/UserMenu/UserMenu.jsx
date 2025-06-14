@@ -48,24 +48,24 @@ export default function UserMenu() {
     };
 
     useEffect(() => {
-        const handleEscape = (e) => {
+        const handleKeyDown = (e) => {
+            if (!isLogoutModalOpen) return;
+
             if (e.key === "Escape") {
+                e.preventDefault();
                 cancelLogout();
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                confirmLogout();
             }
         };
 
-        if (isLogoutModalOpen) {
-            window.addEventListener("keydown", handleEscape);
-        }
-
-        return () => {
-            window.removeEventListener("keydown", handleEscape);
-        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isLogoutModalOpen]);
 
     return (
-        <>
-            <div className={css.userMenu}>
+        <div className={css.userMenu}>
             <p className={css.userdata}>Welcome, {user.name}! 🗿</p>
             <button
                 className={`${css.button} ${(isAnyModalOpen || isEditingGlobal) ? css.disabled : ""}`}
@@ -77,7 +77,9 @@ export default function UserMenu() {
 
             {isLogoutModalOpen && (
                 <div className={css.logout_modal}>
-                    <p className={css.logout_text}>Are you sure you want to <b>log out?</b></p>
+                    <p className={css.logout_text}>
+                        Are you sure you want to <b>log out?</b>
+                    </p>
                     <div className={css.logout_buttons}>
                         <button className={css.cancel_button} onClick={cancelLogout}>
                             Cancel
@@ -88,7 +90,6 @@ export default function UserMenu() {
                     </div>
                 </div>
             )}
-        </div >
-        </>
+        </div>
     );
 }

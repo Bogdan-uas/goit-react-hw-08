@@ -105,80 +105,104 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
         }
     };
 
-useEffect(() => {
-    if (isEditing && nameInputRef.current) {
-        nameInputRef.current.focus();
-    }
-}, [isEditing]);
-
-useEffect(() => {
-    const handleKeyDown = (e) => {
-    if (isEditing && e.key === "Escape") {
-        e.preventDefault();
-        if (hasChanges()) {
-            dispatch(openModal());
-            setShowExitConfirmModal(true);
-        } else {
-            dispatch(stopEditing());
+    useEffect(() => {
+        if (isEditing && nameInputRef.current) {
+            nameInputRef.current.focus();
         }
-    }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-}, [isEditing, editedName, editedNumber]);
+    }, [isEditing]);
 
-useEffect(() => {
-    const handleKeyDown = (e) => {
-        if (isDeletionModalOpen && e.key === "Escape") {
-            e.preventDefault();
-            dispatch(closeModal());
-            setContactIdToDelete(null);
-        }
-    };
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (isEditing && e.key === "Escape") {
+                e.preventDefault();
+                if (hasChanges()) {
+                    dispatch(openModal());
+                    setShowExitConfirmModal(true);
+                } else {
+                    dispatch(stopEditing());
+                }
+            }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isEditing, editedName, editedNumber]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-}, [isDeletionModalOpen, dispatch, setContactIdToDelete]);
-    
-useEffect(() => {
-    const handleKeyDown = (e) => {
-        if (isEditing && isAnyModalOpen && showExitConfirmModal && e.key === "Escape") {
-            e.preventDefault();
-            dispatch(closeModal());
-            setShowExitConfirmModal(false);
-        }
-    };
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (isDeletionModalOpen) {
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                    cancelDelete();
+                } else if (e.key === "Enter") {
+                    e.preventDefault();
+                    confirmDelete();
+                }
+            }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isDeletionModalOpen]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-}, [isEditing, isAnyModalOpen, showExitConfirmModal, dispatch]);
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (isEmptyDeleteModalOpen) {
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                    setEditedName(contact.name);
+                    setEditedNumber(contact.number);
+                    dispatch(closeModal());
+                    setIsEmptyDeleteModalOpen(false);
+                } else if (e.key === "Enter") {
+                    e.preventDefault();
+                    dispatch(deleteContact(contact.id));
+                    toast.success("Contact deleted! (fields were empty)", {
+                        duration: 4000,
+                        style: { borderRadius: "10px", textAlign: "center" },
+                    });
+                    dispatch(closeModal());
+                    setIsEmptyDeleteModalOpen(false);
+                    dispatch(stopEditing());
+                }
+            }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isEmptyDeleteModalOpen]);
 
-useEffect(() => {
-    const handleKeyDown = (e) => {
-        if (isEmptyDeleteModalOpen && e.key === "Escape") {
-            e.preventDefault();
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (isEditing && isAnyModalOpen && showExitConfirmModal) {
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                    dispatch(closeModal());
+                    setShowExitConfirmModal(false);
+                } else if (e.key === "Enter") {
+                    e.preventDefault();
+                    setEditedName(contact.name);
+                    setEditedNumber(contact.number);
+                    dispatch(stopEditing());
+                    dispatch(setUnsavedChanges(false));
+                    dispatch(closeModal());
+                    setShowExitConfirmModal(false);
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isEditing, isAnyModalOpen, showExitConfirmModal]);
+
+    useEffect(() => {
+        const hasChanged = editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+        dispatch(setUnsavedChanges(isEditing && hasChanged));
+    }, [editedName, editedNumber, isEditing]);
+
+    useEffect(() => {
+        if (!isEditing) {
             setEditedName(contact.name);
             setEditedNumber(contact.number);
-            dispatch(closeModal());
-            setIsEmptyDeleteModalOpen(false);
         }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-}, [isEmptyDeleteModalOpen, dispatch]);
-
-useEffect(() => {
-    const hasChanged = editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
-    dispatch(setUnsavedChanges(isEditing && hasChanged));
-}, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
-
-useEffect(() => {
-    if (!isEditing) {
-        setEditedName(contact.name);
-        setEditedNumber(contact.number);
-    }
-}, [isEditing, contact.name, contact.number]);
+    }, [isEditing, contact.name, contact.number]);
 
     return (
         <div className={style.container}>
@@ -186,15 +210,13 @@ useEffect(() => {
                 <div className={style.info_container}>
                     <BsPersonFill className={style.svg} size={18} />
                     {isEditing ? (
-                            <input
-                                id={`name-edit-${contact.id}`}
-                                ref={nameInputRef}
-                                className={style.edit_input}
-                                value={editedName}
-                                onChange={(e) => setEditedName(e.target.value)}
-                                placeholder="(Edited Name)"
-                                aria-describedby={`edit-name-error-${contact.id}`}
-                            />
+                        <input
+                            ref={nameInputRef}
+                            className={style.edit_input}
+                            value={editedName}
+                            onChange={(e) => setEditedName(e.target.value)}
+                            placeholder="(Edited Name)"
+                        />
                     ) : (
                         <p className={style.info_text}>{contact.name}</p>
                     )}
@@ -202,13 +224,12 @@ useEffect(() => {
                 <div className={style.info_container}>
                     <BsTelephoneFill className={style.svg} size={16} />
                     {isEditing ? (
-                            <input
-                                id={`number-edit-${contact.id}`}
-                                className={style.edit_input}
-                                value={editedNumber}
-                                onChange={(e) => setEditedNumber(e.target.value)}
-                                placeholder="(Edited Number)"
-                            />
+                        <input
+                            className={style.edit_input}
+                            value={editedNumber}
+                            onChange={(e) => setEditedNumber(e.target.value)}
+                            placeholder="(Edited Number)"
+                        />
                     ) : (
                         <p className={style.info_text}>{contact.number}</p>
                     )}
@@ -221,23 +242,15 @@ useEffect(() => {
                         <button
                             className={`${style.cancel_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={() => {
-                                const nameEmpty = editedName.trim() === "";
-                                const numberEmpty = editedNumber.trim() === "";
-                            
-                                if (nameEmpty && numberEmpty) {
+                                if (editedName.trim() === "" && editedNumber.trim() === "") {
                                     setEditedName(contact.name);
                                     setEditedNumber(contact.number);
                                     dispatch(stopEditing());
                                     dispatch(setUnsavedChanges(false));
-                                    return;
-                                }
-                            
-                                if (hasChanges()) {
+                                } else if (hasChanges()) {
                                     dispatch(openModal());
                                     setShowExitConfirmModal(true);
                                 } else {
-                                    setEditedName(contact.name);
-                                    setEditedNumber(contact.number);
                                     dispatch(closeModal());
                                     dispatch(stopEditing());
                                 }
@@ -304,8 +317,7 @@ useEffect(() => {
             {isDeletionModalOpen && (
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>
-                        Are you sure you want to delete{" "}
-                        <b className={style.info_text}>{contact.name}</b>?
+                        Are you sure you want to delete <b>{contact.name}</b>?
                     </p>
                     <div className={style.deletion_confirmation_button_group}>
                         <button className={style.save_button} onClick={cancelDelete}>
@@ -317,7 +329,7 @@ useEffect(() => {
                     </div>
                 </div>
             )}
-            
+
             {isEmptyDeleteModalOpen && (
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>
@@ -359,31 +371,31 @@ useEffect(() => {
                     <p className={style.info_text}>
                         You have unsaved changes. Are you sure you want to <b>cancel editing</b>?
                     </p>
-                <div className={style.deletion_confirmation_button_group}>
-                <button
-                    className={style.save_button}
-                    onClick={() => {
-                        dispatch(closeModal());
-                        setShowExitConfirmModal(false);
-                    }}
-                >
-                    Keep Editing
-                </button>
-                <button
-                    className={style.cancel_button}
-                    onClick={() => {
-                        setEditedName(contact.name);
-                        setEditedNumber(contact.number);
-                        dispatch(stopEditing());
-                        dispatch(setUnsavedChanges(false));
-                        dispatch(closeModal());
-                        setShowExitConfirmModal(false);
-                    }}
-                >
-                    Discard Changes
-                </button>
-        </div>
-    </div>
+                    <div className={style.deletion_confirmation_button_group}>
+                        <button
+                            className={style.save_button}
+                            onClick={() => {
+                                dispatch(closeModal());
+                                setShowExitConfirmModal(false);
+                            }}
+                        >
+                            Keep Editing
+                        </button>
+                        <button
+                            className={style.cancel_button}
+                            onClick={() => {
+                                setEditedName(contact.name);
+                                setEditedNumber(contact.number);
+                                dispatch(stopEditing());
+                                dispatch(setUnsavedChanges(false));
+                                dispatch(closeModal());
+                                setShowExitConfirmModal(false);
+                            }}
+                        >
+                            Discard Changes
+                        </button>
+                    </div>
+                </div>
             )}
         </div>
     );
