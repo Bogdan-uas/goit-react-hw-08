@@ -95,7 +95,7 @@
 }
 
 .edit_input {
-    border: 1px solid #808080;
+    border: 1px solid var(--hover);
     background-color: var(--bg);
     color: var(--text);
     border-radius: 4px;
