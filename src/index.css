@@ -41,8 +41,8 @@ body {
 }
 
 body.dark {
-  --bg: #121212;
-  --modal_bg: #121212;
+  --bg: #181818;
+  --modal_bg: #181818;
   --text: #f1f1f1;
   --hover: #8a8a8a;
   --shadow: 0 0 10px rgba(255, 255, 255, 0.2);
