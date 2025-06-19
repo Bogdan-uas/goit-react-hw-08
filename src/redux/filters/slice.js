@@ -5,7 +5,7 @@ name: "filters",
 initialState: {
     filter: "",
     searchBy: "name",
-    sortOrder: 'asc',
+    sortOrder: "default",
 },
 reducers: {
     setFilter: (state, action) => {

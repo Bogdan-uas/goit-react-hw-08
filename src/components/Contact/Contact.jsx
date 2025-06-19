@@ -37,6 +37,11 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
 
     const hasChanges = () => editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
 
+    const validateNumberInput = (value) => {
+        const regex = /^[0-9+\-\s]*$/;
+        return regex.test(value);
+    };
+
     const confirmDelete = () => {
         dispatch(deleteContact(contact.id));
         toast.success("Successfully deleted a contact!", {
@@ -227,7 +232,20 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         <input
                             className={style.edit_input}
                             value={editedNumber}
-                            onChange={(e) => setEditedNumber(e.target.value)}
+                            onChange={(e) => {
+                            const val = e.target.value;
+                            if (validateNumberInput(val)) {
+                                setEditedNumber(val);
+                            } else {
+                                toast.error("Invalid character in phone number! Only digits, +, -, and spaces allowed.", {
+                                    duration: 6000,
+                                    style: {
+                                        borderRadius: "10px",
+                                        textAlign: "center"
+                                    },
+                                });
+                            }
+                            }}
                             placeholder="(Edited Number)"
                         />
                     ) : (

@@ -15,13 +15,13 @@ export const selectFilteredContacts = createSelector(
     });
 
     if (sortOrder === "asc") {
-    filteredContacts = [...filteredContacts].sort((a, b) =>
-        a.name.localeCompare(b.name)
-    );
+        filteredContacts = [...filteredContacts].sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
     } else if (sortOrder === "desc") {
-    filteredContacts = [...filteredContacts].sort((a, b) =>
-        b.name.localeCompare(a.name)
-    );
+        filteredContacts = [...filteredContacts].sort((a, b) =>
+            b.name.localeCompare(a.name)
+        );
     }
 
     return filteredContacts;

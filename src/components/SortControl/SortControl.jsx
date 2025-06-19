@@ -72,6 +72,19 @@ export default function SortControl() {
             {showOptions && (
                 <div className={style.radio_group}>
                     <div
+                        className={`${style.radio_label} ${style.no_sorting_radio} ${isLocked ? style.disabled : ""}`}
+                        onClick={() => handleSortChange("default")}
+                    >
+                        <input
+                            type="radio"
+                            value="default"
+                            checked={sortOrder === "default"}
+                            readOnly
+                            className={isLocked ? style.disabled : ""}
+                        />
+                        <span className={`${style.span} ${isLocked ? style.disabled : ""}`}>No sorting</span>
+                    </div>
+                    <div
                         className={`${style.radio_label} ${isLocked ? style.disabled : ""}`}
                         onClick={() => handleSortChange("asc")}
                     >
