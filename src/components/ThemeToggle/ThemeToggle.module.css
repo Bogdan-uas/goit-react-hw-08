@@ -75,25 +75,25 @@
     opacity: 0;
 }
 
-.input[type=checkbox]:checked+.display label {
+.input[type=checkbox]:checked+label {
     background: #1F1F21;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5) inset;
 }
 
-.input[type=checkbox]:checked+.display label .circle {
+.input[type=checkbox]:checked+label .circle {
     left: 100%;
     transform: translate(-110%, -50%);
     background: #2C2C2F;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5),
-        -2px -2px 7px rgba(0, 0, 0, 0.5) inset;
+    -2px -2px 7px rgba(0, 0, 0, 0.5) inset;
 }
 
-.input[type=checkbox]:checked+.display label .circle .sun {
+.input[type=checkbox]:checked+label .circle .sun {
     margin-top: 150%;
     opacity: 0;
 }
 
-.input[type=checkbox]:checked+.display label .circle .moon {
+.input[type=checkbox]:checked+label .circle .moon {
     margin-top: 0%;
     opacity: 1;
 }
