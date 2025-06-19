@@ -15,10 +15,6 @@
     transition: all 500ms ease-in-out;
 }
 
-.userdata:hover {
-    color: var(--hover);
-}
-
 .button {
     display: flex;
     font-weight: 500;
