@@ -1,58 +1,115 @@
 .main_container {
     display: flex;
-    gap: 16px;
     align-items: center;
+    gap: 12px;
     margin-left: auto;
     margin-right: 32px;
 }
 
-.switch {
-    width: 70px;
-    height: 32px;
-    background-color: #808080;
-    border-radius: 999px;
-    border: none;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 500ms ease-in-out;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-}
-
-.slider {
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    background-color: #fff;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    transition: transform 500ms ease-in-out;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-
-.active .slider {
-    transform: translateX(38px);
-}
-
-.icon {
-    z-index: 2;
-    font-size: 14px;
-    color: white;
-    position: relative;
-}
-
-.active {
-    background-color: #0d6aff;
-    color: #fff;
+.disabled {
+    opacity: 0.5;
 }
 
 .info_text {
     line-height: 1.5;
     letter-spacing: 0.04em;
     color: var(--text);
+}
+
+.input {
+    display: none;
+}
+
+.display {
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    width: 76px;
+    height: 38px;
+    border-radius: 999px;
+    background: #ebebeb;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05) inset;
+    position: relative;
+}
+
+.disabled .label {
+    cursor: not-allowed !important;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05),
+        -2px -2px 7px rgba(0, 0, 0, 0.05) inset;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(10%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sun,
+.moon {
+    width: 16px;
+    position: absolute;
+}
+
+.sun {
+    color: #FFD600;
+    margin-top: 0%;
+    opacity: 1;
+}
+
+.moon {
+    margin-top: -150%;
+    color: white;
+    opacity: 0;
+}
+
+.input[type=checkbox]:checked+.display label {
+    background: #1F1F21;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5) inset;
+}
+
+.input[type=checkbox]:checked+.display label .circle {
+    left: 100%;
+    transform: translate(-110%, -50%);
+    background: #2C2C2F;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5),
+        -2px -2px 7px rgba(0, 0, 0, 0.5) inset;
+}
+
+.input[type=checkbox]:checked+.display label .circle .sun {
+    margin-top: 150%;
+    opacity: 0;
+}
+
+.input[type=checkbox]:checked+.display label .circle .moon {
+    margin-top: 0%;
+    opacity: 1;
+}
+
+.label:hover {
+    cursor: pointer;
+}
+
+.label:hover .circle {
+    width: 38px;
+}
+
+.label:hover .sun {
+    color: #dab600;
+}
+
+.label:hover .moon {
+    color: #d9d9d9;
 }

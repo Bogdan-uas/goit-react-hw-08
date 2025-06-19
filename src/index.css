@@ -15,7 +15,19 @@
   flex-direction: column;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
+}
+
 *:disabled {
+  cursor: not-allowed;
+}
+
+.disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
