@@ -6,8 +6,9 @@ import {
     deleteContact,
     updateContact,
     deleteAllContacts,
-    Contact,
 } from "./operations";
+
+import { Contact } from './types';
 
 interface ContactsState {
     items: Contact[];
