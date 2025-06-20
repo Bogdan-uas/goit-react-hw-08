@@ -3,6 +3,7 @@ import { BsPersonFill, BsTelephoneFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
 import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
 import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice.js";
@@ -60,13 +61,13 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
     const onSave = async () => {
         const trimmedName = editedName.trim();
         const trimmedNumber = editedNumber.trim();
-
+    
         if (trimmedName === "" && trimmedNumber === "") {
             dispatch(openModal());
             setIsEmptyDeleteModalOpen(true);
             return;
         }
-
+    
         if (trimmedName === contact.name && trimmedNumber === contact.number) {
             toast("Nothing to change!", {
                 icon: "❗",
@@ -75,29 +76,35 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
             });
             return;
         }
-
+    
         try {
             await contactSchema.validate(
                 { name: trimmedName, number: trimmedNumber },
                 { abortEarly: false }
             );
-
+    
+            let formattedNumber = trimmedNumber;
+            const parsedPhone = parsePhoneNumberFromString(trimmedNumber, 'US');
+            if (parsedPhone?.isValid()) {
+                formattedNumber = parsedPhone.format('E.164');
+            }
+    
             dispatch(updateContact({
                 contactId: contact.id,
                 updates: {
                     name: trimmedName,
-                    number: trimmedNumber,
+                    number: formattedNumber,
                 },
             }))
-                .unwrap()
-                .then(() => {
-                    toast.success("Contact successfully updated!", {
-                        duration: 4000,
-                        style: { borderRadius: "10px", textAlign: "center" },
-                    });
-                    dispatch(stopEditing());
-                    dispatch(setUnsavedChanges(false));
+            .unwrap()
+            .then(() => {
+                toast.success("Contact successfully updated!", {
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
                 });
+                dispatch(stopEditing());
+                dispatch(setUnsavedChanges(false));
+            });
         } catch (err) {
             if (err.inner) {
                 err.inner.forEach((validationError) => {
@@ -118,71 +125,37 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (isEditing && e.key === "Escape") {
-                e.preventDefault();
-                if (hasChanges()) {
-                    dispatch(openModal());
-                    setShowExitConfirmModal(true);
-                } else {
-                    dispatch(stopEditing());
-                }
-            }
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isEditing, editedName, editedNumber]);
-
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (isDeletionModalOpen) {
-                if (e.key === "Escape") {
-                    e.preventDefault();
+            if (e.key === "Escape") {
+                if (isDeletionModalOpen) {
                     cancelDelete();
-                } else if (e.key === "Enter") {
-                    e.preventDefault();
-                    confirmDelete();
-                }
-            }
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isDeletionModalOpen]);
-
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (isEmptyDeleteModalOpen) {
-                if (e.key === "Escape") {
-                    e.preventDefault();
+                } else if (isEmptyDeleteModalOpen) {
                     setEditedName(contact.name);
                     setEditedNumber(contact.number);
                     dispatch(closeModal());
                     setIsEmptyDeleteModalOpen(false);
-                } else if (e.key === "Enter") {
-                    e.preventDefault();
+                } else if (isEditing && showExitConfirmModal) {
+                    dispatch(closeModal());
+                    setShowExitConfirmModal(false);
+                } else if (isEditing) {
+                    if (hasChanges()) {
+                        dispatch(openModal());
+                        setShowExitConfirmModal(true);
+                    } else {
+                        dispatch(stopEditing());
+                    }
+                }
+            }
+    
+            if (e.key === "Enter") {
+                if (isDeletionModalOpen) {
+                    confirmDelete();
+                } else if (isEmptyDeleteModalOpen) {
                     dispatch(deleteContact(contact.id));
-                    toast.success("Contact deleted! (fields were empty)", {
-                        duration: 4000,
-                        style: { borderRadius: "10px", textAlign: "center" },
-                    });
+                    toast.success("Contact deleted! (fields were empty)");
                     dispatch(closeModal());
                     setIsEmptyDeleteModalOpen(false);
                     dispatch(stopEditing());
-                }
-            }
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isEmptyDeleteModalOpen]);
-
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (isEditing && isAnyModalOpen && showExitConfirmModal) {
-                if (e.key === "Escape") {
-                    e.preventDefault();
-                    dispatch(closeModal());
-                    setShowExitConfirmModal(false);
-                } else if (e.key === "Enter") {
-                    e.preventDefault();
+                } else if (isEditing && showExitConfirmModal) {
                     setEditedName(contact.name);
                     setEditedNumber(contact.number);
                     dispatch(stopEditing());
@@ -192,10 +165,10 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                 }
             }
         };
-
+    
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isEditing, isAnyModalOpen, showExitConfirmModal]);
+    }, [isEditing, editedName, editedNumber, isDeletionModalOpen, isEmptyDeleteModalOpen, showExitConfirmModal]);
 
     useEffect(() => {
         const hasChanged = editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
@@ -357,10 +330,18 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                         <button
                             className={style.save_button}
                             onClick={() => {
-                                setEditedName(contact.name);
-                                setEditedNumber(contact.number);
-                                dispatch(closeModal());
-                                setIsEmptyDeleteModalOpen(false);
+                                if (editedName.trim() === "" && editedNumber.trim() === "") {
+                                    setEditedName(contact.name);
+                                    setEditedNumber(contact.number);
+                                    dispatch(stopEditing());
+                                    dispatch(setUnsavedChanges(false));
+                                } else if (hasChanges()) {
+                                    dispatch(openModal());
+                                    setShowExitConfirmModal(true);
+                                } else {
+                                    dispatch(closeModal());
+                                    dispatch(stopEditing());
+                                }
                             }}
                         >
                             Cancel
