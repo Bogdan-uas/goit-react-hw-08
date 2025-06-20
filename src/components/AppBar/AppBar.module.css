@@ -10,5 +10,5 @@
     padding: 8px 16px;
     background-color: var(--bg);
     border-bottom: solid 1px var(--text);
-    z-index: 1000; 
+    z-index: 998; 
 }
