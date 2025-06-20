@@ -65,6 +65,7 @@
 
 .sun {
     color: #FFD600;
+    fill: #FFD600;
     margin-top: 0%;
     opacity: 1;
 }
@@ -108,6 +109,7 @@
 
 .label:hover .sun {
     color: #dab600;
+    fill: #dab600;
 }
 
 .label:hover .moon {
