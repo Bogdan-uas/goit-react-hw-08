@@ -8,12 +8,14 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-return (
-    <div className={css.container}>
-    <Suspense fallback={<div>Loading...</div>}>
-        <AppBar />
-    </Suspense>
-    <main className={css.main}>{children}</main>
-    </div>
-);
+    return (
+        <div className={css.container}>
+            <Suspense fallback={<div>Loading...</div>}>
+                <AppBar />
+            </Suspense>
+            <main className={css.main}>
+                {children}
+            </main>
+        </div>
+    );
 }
