@@ -41,7 +41,7 @@ useEffect(() => {
 }, [darkMode]);
 
 return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>🤚Loading...🤚</div>}>
     <Layout>
         {handleIsModalOpen(
         <Toaster

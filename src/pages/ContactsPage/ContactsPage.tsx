@@ -24,7 +24,7 @@ export default function ContactsPage() {
 
     return (
         <div className={css.main_container}>
-            <Suspense fallback={<p className={css.loading_text}>Loading page...</p>}>
+            <Suspense fallback={<p className={css.loading_text}>🤚Loading page...🤚</p>}>
                 <PageTitleSetter title="Contacts Page" />
                 <ContactForm />
                 {hasContacts && <SearchBox />}
