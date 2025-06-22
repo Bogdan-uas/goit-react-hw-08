@@ -6,4 +6,4 @@ edit a specific one.
 #
 
 Up from Commit `413ec6d`, June 20th 2025, this project consists of only pure
-TypeScript!
+TypeScript(and CSS and JSON)!
