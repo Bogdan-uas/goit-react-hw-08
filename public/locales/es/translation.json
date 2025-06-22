@@ -206,5 +206,11 @@
       "editing": "¡No puedes cerrar sesión mientras editas un contacto!",
       "modalOpen": "¡Cierra el modal actual antes de cerrar sesión!"
     }
+  },
+  "navigation": {
+    "errors": {
+      "closeModalFirst": "Por favor, cierra primero la ventana modal.",
+      "cannotNavigateWhileEditing": "Termina de editar antes de navegar."
+    }
   }
 }

@@ -206,5 +206,11 @@
       "editing": "Du kannst dich während des Bearbeitens nicht abmelden!",
       "modalOpen": "Schließe das aktuelle Modal, bevor du dich abmeldest!"
     }
+  },
+  "navigation": {
+    "errors": {
+      "closeModalFirst": "Bitte schließen Sie zuerst das geöffnete Modal.",
+      "cannotNavigateWhileEditing": "Beenden Sie die Bearbeitung, bevor Sie navigieren."
+    }
   }
 }

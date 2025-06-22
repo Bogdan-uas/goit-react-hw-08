@@ -206,5 +206,11 @@
       "editing": "Non puoi disconnetterti mentre stai modificando un contatto!",
       "modalOpen": "Chiudi il modal corrente prima di disconnetterti!"
     }
+  },
+  "navigation": {
+    "errors": {
+      "closeModalFirst": "Chiudi prima la finestra modale aperta.",
+      "cannotNavigateWhileEditing": "Completa la modifica prima di navigare."
+    }
   }
 }

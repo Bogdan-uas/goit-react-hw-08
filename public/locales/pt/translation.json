@@ -206,5 +206,11 @@
       "editing": "Você não pode sair enquanto edita um contato!",
       "modalOpen": "Feche o modal atual antes de sair!"
     }
+  },
+  "navigation": {
+    "errors": {
+      "closeModalFirst": "Feche primeiro a janela modal aberta.",
+      "cannotNavigateWhileEditing": "Conclua a edição antes de navegar."
+    }
   }
 }

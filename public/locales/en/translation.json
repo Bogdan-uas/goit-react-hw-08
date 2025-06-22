@@ -206,5 +206,11 @@
         "editing": "You can't logout while editing a contact!",
         "modalOpen": "Close the current modal before logging out!"
       }
+    },
+    "navigation": {
+      "errors": {
+        "closeModalFirst": "Please close the open modal first.",
+        "cannotNavigateWhileEditing": "Finish editing before navigating."
+      }
     }
 }

@@ -206,5 +206,11 @@
       "editing": "Vous ne pouvez pas vous déconnecter pendant l'édition!",
       "modalOpen": "Fermez la fenêtre modale actuelle avant de vous déconnecter!"
     }
+  },
+  "navigation": {
+    "errors": {
+      "closeModalFirst": "Veuillez d'abord fermer la fenêtre modale.",
+      "cannotNavigateWhileEditing": "Terminez l'édition avant de naviguer."
+    }
   }
 }
