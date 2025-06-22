@@ -1,0 +1,210 @@
+{
+  "home": {
+    "title": "Página Inicial",
+    "description": "Um diretório telefônico simples onde você pode adicionar, excluir, buscar ou editar um contato."
+  },
+  "contactsPage": {
+    "title": "Contatos",
+    "loadingPage": "🤚Carregando página...🤚",
+    "loading": "✋Carregando...🤚",
+    "validation": {
+      "nameTooShort": "Muito curto!",
+      "nameTooLong": "Muito longo!",
+      "nameRequired": "Nome é obrigatório",
+      "invalidNumber": "Formato de número inválido",
+      "numberTooShort": "Deve continuar sendo um número válido!",
+      "numberRequired": "Número é obrigatório"
+    },
+    "form": {
+      "nameLabel": "Nome",
+      "numberLabel": "Número",
+      "addButton": "Adicionar contato",
+      "deleteAllButton": "Excluir todos os contatos",
+      "validation": {
+        "nameTooShort": "Muito curto!",
+        "nameTooLong": "Muito longo!",
+        "required": "Obrigatório",
+        "invalidNumber": "Deve ser um número válido!"
+      },
+      "toast": {
+        "closeModalFirst": "Feche o modal primeiro.",
+        "duplicateExact": "Você não pode criar um contato com dados idênticos",
+        "duplicateNumberWarning": "Aviso: já existe um contato com este número! (Contato ainda assim adicionado!)",
+        "successAdd": "Contato adicionado com sucesso!",
+        "failedAdd": "Falha ao adicionar contato.",
+        "closeModalBeforeAdding": "Feche o modal atual antes de adicionar outro contato!",
+        "cantAddWhileEditing": "Você não pode adicionar outro contato enquanto edita!",
+        "closeModalBeforeDeleting": "Feche o modal atual antes de excluir todos os contatos!",
+        "cantDeleteWhileEditing": "Você não pode excluir todos os contatos enquanto edita!",
+        "allDeleted": "Todos os contatos foram excluídos!",
+        "failedDeleteAll": "Falha ao excluir todos os contatos."
+      },
+      "deleteAllModal": {
+        "confirmText1": "Você tem certeza de que deseja excluir",
+        "all": "TODOS OS",
+        "confirmText2": "contatos?",
+        "warningText": "Você não poderá restaurá-los!",
+        "cancelButton": "Cancelar",
+        "confirmButton": "Confirmar"
+      },
+      "list": {
+        "loading": "Carregando..."
+      }
+    },
+    "searchBox": {
+      "searchByName": "Encontrar contato por nome",
+      "searchByNumber": "Encontrar contato por número",
+      "placeholderByName": "Pesquisar por nome",
+      "placeholderByNumber": "Pesquisar por número",
+      "toastModalSearch": "Feche o modal atual antes de pesquisar!",
+      "toastEditingSearch": "Você não pode pesquisar outros contatos durante a edição!",
+      "toastSuggestName": "Parece que você quis pesquisar por nome.",
+      "toastSuggestNumber": "Parece que você quis pesquisar por número.",
+      "toastModalSwitch": "Feche o modal atual antes de mudar o modo de pesquisa!",
+      "toastEditingSwitch": "Você não pode mudar o método de pesquisa durante a edição!"
+    },
+    "sortControl": {
+      "promptShow": "Você quer ordenar os contatos?",
+      "promptHide": "Se não quiser ordenar, clique novamente!",
+      "infoSave": "(Seu método de ordenação atual será salvo!)",
+      "optionNone": "Sem ordenação",
+      "optionAsc": "A-Z",
+      "optionDesc": "Z-A",
+      "toastModalToggle": "Feche o modal atual antes de pressionar este botão!",
+      "toastEditingToggle": "Você não pode pressionar este botão enquanto edita um contato!",
+      "toastModalChange": "Feche o modal atual antes de escolher um método de ordenação!",
+      "toastEditingChange": "Você não pode ordenar contatos enquanto edita um!"
+    }
+  },
+  "loginPage": {
+    "title": "Entrar",
+    "labels": {
+      "email": "E-mail",
+      "password": "Senha"
+    },
+    "validation": {
+      "tooShort": "Muito curto!",
+      "tooLong": "Muito longo!",
+      "invalidEmail": "Formato de e-mail inválido",
+      "emailRequired": "O e-mail é obrigatório!",
+      "passwordRequired": "A senha é obrigatória!"
+    },
+    "buttons": {
+      "submit": "Entrar"
+    },
+    "text": {
+      "noAccount": "Ainda não tem conta?🤨",
+      "registerLink": "Registrar"
+    },
+    "toasts": {
+      "loginSuccess": "Login efetuado com sucesso!",
+      "loginFail": "Ninguém registrado com esses dados!",
+      "escapeTip": "Dica: Todos os modais podem ser fechados com a tecla Escape!"
+    },
+    "form": {
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha"
+    }
+  },
+  "registerPage": {
+    "title": "Registrar",
+    "labels": {
+      "name": "Nome",
+      "email": "E-mail",
+      "password": "Senha"
+    },
+    "validation": {
+      "tooShort": "Muito curto!",
+      "tooLong": "Muito longo!",
+      "nameRequired": "Nome de usuário obrigatório!",
+      "emailRequired": "E-mail obrigatório!",
+      "invalidEmail": "Formato de e-mail inválido",
+      "passwordRequired": "Senha obrigatória!"
+    },
+    "buttons": {
+      "submit": "Registrar"
+    },
+    "text": {
+      "haveAccount": "Já tem uma conta?😱",
+      "loginLink": "Entrar"
+    },
+    "toasts": {
+      "success": "Registrado com sucesso!",
+      "escapeTip": "Dica: Todos os modais podem ser fechados pressionando Escape!",
+      "error": "Alguns dados já foram usados por outro usuário!"
+    },
+    "form": {
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha"
+    }
+  },
+  "app": {
+    "loading": "🤚Carregando...🤚",
+    "languageSelector": {
+      "prompt": "Escolha um idioma?",
+      "selectLanguage": "Selecionar idioma",
+      "fallback": "Selecionar idioma",
+      "toastModal": "Feche o modal atual antes de mudar o idioma!",
+      "toastEditing": "Você não pode mudar o idioma enquanto edita!"
+    },
+    "layout": {
+      "loading": "Carregando..."
+    },
+    "navigation": {
+      "home": "Início",
+      "contacts": "Contatos"
+    }
+  },
+  "languages": {
+    "en": "English (Inglês)",
+    "de": "Deutsch (Alemão)",
+    "fr": "Français (Francês)",
+    "es": "Español (Espanhol)",
+    "uk": "Українська (Ucraniano)",
+    "pt": "Português",
+    "ru": "Русский (Russo)",
+    "it": "Italiano (Italiano)"
+  },
+  "authNav": {
+    "register": "Registrar",
+    "login": "Entrar"
+  },
+  "contact": {
+    "namePlaceholder": "Digite o nome",
+    "numberPlaceholder": "Digite o número de telefone",
+    "invalidPhoneCharacters": "Apenas dígitos, espaços, '+', e '-' permitidos",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "errorModalOpen": "Não é possível realizar a ação enquanto outro modal estiver aberto",
+    "errorEditingOther": "Não é possível realizar a ação enquanto outro contato estiver sendo editado",
+    "confirmDelete": "Tem certeza de que deseja excluir \"{{name}}\"?",
+    "confirmDeleteEmpty": "Nome e número não podem estar ambos vazios. Deseja excluir o contato?",
+    "deletedSuccess": "Contato excluído com sucesso",
+    "deletedEmptyFields": "Contato excluído devido a campos vazios",
+    "updatedSuccess": "Contato atualizado com sucesso",
+    "nothingToChange": "Nenhuma alteração para salvar",
+    "unsavedChanges": "Você tem alterações não salvas. Tem certeza de que deseja sair?"
+  },
+  "themeToggle": {
+    "infoText": "Você também pode mudar seu tema!",
+    "ariaLabel": "Alternar modo escuro",
+    "errors": {
+      "closeModalFirst": "Feche o modal atual antes de mudar o tema!",
+      "cannotChangeWhileEditing": "Você não pode mudar o tema enquanto edita!"
+    }
+  },
+  "userMenu": {
+    "welcome": "Bem-vindo, {{name}}! 🗿",
+    "logoutButton": "Sair!",
+    "modalText": "Tem certeza de que deseja <1>sair</1>?",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "errors": {
+      "editing": "Você não pode sair enquanto edita um contato!",
+      "modalOpen": "Feche o modal atual antes de sair!"
+    }
+  }
+}

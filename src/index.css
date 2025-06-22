@@ -49,6 +49,7 @@ body {
 }
 
 body {
+  --custom_bg: rgba(255, 255, 255, 0.9);
   --bg: white;
   --modal_bg: white;
   --text: #2e2f42;
@@ -60,6 +61,7 @@ body {
 }
 
 body.dark {
+  --custom_bg: rgba(44, 44, 44, 0.9);
   --bg: #181818;
   --modal_bg: #181818;
   --text: #f1f1f1;

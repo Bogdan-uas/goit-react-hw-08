@@ -2,6 +2,7 @@ import React, { useEffect, lazy, Suspense, ReactElement } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import { selectIsModalOpen, selectDarkMode } from "../../redux/ui/selectors";
 import { apiRefreshUser } from "../../redux/auth/operations";
@@ -23,6 +24,7 @@ function App(): ReactElement {
 const dispatch = useDispatch<AppDispatch>();
 const isAnyModalOpen = useSelector(selectIsModalOpen);
 const darkMode = useSelector(selectDarkMode);
+const { t } = useTranslation();
 
 const handleIsModalOpen = (t: ReactElement, r: ReactElement): ReactElement =>
     isAnyModalOpen ? r : t;
@@ -41,7 +43,7 @@ useEffect(() => {
 }, [darkMode]);
 
 return (
-    <Suspense fallback={<div>🤚Loading...🤚</div>}>
+    <Suspense fallback={<div>{t("app.loading")}</div>}>
     <Layout>
         {handleIsModalOpen(
         <Toaster

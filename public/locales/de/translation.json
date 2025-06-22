@@ -1,0 +1,210 @@
+{
+  "home": {
+    "title": "Startseite",
+    "description": "Ein einfaches Telefonverzeichnis, in dem Sie Kontakte hinzufügen, löschen, suchen oder bearbeiten können."
+  },
+  "contactsPage": {
+    "title": "Kontakte",
+    "loadingPage": "🤚Seite wird geladen...🤚",
+    "loading": "✋Wird geladen...🤚",
+    "validation": {
+      "nameTooShort": "Zu kurz!",
+      "nameTooLong": "Zu lang!",
+      "nameRequired": "Name ist erforderlich",
+      "invalidNumber": "Ungültiges Zahlenformat",
+      "numberTooShort": "Muss eine gültige Nummer bleiben!",
+      "numberRequired": "Nummer ist erforderlich"
+    },
+    "form": {
+      "nameLabel": "Name",
+      "numberLabel": "Nummer",
+      "addButton": "Kontakt hinzufügen",
+      "deleteAllButton": "Alle Kontakte löschen",
+      "validation": {
+        "nameTooShort": "Zu kurz!",
+        "nameTooLong": "Zu lang!",
+        "required": "Erforderlich",
+        "invalidNumber": "Muss eine gültige Nummer sein!"
+      },
+      "toast": {
+        "closeModalFirst": "Schließe zuerst das Modal.",
+        "duplicateExact": "Du kannst keinen Kontakt mit identischen Daten erstellen",
+        "duplicateNumberWarning": "Warnung: Eine Nummer ist bereits vorhanden! (Kontakt wurde dennoch hinzugefügt!)",
+        "successAdd": "Kontakt erfolgreich hinzugefügt!",
+        "failedAdd": "Kontakt konnte nicht hinzugefügt werden.",
+        "closeModalBeforeAdding": "Schließe das aktuelle Modal bevor du einen weiteren Kontakt hinzufügst!",
+        "cantAddWhileEditing": "Du kannst während der Bearbeitung keinen weiteren Kontakt hinzufügen!",
+        "closeModalBeforeDeleting": "Schließe das aktuelle Modal bevor du alle Kontakte löschst!",
+        "cantDeleteWhileEditing": "Du kannst während der Bearbeitung nicht alle Kontakte löschen!",
+        "allDeleted": "Alle Kontakte wurden gelöscht!",
+        "failedDeleteAll": "Alle Kontakte konnten nicht gelöscht werden."
+      },
+      "deleteAllModal": {
+        "confirmText1": "Bist du sicher, dass du",
+        "all": "ALLE",
+        "confirmText2": "Kontakte löschen möchtest?",
+        "warningText": "Du kannst sie nicht wiederherstellen!",
+        "cancelButton": "Abbrechen",
+        "confirmButton": "Bestätigen"
+      },
+      "list": {
+        "loading": "Wird geladen..."
+      }
+    },
+    "searchBox": {
+      "searchByName": "Kontakt nach Name suchen",
+      "searchByNumber": "Kontakt nach Nummer suchen",
+      "placeholderByName": "Nach Name suchen",
+      "placeholderByNumber": "Nach Nummer suchen",
+      "toastModalSearch": "Schließe das aktuelle Modal, bevor du suchst!",
+      "toastEditingSearch": "Du kannst während der Bearbeitung keinen anderen Kontakt suchen!",
+      "toastSuggestName": "Möglicherweise wolltest du nach Name suchen.",
+      "toastSuggestNumber": "Möglicherweise wolltest du nach Nummer suchen.",
+      "toastModalSwitch": "Schließe das aktuelle Modal, bevor du die Suchmethode änderst!",
+      "toastEditingSwitch": "Du kannst die Suchmethode während der Bearbeitung nicht ändern!"
+    },
+    "sortControl": {
+      "promptShow": "Möchten Sie die Kontakte sortieren?",
+      "promptHide": "Wenn Sie nicht sortieren möchten, klicken Sie nochmal!",
+      "infoSave": "(Ihre aktuelle Sortiermethode wird gespeichert!)",
+      "optionNone": "Keine Sortierung",
+      "optionAsc": "A-Z",
+      "optionDesc": "Z-A",
+      "toastModalToggle": "Schließen Sie das aktuelle Modal, bevor Sie diese Schaltfläche drücken!",
+      "toastEditingToggle": "Sie können diese Schaltfläche nicht drücken, während Sie einen Kontakt bearbeiten!",
+      "toastModalChange": "Schließen Sie das aktuelle Modal, bevor Sie eine Sortiermethode wählen!",
+      "toastEditingChange": "Sie können die Kontakte nicht sortieren, während Sie einen bearbeiten!"
+    }
+  },
+  "loginPage": {
+    "title": "Anmelden",
+    "labels": {
+      "email": "E-Mail",
+      "password": "Passwort"
+    },
+    "validation": {
+      "tooShort": "Zu kurz!",
+      "tooLong": "Zu lang!",
+      "invalidEmail": "Ungültiges E-Mail-Format",
+      "emailRequired": "E-Mail ist erforderlich!",
+      "passwordRequired": "Passwort ist erforderlich!"
+    },
+    "buttons": {
+      "submit": "Einloggen"
+    },
+    "text": {
+      "noAccount": "Noch kein Konto?🤨",
+      "registerLink": "Registrieren"
+    },
+    "toasts": {
+      "loginSuccess": "Erfolgreich eingeloggt!",
+      "loginFail": "Unter diesen Daten ist niemand registriert!",
+      "escapeTip": "Tipp: Alle Modale können mit Escape geschlossen werden!"
+    },
+    "form": {
+      "showPassword": "Passwort anzeigen",
+      "hidePassword": "Passwort verbergen"
+    }
+  },
+  "registerPage": {
+    "title": "Registrieren",
+    "labels": {
+      "name": "Name",
+      "email": "E-Mail",
+      "password": "Passwort"
+    },
+    "validation": {
+      "tooShort": "Zu kurz!",
+      "tooLong": "Zu lang!",
+      "nameRequired": "Benutzername ist erforderlich!",
+      "emailRequired": "E-Mail ist erforderlich!",
+      "invalidEmail": "Ungültiges E-Mail-Format",
+      "passwordRequired": "Passwort ist erforderlich!"
+    },
+    "buttons": {
+      "submit": "Registrieren"
+    },
+    "text": {
+      "haveAccount": "Schon ein Konto?😱",
+      "loginLink": "Login"
+    },
+    "toasts": {
+      "success": "Erfolgreich registriert!",
+      "escapeTip": "Tipp: Alle Modale können mit Escape geschlossen werden!",
+      "error": "Einige Daten wurden bereits von einem anderen Nutzer verwendet!"
+    },
+    "form": {
+      "showPassword": "Passwort anzeigen",
+      "hidePassword": "Passwort verbergen"
+    }
+  },
+  "app": {
+    "loading": "🤚Lädt...🤚",
+    "languageSelector": {
+      "prompt": "Eine Sprache wählen?",
+      "selectLanguage": "Sprache auswählen",
+      "fallback": "Sprache auswählen",
+      "toastModal": "Schließe das aktuelle Modal, bevor du die Sprache änderst!",
+      "toastEditing": "Du kannst die Sprache während des Bearbeitens nicht ändern!"
+    },
+    "layout": {
+      "loading": "Wird geladen..."
+    },
+    "navigation": {
+      "home": "Startseite",
+      "contacts": "Kontakte"
+    }
+  },
+  "languages": {
+    "en": "English (Englisch)",
+    "de": "Deutsch",
+    "fr": "Français (Französisch)",
+    "es": "Español (Spanisch)",
+    "uk": "Українська (Ukrainisch)",
+    "pt": "Português (Portugiesisch)",
+    "ru": "Русский (Russisch)",
+    "it": "Italiano (Italienisch)"
+  },
+  "authNav": {
+    "register": "Registrieren",
+    "login": "Anmelden"
+  },
+  "contact": {
+    "namePlaceholder": "Name eingeben",
+    "numberPlaceholder": "Telefonnummer eingeben",
+    "invalidPhoneCharacters": "Nur Ziffern, Leerzeichen, '+', und '-' erlaubt",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "errorModalOpen": "Aktion kann nicht ausgeführt werden, während ein anderes Modal geöffnet ist",
+    "errorEditingOther": "Aktion kann nicht ausgeführt werden, während ein anderer Kontakt bearbeitet wird",
+    "confirmDelete": "Bist du sicher, dass du \"{{name}}\" löschen möchtest?",
+    "confirmDeleteEmpty": "Name und Nummer können nicht beide leer sein. Möchtest du stattdessen den Kontakt löschen?",
+    "deletedSuccess": "Kontakt erfolgreich gelöscht",
+    "deletedEmptyFields": "Kontakt aufgrund leerer Felder gelöscht",
+    "updatedSuccess": "Kontakt erfolgreich aktualisiert",
+    "nothingToChange": "Keine Änderungen zum Speichern",
+    "unsavedChanges": "Sie haben ungespeicherte Änderungen. Bist du sicher, dass du beenden möchtest?"
+  },
+  "themeToggle": {
+    "infoText": "Du kannst auch dein Thema ändern!",
+    "ariaLabel": "Dunkelmodus umschalten",
+    "errors": {
+      "closeModalFirst": "Schließe zuerst das aktuelle Modal, bevor du das Thema änderst!",
+      "cannotChangeWhileEditing": "Du kannst das Thema nicht ändern, während du bearbeitest!"
+    }
+  },
+  "userMenu": {
+    "welcome": "Willkommen, {{name}}! 🗿",
+    "logoutButton": "Abmelden!",
+    "modalText": "Bist du sicher, dass du dich <1>abmelden</1> möchtest?",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "errors": {
+      "editing": "Du kannst dich während des Bearbeitens nicht abmelden!",
+      "modalOpen": "Schließe das aktuelle Modal, bevor du dich abmeldest!"
+    }
+  }
+}

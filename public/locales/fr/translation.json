@@ -1,0 +1,210 @@
+{
+  "home": {
+    "title": "Page d'accueil",
+    "description": "Annuaire téléphonique simple où vous pouvez ajouter, supprimer, rechercher ou modifier des contacts."
+  },
+  "contactsPage": {
+    "title": "Contacts",
+    "loadingPage": "🤚Chargement de la page...🤚",
+    "loading": "✋Chargement...🤚",
+    "validation": {
+      "nameTooShort": "Trop court !",
+      "nameTooLong": "Trop long !",
+      "nameRequired": "Le nom est requis",
+      "invalidNumber": "Format de numéro invalide",
+      "numberTooShort": "Doit rester un numéro valide !",
+      "numberRequired": "Le numéro est requis"
+    },
+    "form": {
+      "nameLabel": "Nom",
+      "numberLabel": "Numéro",
+      "addButton": "Ajouter un contact",
+      "deleteAllButton": "Supprimer tous les contacts",
+      "validation": {
+        "nameTooShort": "Trop court !",
+        "nameTooLong": "Trop long !",
+        "required": "Requis",
+        "invalidNumber": "Doit être un numéro valide !"
+      },
+      "toast": {
+        "closeModalFirst": "Fermez d'abord la fenêtre modale.",
+        "duplicateExact": "Vous ne pouvez pas créer un contact avec les mêmes données",
+        "duplicateNumberWarning": "Attention : un contact avec ce numéro existe déjà ! (Contact ajouté malgré tout !)",
+        "successAdd": "Contact ajouté avec succès !",
+        "failedAdd": "Échec de l'ajout du contact.",
+        "closeModalBeforeAdding": "Fermez la fenêtre modale avant d'ajouter un autre contact !",
+        "cantAddWhileEditing": "Vous ne pouvez pas ajouter un autre contact pendant la modification !",
+        "closeModalBeforeDeleting": "Fermez la fenêtre modale avant de supprimer tous les contacts !",
+        "cantDeleteWhileEditing": "Vous ne pouvez pas supprimer tous les contacts pendant la modification !",
+        "allDeleted": "Tous les contacts ont été supprimés !",
+        "failedDeleteAll": "Échec de la suppression de tous les contacts."
+      },
+      "deleteAllModal": {
+        "confirmText1": "Êtes-vous sûr de vouloir supprimer",
+        "all": "TOUS LES",
+        "confirmText2": "contacts ?",
+        "warningText": "Vous ne pourrez pas les restaurer !",
+        "cancelButton": "Annuler",
+        "confirmButton": "Confirmer"
+      },
+      "list": {
+        "loading": "Chargement..."
+      }
+    },
+    "searchBox": {
+      "searchByName": "Rechercher un contact par nom",
+      "searchByNumber": "Rechercher un contact par numéro",
+      "placeholderByName": "Rechercher par nom",
+      "placeholderByNumber": "Rechercher par numéro",
+      "toastModalSearch": "Fermez la fenêtre actuelle avant de rechercher !",
+      "toastEditingSearch": "Impossible de rechercher un autre contact pendant l'édition !",
+      "toastSuggestName": "Vous vouliez peut-être rechercher par nom.",
+      "toastSuggestNumber": "Vous vouliez peut-être rechercher par numéro.",
+      "toastModalSwitch": "Fermez la fenêtre actuelle avant de changer le mode de recherche !",
+      "toastEditingSwitch": "Impossible de changer de méthode de recherche pendant l'édition !"
+    },
+    "sortControl": {
+      "promptShow": "Voulez-vous trier les contacts ?",
+      "promptHide": "Si vous ne voulez pas trier, cliquez à nouveau !",
+      "infoSave": "(Votre méthode de tri actuelle sera enregistrée !)",
+      "optionNone": "Pas de tri",
+      "optionAsc": "A-Z",
+      "optionDesc": "Z-A",
+      "toastModalToggle": "Fermez la fenêtre modale avant d'appuyer sur ce bouton !",
+      "toastEditingToggle": "Vous ne pouvez pas appuyer sur ce bouton pendant la modification d'un contact !",
+      "toastModalChange": "Fermez la fenêtre modale avant de choisir une méthode de tri !",
+      "toastEditingChange": "Vous ne pouvez pas trier les contacts pendant la modification !"
+    }
+  },
+  "loginPage": {
+    "title": "Connexion",
+    "labels": {
+      "email": "E-mail",
+      "password": "Mot de passe"
+    },
+    "validation": {
+      "tooShort": "Trop court !",
+      "tooLong": "Trop long !",
+      "invalidEmail": "Format d'e-mail invalide",
+      "emailRequired": "L'e-mail est requis !",
+      "passwordRequired": "Le mot de passe est requis !"
+    },
+    "buttons": {
+      "submit": "Se connecter"
+    },
+    "text": {
+      "noAccount": "Vous n'avez pas encore de compte ?🤨",
+      "registerLink": "S'inscrire"
+    },
+    "toasts": {
+      "loginSuccess": "Connexion réussie !",
+      "loginFail": "Aucun utilisateur enregistré avec ces données !",
+      "escapeTip": "Astuce : Tous les modaux peuvent être fermés avec la touche Échap !"
+    },
+    "form": {
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe"
+    }
+  },
+  "registerPage": {
+    "title": "S'inscrire",
+    "labels": {
+      "name": "Nom",
+      "email": "E-mail",
+      "password": "Mot de passe"
+    },
+    "validation": {
+      "tooShort": "Trop court!",
+      "tooLong": "Trop long!",
+      "nameRequired": "Nom d'utilisateur requis!",
+      "emailRequired": "E-mail requis!",
+      "invalidEmail": "Format d'e-mail invalide",
+      "passwordRequired": "Mot de passe requis!"
+    },
+    "buttons": {
+      "submit": "S'inscrire"
+    },
+    "text": {
+      "haveAccount": "Vous avez déjà un compte ?😱",
+      "loginLink": "Connexion"
+    },
+    "toasts": {
+      "success": "Inscription réussie!",
+      "escapeTip": "Astuce : Toutes les modales peuvent être fermées avec Échap !",
+      "error": "Certaines données ont déjà été utilisées par un autre utilisateur!"
+    },
+    "form": {
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe"
+    }
+  },
+  "app": {
+    "loading": "🤚Chargement...🤚",
+    "languageSelector": {
+      "prompt": "Choisissez une langue ?",
+      "selectLanguage": "Choisir la langue",
+      "fallback": "Choisir la langue",
+      "toastModal": "Fermez la fenêtre modale actuelle avant de changer de langue !",
+      "toastEditing": "Vous ne pouvez pas changer de langue pendant l'édition !"
+    },
+    "layout": {
+      "loading": "Chargement..."
+    },
+    "navigation": {
+      "home": "Accueil",
+      "contacts": "Contacts"
+    }
+  },
+  "languages": {
+    "en": "English (Anglais)",
+    "de": "Deutsch (Allemand)",
+    "fr": "Français",
+    "es": "Español (Espagnol)",
+    "uk": "Українська (Ukrainien)",
+    "pt": "Português (Portugais)",
+    "ru": "Русский (Russe)",
+    "it": "Italiano (Italien)"
+  },
+  "authNav": {
+    "register": "S'inscrire",
+    "login": "Se connecter"
+  },
+  "contact": {
+    "namePlaceholder": "Entrez le nom",
+    "numberPlaceholder": "Entrez le numéro de téléphone",
+    "invalidPhoneCharacters": "Seuls les chiffres, espaces, '+', et '-' sont autorisés",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "errorModalOpen": "Impossible d'effectuer l'action tant qu'une autre fenêtre est ouverte",
+    "errorEditingOther": "Impossible d'effectuer l'action tant qu'un autre contact est modifié",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ?",
+    "confirmDeleteEmpty": "Le nom et le numéro ne peuvent pas être tous deux vides. Voulez-vous supprimer le contact ?",
+    "deletedSuccess": "Contact supprimé avec succès",
+    "deletedEmptyFields": "Contact supprimé en raison de champs vides",
+    "updatedSuccess": "Contact mis à jour avec succès",
+    "nothingToChange": "Aucun changement à enregistrer",
+    "unsavedChanges": "Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir quitter ?"
+  },
+  "themeToggle": {
+    "infoText": "Vous pouvez également changer votre thème!",
+    "ariaLabel": "Basculer en mode sombre",
+    "errors": {
+      "closeModalFirst": "Fermez la fenêtre modale actuelle avant de changer le thème !",
+      "cannotChangeWhileEditing": "Vous ne pouvez pas changer le thème pendant la modification !"
+    }
+  },
+  "userMenu": {
+    "welcome": "Bienvenue, {{name}}! 🗿",
+    "logoutButton": "Se déconnecter!",
+    "modalText": "Êtes-vous sûr de vouloir vous <1>déconnecter</1>?",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "errors": {
+      "editing": "Vous ne pouvez pas vous déconnecter pendant l'édition!",
+      "modalOpen": "Fermez la fenêtre modale actuelle avant de vous déconnecter!"
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "home": {
+    "title": "Página de inicio",
+    "description": "Directorio telefónico sencillo donde puedes agregar, eliminar, buscar o editar un contacto."
+  },
+  "contactsPage": {
+    "title": "Contactos",
+    "loadingPage": "🤚Cargando la página...🤚",
+    "loading": "✋Cargando...🤚",
+    "validation": {
+      "nameTooShort": "¡Demasiado corto!",
+      "nameTooLong": "¡Demasiado largo!",
+      "nameRequired": "El nombre es obligatorio",
+      "invalidNumber": "Formato de número inválido",
+      "numberTooShort": "¡Debe seguir siendo un número válido!",
+      "numberRequired": "El número es obligatorio"
+    },
+    "form": {
+      "nameLabel": "Nombre",
+      "numberLabel": "Número",
+      "addButton": "Agregar contacto",
+      "deleteAllButton": "Eliminar todos los contactos",
+      "validation": {
+        "nameTooShort": "¡Demasiado corto!",
+        "nameTooLong": "¡Demasiado largo!",
+        "required": "Requerido",
+        "invalidNumber": "¡Debe ser un número válido!"
+      },
+      "toast": {
+        "closeModalFirst": "Cierra primero el modal.",
+        "duplicateExact": "No puedes crear un contacto con datos idénticos",
+        "duplicateNumberWarning": "Advertencia: ¡Ya existe contacto con este número! (¡Contacto aún así añadido!)",
+        "successAdd": "¡Contacto agregado exitosamente!",
+        "failedAdd": "Error al agregar contacto.",
+        "closeModalBeforeAdding": "Cierra el modal actual antes de agregar otro contacto!",
+        "cantAddWhileEditing": "¡No puedes agregar otro contacto mientras editas!",
+        "closeModalBeforeDeleting": "Cierra el modal actual antes de eliminar todos los contactos!",
+        "cantDeleteWhileEditing": "¡No puedes eliminar todos los contactos mientras editas!",
+        "allDeleted": "¡Todos los contactos han sido eliminados!",
+        "failedDeleteAll": "Error al eliminar todos los contactos."
+      },
+      "deleteAllModal": {
+        "confirmText1": "¿Estás seguro de que quieres eliminar",
+        "all": "TODOS LOS",
+        "confirmText2": "contactos?",
+        "warningText": "¡No podrás restaurarlos!",
+        "cancelButton": "Cancelar",
+        "confirmButton": "Confirmar"
+      },
+      "list": {
+        "loading": "Cargando..."
+      }
+    },
+    "searchBox": {
+      "searchByName": "Buscar un contacto por nombre",
+      "searchByNumber": "Buscar un contacto por número",
+      "placeholderByName": "Buscar por nombre",
+      "placeholderByNumber": "Buscar por número",
+      "toastModalSearch": "¡Cierra el modal actual antes de buscar!",
+      "toastEditingSearch": "¡No puedes buscar otros contactos mientras editas uno!",
+      "toastSuggestName": "Parece que querías buscar por nombre.",
+      "toastSuggestNumber": "Parece que querías buscar por número.",
+      "toastModalSwitch": "¡Cierra el modal actual antes de cambiar el modo de búsqueda!",
+      "toastEditingSwitch": "¡No puedes cambiar el método de búsqueda mientras editas un contacto!"
+    },
+    "sortControl": {
+      "promptShow": "¿Quieres ordenar los contactos?",
+      "promptHide": "Si no quieres ordenar, ¡haz clic de nuevo!",
+      "infoSave": "(¡Se guardará tu método de orden actual!)",
+      "optionNone": "Sin ordenar",
+      "optionAsc": "A-Z",
+      "optionDesc": "Z-A",
+      "toastModalToggle": "¡Cierra el modal actual antes de pulsar este botón!",
+      "toastEditingToggle": "No puedes pulsar este botón mientras editas un contacto.",
+      "toastModalChange": "¡Cierra el modal actual antes de elegir un método de ordenación!",
+      "toastEditingChange": "No puedes ordenar contactos mientras editas uno."
+    }
+  },
+  "loginPage": {
+    "title": "Iniciar sesión",
+    "labels": {
+      "email": "Correo electrónico",
+      "password": "Contraseña"
+    },
+    "validation": {
+      "tooShort": "¡Demasiado corto!",
+      "tooLong": "¡Demasiado largo!",
+      "invalidEmail": "Formato de correo inválido",
+      "emailRequired": "¡El correo es obligatorio!",
+      "passwordRequired": "¡La contraseña es obligatoria!"
+    },
+    "buttons": {
+      "submit": "Iniciar sesión"
+    },
+    "text": {
+      "noAccount": "¿No tienes cuenta aún?🤨",
+      "registerLink": "Registrarse"
+    },
+    "toasts": {
+      "loginSuccess": "¡Inicio de sesión exitoso!",
+      "loginFail": "¡Nadie está registrado con estos datos!",
+      "escapeTip": "Consejo: ¡Todos los modales se pueden cerrar con la tecla Escape!"
+    },
+    "form": {
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña"
+    }
+  },
+  "registerPage": {
+    "title": "Registrarse",
+    "labels": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña"
+    },
+    "validation": {
+      "tooShort": "¡Demasiado corto!",
+      "tooLong": "¡Demasiado largo!",
+      "nameRequired": "¡Se requiere nombre de usuario!",
+      "emailRequired": "¡Se requiere correo electrónico!",
+      "invalidEmail": "Formato de correo inválido",
+      "passwordRequired": "¡Se requiere contraseña!"
+    },
+    "buttons": {
+      "submit": "Registrarse"
+    },
+    "text": {
+      "haveAccount": "¿Ya tienes una cuenta?😱",
+      "loginLink": "Iniciar sesión"
+    },
+    "toasts": {
+      "success": "¡Registrado con éxito!",
+      "escapeTip": "Consejo: ¡Todas las ventanas modales se pueden cerrar con Escape!",
+      "error": "¡Algunos datos ya fueron usados por otro usuario!"
+    },
+    "form": {
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña"
+    }
+  },
+  "app": {
+    "loading": "🤚Cargando...🤚",
+    "languageSelector": {
+      "prompt": "¿Elige un idioma?",
+      "selectLanguage": "Seleccionar idioma",
+      "fallback": "Seleccionar idioma",
+      "toastModal": "¡Cierra el modal actual antes de cambiar el idioma!",
+      "toastEditing": "¡No puedes cambiar el idioma mientras editas!"
+    },
+    "layout": {
+      "loading": "Cargando..."
+    },
+    "navigation": {
+      "home": "Inicio",
+      "contacts": "Contactos"
+    }
+  },
+  "languages": {
+    "en": "English (Inglés)",
+    "de": "Deutsch (Alemán)",
+    "fr": "Français (Francés)",
+    "es": "Español",
+    "uk": "Українська (Ucraniano)",
+    "pt": "Português (Portugués)",
+    "ru": "Русский (Ruso)",
+    "it": "Italiano (Italiano)"
+  },
+  "authNav": {
+    "register": "Registrarse",
+    "login": "Iniciar sesión"
+  },
+  "contact": {
+    "namePlaceholder": "Ingresa nombre",
+    "numberPlaceholder": "Ingresa número de teléfono",
+    "invalidPhoneCharacters": "Solo dígitos, espacios, '+', y '-' permitidos",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "errorModalOpen": "No se puede realizar la acción mientras otro modal está abierto",
+    "errorEditingOther": "No se puede realizar la acción mientras se edita otro contacto",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar \"{{name}}\"?",
+    "confirmDeleteEmpty": "El nombre y el número no pueden estar ambos vacíos. ¿Deseas eliminar el contacto?",
+    "deletedSuccess": "Contacto eliminado exitosamente",
+    "deletedEmptyFields": "Contacto eliminado debido a campos vacíos",
+    "updatedSuccess": "Contacto actualizado con éxito",
+    "nothingToChange": "No hay cambios para guardar",
+    "unsavedChanges": "Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?"
+  },
+  "themeToggle": {
+    "infoText": "¡También puedes cambiar tu tema!",
+    "ariaLabel": "Alternar modo oscuro",
+    "errors": {
+      "closeModalFirst": "¡Cierra el modal actual antes de cambiar el tema!",
+      "cannotChangeWhileEditing": "¡No puedes cambiar el tema mientras editas!"
+    }
+  },
+  "userMenu": {
+    "welcome": "¡Bienvenido, {{name}}! 🗿",
+    "logoutButton": "¡Cerrar sesión!",
+    "modalText": "¿Estás seguro de que deseas <1>cerrar sesión</1>?",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "errors": {
+      "editing": "¡No puedes cerrar sesión mientras editas un contacto!",
+      "modalOpen": "¡Cierra el modal actual antes de cerrar sesión!"
+    }
+  }
+}

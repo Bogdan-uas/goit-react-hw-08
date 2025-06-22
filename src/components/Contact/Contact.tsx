@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import type { AppDispatch } from '../../redux/store'; 
+import type { AppDispatch } from "../../redux/store";
 import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
 import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
 import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice.js";
@@ -14,6 +14,7 @@ import {
     selectIsEditingGlobal,
     selectEditingId,
 } from "../../redux/ui/selectors.js";
+import { useTranslation } from "react-i18next";
 
 interface ContactProps {
 contact: {
@@ -25,19 +26,12 @@ contactIdToDelete: string | null;
 setContactIdToDelete: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const contactSchema = Yup.object().shape({
-name: Yup.string().min(3, "Too short!").max(50, "Too long!").required("Name is required"),
-number: Yup.string()
-    .matches(/^\+?[0-9\s-]{3,}$/, "Invalid number format")
-    .min(9, "Must remain a valid number!")
-    .required("Number is required"),
-});
-
 export default function Contact({
     contact,
     contactIdToDelete,
     setContactIdToDelete,
 }: ContactProps) {
+    const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
@@ -53,13 +47,26 @@ export default function Contact({
     const isEditing = globalEditingId === contact.id;
     const isDeletionModalOpen = contactIdToDelete === contact.id;
 
-    const hasChanges = () => editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+    const contactSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(3, t("contactsPage.validation.nameTooShort"))
+            .max(50, t("contactsPage.validation.nameTooLong"))
+            .required(t("contactsPage.validation.nameRequired")),
+        number: Yup.string()
+            .matches(/^\+?[0-9\s-]{3,}$/, t("contactsPage.validation.invalidNumber"))
+            .min(9, t("contactsPage.validation.numberTooShort"))
+            .required(t("contactsPage.validation.numberRequired")),
+        });
 
-    const validateNumberInput = (value: string) => /^[0-9+\-\s]*$/.test(value);
+    const hasChanges = () =>
+        editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+
+    const validateNumberInput = (value: string) =>
+        /^[0-9+\-\s]*$/.test(value);
 
     const confirmDelete = () => {
         dispatch(deleteContact(contact.id));
-        toast.success("Successfully deleted a contact!", {
+        toast.success(t("contact.deletedSuccess"), {
             duration: 4000,
             style: { borderRadius: "10px", textAlign: "center" },
         });
@@ -82,8 +89,11 @@ export default function Contact({
             return;
         }
 
-        if (trimmedName === contact.name && trimmedNumber === contact.number) {
-            toast("Nothing to change!", {
+        if (
+            trimmedName === contact.name &&
+            trimmedNumber === contact.number
+        ) {
+            toast(t("contact.nothingToChange"), {
                 icon: "❗",
                 duration: 4000,
                 style: { borderRadius: "10px", textAlign: "center" },
@@ -92,10 +102,16 @@ export default function Contact({
         }
 
         try {
-            await contactSchema.validate({ name: trimmedName, number: trimmedNumber }, { abortEarly: false });
+            await contactSchema.validate(
+                { name: trimmedName, number: trimmedNumber },
+                { abortEarly: false }
+            );
 
             let formattedNumber = trimmedNumber;
-            const parsedPhone = parsePhoneNumberFromString(trimmedNumber, "US");
+            const parsedPhone = parsePhoneNumberFromString(
+                trimmedNumber,
+                "US"
+            );
             if (parsedPhone?.isValid()) {
                 formattedNumber = parsedPhone.format("E.164");
             }
@@ -108,7 +124,7 @@ export default function Contact({
             )
                 .unwrap()
                 .then(() => {
-                    toast.success("Contact successfully updated!", {
+                    toast.success(t("contact.updatedSuccess"), {
                         duration: 4000,
                         style: { borderRadius: "10px", textAlign: "center" },
                     });
@@ -161,7 +177,7 @@ export default function Contact({
                     confirmDelete();
                 } else if (isEmptyDeleteModalOpen) {
                     dispatch(deleteContact(contact.id));
-                    toast.success("Contact deleted! (fields were empty)");
+                    toast.success(t("contact.deletedEmptyFields"));
                     dispatch(closeModal());
                     setIsEmptyDeleteModalOpen(false);
                     dispatch(stopEditing());
@@ -191,7 +207,9 @@ export default function Contact({
     ]);
 
     useEffect(() => {
-        const hasChanged = editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+        const hasChanged =
+            editedName.trim() !== contact.name ||
+            editedNumber.trim() !== contact.number;
         dispatch(setUnsavedChanges(isEditing && hasChanged));
     }, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
 
@@ -213,7 +231,7 @@ export default function Contact({
                             className={style.edit_input}
                             value={editedName}
                             onChange={(e) => setEditedName(e.target.value)}
-                            placeholder="(Edited Name)"
+                            placeholder={t("contact.namePlaceholder")}
                         />
                     ) : (
                         <p className={style.info_text}>{contact.name}</p>
@@ -230,19 +248,16 @@ export default function Contact({
                                 if (validateNumberInput(val)) {
                                     setEditedNumber(val);
                                 } else {
-                                    toast.error(
-                                        "Invalid character in phone number! Only digits, +, -, and spaces allowed.",
-                                        {
-                                            duration: 6000,
-                                            style: {
-                                                borderRadius: "10px",
-                                                textAlign: "center",
-                                            },
-                                        }
-                                    );
+                                    toast.error(t("contact.invalidPhoneCharacters"), {
+                                        duration: 6000,
+                                        style: {
+                                            borderRadius: "10px",
+                                            textAlign: "center",
+                                        },
+                                    });
                                 }
                             }}
-                            placeholder="(Edited Number)"
+                            placeholder={t("contact.numberPlaceholder")}
                         />
                     ) : (
                         <p className={style.info_text}>{contact.number}</p>
@@ -270,13 +285,13 @@ export default function Contact({
                                 }
                             }}
                         >
-                            Cancel
+                            {t("contact.cancel")}
                         </button>
                         <button
                             className={`${style.save_button} ${isAnyModalOpen ? style.disabled : ""}`}
                             onClick={onSave}
                         >
-                            Save
+                            {t("contact.save")}
                         </button>
                     </>
                 ) : (
@@ -288,8 +303,8 @@ export default function Contact({
                                     e.preventDefault();
                                     toast.error(
                                         isAnyModalOpen
-                                            ? "Close the current modal before deleting a contact!"
-                                            : "You can't delete another contact while editing one!",
+                                            ? t("contact.errorModalOpen")
+                                            : t("contact.errorEditingOther"),
                                         {
                                             duration: 4000,
                                             style: { borderRadius: "10px", textAlign: "center" },
@@ -301,7 +316,7 @@ export default function Contact({
                                 }
                             }}
                         >
-                            Delete
+                            {t("contact.delete")}
                         </button>
                         <button
                             className={`${style.edit_button} ${(isAnyModalOpen || isEditingGlobal) ? style.disabled : ""}`}
@@ -310,8 +325,8 @@ export default function Contact({
                                     e.preventDefault();
                                     toast.error(
                                         isAnyModalOpen
-                                            ? "Close the current modal before starting editing a contact!"
-                                            : "You can't edit another contact while editing one!",
+                                            ? t("contact.errorModalOpen")
+                                            : t("contact.errorEditingOther"),
                                         {
                                             duration: 4000,
                                             style: { borderRadius: "10px", textAlign: "center" },
@@ -322,7 +337,7 @@ export default function Contact({
                                 }
                             }}
                         >
-                            Edit
+                            {t("contact.edit")}
                         </button>
                     </>
                 )}
@@ -331,25 +346,22 @@ export default function Contact({
             {isDeletionModalOpen && (
                 <div className={style.confirm_modal}>
                     <p className={style.info_text}>
-                        Are you sure you want to delete <b>{contact.name}</b>?
+                        {t("contact.confirmDelete", { name: contact.name })}
                     </p>
                     <div className={style.deletion_confirmation_button_group}>
                         <button className={style.save_button} onClick={cancelDelete}>
-                            Cancel
+                            {t("contact.cancel")}
                         </button>
                         <button className={style.cancel_button} onClick={confirmDelete}>
-                            Confirm
+                            {t("contact.confirm")}
                         </button>
                     </div>
                 </div>
-            )
-            }
+            )}
 
             {isEmptyDeleteModalOpen && (
                 <div className={style.confirm_modal}>
-                    <p className={style.info_text}>
-                        Both fields are empty. Do you want to <b>delete</b> this contact?
-                    </p>
+                    <p className={style.info_text}>{t("contact.confirmDeleteEmpty")}</p>
                     <div className={style.deletion_confirmation_button_group}>
                         <button
                             className={style.save_button}
@@ -362,13 +374,13 @@ export default function Contact({
                                 setIsEmptyDeleteModalOpen(false);
                             }}
                         >
-                            Cancel
+                            {t("contact.cancel")}
                         </button>
                         <button
                             className={style.cancel_button}
                             onClick={() => {
                                 dispatch(deleteContact(contact.id));
-                                toast.success("Contact deleted! (fields were empty)", {
+                                toast.success(t("contact.deletedEmptyFields"), {
                                     duration: 4000,
                                     style: { borderRadius: "10px", textAlign: "center" },
                                 });
@@ -377,7 +389,7 @@ export default function Contact({
                                 dispatch(stopEditing());
                             }}
                         >
-                            Confirm
+                            {t("contact.confirm")}
                         </button>
                     </div>
                 </div>
@@ -385,9 +397,7 @@ export default function Contact({
 
             {showExitConfirmModal && (
                 <div className={style.confirm_modal}>
-                    <p className={style.info_text}>
-                        You have unsaved changes. Are you sure you want to exit without saving?
-                    </p>
+                    <p className={style.info_text}>{t("contact.unsavedChanges")}</p>
                     <div className={style.deletion_confirmation_button_group}>
                         <button
                             className={style.save_button}
@@ -396,7 +406,7 @@ export default function Contact({
                                 dispatch(closeModal());
                             }}
                         >
-                            Cancel
+                            {t("contact.cancel")}
                         </button>
                         <button
                             className={style.cancel_button}
@@ -409,7 +419,7 @@ export default function Contact({
                                 setShowExitConfirmModal(false);
                             }}
                         >
-                            Confirm
+                            {t("contact.confirm")}
                         </button>
                     </div>
                 </div>

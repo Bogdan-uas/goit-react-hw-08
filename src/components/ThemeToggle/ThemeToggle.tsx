@@ -9,58 +9,62 @@ import { LuSun } from "react-icons/lu";
 import { IoMdMoon } from "react-icons/io";
 import { useEffect, ChangeEvent } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import css from "./ThemeToggle.module.css";
 
 export default function ThemeToggle() {
-const dispatch = useDispatch();
-const darkMode = useSelector(selectDarkMode);
-const isModalOpen = useSelector(selectIsModalOpen);
-const isEditingGlobal = useSelector(selectIsEditingGlobal);
-const isLocked = isModalOpen || isEditingGlobal;
+    const dispatch = useDispatch();
+    const darkMode = useSelector(selectDarkMode);
+    const isModalOpen = useSelector(selectIsModalOpen);
+    const isEditingGlobal = useSelector(selectIsEditingGlobal);
+    const isLocked = isModalOpen || isEditingGlobal;
+    const { t } = useTranslation();
 
-useEffect(() => {
-    document.body.classList.toggle("dark", darkMode);
-}, [darkMode]);
+    useEffect(() => {
+        document.body.classList.toggle("dark", darkMode);
+    }, [darkMode]);
 
-const handleToggle = () => {
-    dispatch(toggleDarkMode());
-};
+    const handleToggle = () => {
+        dispatch(toggleDarkMode());
+    };
 
-const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (isLocked) {
-    e.preventDefault();
-    toast.error(
-        isModalOpen
-            ? "Close the current modal before changing the theme!"
-            : "You can't change the theme while editing!",
-        {
-            duration: 4000,
-            style: { borderRadius: "10px", textAlign: "center" },
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (isLocked) {
+            e.preventDefault();
+            toast.error(
+                isModalOpen
+                    ? t("themeToggle.errors.closeModalFirst")
+                    : t("themeToggle.errors.cannotChangeWhileEditing"),
+                {
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                }
+            );
+        } else {
+            handleToggle();
         }
-    );
-    } else {
-        handleToggle();
-    }
-};
+    };
 
-return (
-    <div className={css.main_container}>
-    <p className={css.info_text}>You can also change your theme!</p>
-    <div className={`${css.display} ${isLocked ? css.disabled : ""}`}>
-        <input
-            className={css.input}
-            type="checkbox"
-            id="toggle"
-            checked={darkMode}
-            onChange={handleChange}
-        />
-        <label className={css.label} htmlFor="toggle">
-        <div className={css.circle}>
-            <LuSun className={css.sun} />
-            <IoMdMoon className={css.moon} />
+    return (
+        <div className={css.main_container}>
+            <p className={css.info_text}>{t("themeToggle.infoText")}</p>
+            <div className={`${css.display} ${isLocked ? css.disabled : ""}`}>
+                <input
+                    className={css.input}
+                    type="checkbox"
+                    id="toggle"
+                    checked={darkMode}
+                    onChange={handleChange}
+                    aria-checked={darkMode}
+                    aria-label={t("themeToggle.ariaLabel")}
+                />
+                <label className={css.label} htmlFor="toggle" tabIndex={0} role="switch" aria-checked={darkMode}>
+                    <div className={css.circle}>
+                        <LuSun className={css.sun} aria-hidden="true" />
+                        <IoMdMoon className={css.moon} aria-hidden="true" />
+                    </div>
+                </label>
+            </div>
         </div>
-        </label>
-    </div>
-    </div>
-);
+    );
 }

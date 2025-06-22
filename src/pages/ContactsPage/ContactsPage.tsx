@@ -5,6 +5,7 @@ import { selectIsLoading, selectContacts } from "../../redux/contacts/selectors"
 import type { AppDispatch } from '../../redux/store';
 import css from "./ContactsPage.module.css";
 import "../../components/App/App.css";
+import { useTranslation } from "react-i18next";
 
 const PageTitleSetter = lazy(() => import("../../components/PageTitleSetter/PageTitleSetter"));
 const ContactForm = lazy(() => import("../../components/ContactForm/ContactForm"));
@@ -13,6 +14,7 @@ const SortControl = lazy(() => import("../../components/SortControl/SortControl"
 const ContactList = lazy(() => import("../../components/ContactList/ContactList"));
 
 export default function ContactsPage() {
+    const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
     const isLoading = useSelector(selectIsLoading);
     const contacts = useSelector(selectContacts);
@@ -24,14 +26,14 @@ export default function ContactsPage() {
 
     return (
         <div className={css.main_container}>
-            <Suspense fallback={<p className={css.loading_text}>🤚Loading page...🤚</p>}>
-                <PageTitleSetter title="Contacts Page" />
+            <Suspense fallback={<p className={css.loading_text}>{t("contactsPage.loadingPage")}</p>}>
+                <PageTitleSetter title={t("contactsPage.title")} />
                 <ContactForm />
                 {hasContacts && <SearchBox />}
                 <SortControl />
                 <ContactList />
             </Suspense>
-            {isLoading && <p className={css.loading_text}>✋Loading...🤚</p>}
+            {isLoading && <p className={css.loading_text}>{t("contactsPage.loading")}</p>}
         </div>
     );
 }

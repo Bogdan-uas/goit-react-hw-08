@@ -1,0 +1,210 @@
+{
+    "home": {
+      "title": "Home Page",
+      "description": "A simple phone book, where you can add new contacts, delete them, look for or edit a specific one."
+    },
+    "contactsPage": {
+      "title": "Contacts Page",
+      "loadingPage": "🤚Loading page...🤚",
+      "loading": "✋Loading...🤚",
+      "validation": {
+        "nameTooShort": "Too short!",
+        "nameTooLong": "Too long!",
+        "nameRequired": "Name is required",
+        "invalidNumber": "Invalid number format",
+        "numberTooShort": "Must remain a valid number!",
+        "numberRequired": "Number is required"
+      },
+      "form": {
+        "nameLabel": "Name",
+        "numberLabel": "Number",
+        "addButton": "Add contact",
+        "deleteAllButton": "Delete all contacts",
+        "validation": {
+          "nameTooShort": "Too Short!",
+          "nameTooLong": "Too Long!",
+          "required": "Required",
+          "invalidNumber": "Must be a valid number!"
+        },
+        "toast": {
+          "closeModalFirst": "Close the modal first.",
+          "duplicateExact": "You can't create a contact with identical data",
+          "duplicateNumberWarning": "Warning: A contact with this phone number already exists! (A contact was still successfully added!)",
+          "successAdd": "Successfully added a contact!",
+          "failedAdd": "Failed to add contact.",
+          "closeModalBeforeAdding": "Close the current modal before adding another contact!",
+          "cantAddWhileEditing": "You can't add another contact while editing!",
+          "closeModalBeforeDeleting": "Close the current modal before deleting all contacts!",
+          "cantDeleteWhileEditing": "You can't delete all contacts while editing!",
+          "allDeleted": "All contacts deleted!",
+          "failedDeleteAll": "Failed to delete all contacts."
+        },
+        "deleteAllModal": {
+          "confirmText1": "Are you sure you want to delete",
+          "all": "ALL",
+          "confirmText2": "contacts?",
+          "warningText": "You won't be able to restore them!",
+          "cancelButton": "Cancel",
+          "confirmButton": "Confirm"
+        },
+        "list": {
+          "loading": "Loading..."
+        }
+      },
+      "searchBox": {
+        "searchByName": "Find a contact by name",
+        "searchByNumber": "Find a contact by number",
+        "placeholderByName": "Search by name",
+        "placeholderByNumber": "Search by number",
+        "toastModalSearch": "Close the current modal before searching!",
+        "toastEditingSearch": "You can't search some other contacts while editing one!",
+        "toastSuggestName": "Seems like you meant to search by name instead.",
+        "toastSuggestNumber": "Seems like you meant to search by number instead.",
+        "toastModalSwitch": "Close the current modal before changing search mode!",
+        "toastEditingSwitch": "You can't change search method while editing a contact!"
+      },
+      "sortControl": {
+        "promptShow": "Do you want to sort the contacts?",
+        "promptHide": "If you don't want to sort already, click it again!",
+        "infoSave": "(It will save your current sorting method!)",
+        "optionNone": "No sorting",
+        "optionAsc": "A-Z",
+        "optionDesc": "Z-A",
+        "toastModalToggle": "Close the current modal before pressing this button!",
+        "toastEditingToggle": "You can't press this button while editing a contact!",
+        "toastModalChange": "Close the current modal before choosing a sorting method!",
+        "toastEditingChange": "You can't sort the contacts while editing one!"
+      }
+    },
+    "loginPage": {
+      "title": "Login",
+      "labels": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "validation": {
+        "tooShort": "Too Short!",
+        "tooLong": "Too Long!",
+        "invalidEmail": "Invalid email format",
+        "emailRequired": "Email is required!",
+        "passwordRequired": "Password is required!"
+      },
+      "buttons": {
+        "submit": "Log in"
+      },
+      "text": {
+        "noAccount": "Don't have any account yet?🤨",
+        "registerLink": "Register"
+      },
+      "toasts": {
+        "loginSuccess": "Successfully logged in!",
+        "loginFail": "No one has registered under this data yet!",
+        "escapeTip": "Tip: All modals can be closed by pressing Escape!"
+      },
+      "form": {
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      }
+    },
+    "registerPage": {
+      "title": "Register",
+      "labels": {
+        "name": "Name",
+        "email": "Email",
+        "password": "Password"
+      },
+      "validation": {
+        "tooShort": "Too Short!",
+        "tooLong": "Too Long!",
+        "nameRequired": "Username is required!",
+        "emailRequired": "Email is required!",
+        "invalidEmail": "Invalid email format",
+        "passwordRequired": "Password is required!"
+      },
+      "buttons": {
+        "submit": "Sign up"
+      },
+      "text": {
+        "haveAccount": "Already have an account?😱",
+        "loginLink": "Login"
+      },
+      "toasts": {
+        "success": "Successfully registered!",
+        "escapeTip": "Tip: All modals can be closed by pressing Escape!",
+        "error": "Some of the data had been earlier used by another user!"
+      },
+      "form": {
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      }
+    },
+    "app": {
+      "loading": "🤚Loading...🤚",
+      "languageSelector": {
+        "prompt": "Choose a language?",
+        "selectLanguage": "Select Language",
+        "fallback": "Select language",
+        "toastModal": "Close the current modal before changing the language!",
+        "toastEditing": "You can't change the language while editing!"
+      },
+      "layout": {
+        "loading": "Loading..."
+      },
+      "navigation": {
+        "home": "Home",
+        "contacts": "Contacts"
+      }
+    },
+    "languages": {
+      "en": "English",
+      "de": "Deutsch (German)",
+      "fr": "Français (French)",
+      "es": "Español (Spanish)",
+      "uk": "Українська (Ukrainian)",
+      "pt": "Português (Portuguese)",
+      "ru": "Русский (Russian)",
+      "it": "Italiano (Italian)"
+    },
+    "authNav": {
+      "register": "Register",
+      "login": "Log In"
+    },
+    "contact": {
+      "namePlaceholder": "Enter name",
+      "numberPlaceholder": "Enter phone number",
+      "invalidPhoneCharacters": "Only digits, spaces, '+', and '-' allowed",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "errorModalOpen": "Cannot perform action while another modal is open",
+      "errorEditingOther": "Cannot perform action while editing another contact",
+      "confirmDelete": "Are you sure you want to delete \"{{name}}\"?",
+      "confirmDeleteEmpty": "Name and number cannot both be empty. You want to delete the contact instead?",
+      "deletedSuccess": "Contact deleted successfully",
+      "deletedEmptyFields": "Contact deleted due to empty fields",
+      "updatedSuccess": "Contact updated successfully",
+      "nothingToChange": "No changes to save",
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to exit?"
+    },
+    "themeToggle": {
+      "infoText": "You can also change your theme!",
+      "ariaLabel": "Toggle dark mode",
+      "errors": {
+        "closeModalFirst": "Close the current modal before changing the theme!",
+        "cannotChangeWhileEditing": "You can't change the theme while editing!"
+      }
+    },
+    "userMenu": {
+      "welcome": "Welcome, {{name}}! 🗿",
+      "logoutButton": "Log Out!",
+      "modalText": "Are you sure you want to <1>log out?</1>",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "errors": {
+        "editing": "You can't logout while editing a contact!",
+        "modalOpen": "Close the current modal before logging out!"
+      }
+    }
+}

@@ -1,0 +1,210 @@
+{
+  "home": {
+    "title": "Pagina principale",
+    "description": "Rubrica telefonica semplice dove puoi aggiungere, eliminare, cercare o modificare un contatto."
+  },
+  "contactsPage": {
+    "title": "Contatti",
+    "loadingPage": "🤚Caricamento pagina...🤚",
+    "loading": "✋Caricamento...🤚",
+    "validation": {
+      "nameTooShort": "Troppo corto!",
+      "nameTooLong": "Troppo lungo!",
+      "nameRequired": "Il nome è obbligatorio",
+      "invalidNumber": "Formato numero non valido",
+      "numberTooShort": "Numero troppo corto!",
+      "numberRequired": "Il numero è obbligatorio"
+    },
+    "form": {
+      "nameLabel": "Nome",
+      "numberLabel": "Numero",
+      "addButton": "Aggiungi contatto",
+      "deleteAllButton": "Elimina tutti i contatti",
+      "validation": {
+        "nameTooShort": "Troppo corto!",
+        "nameTooLong": "Troppo lungo!",
+        "required": "Obbligatorio",
+        "invalidNumber": "Il numero deve essere valido!"
+      },
+      "toast": {
+        "closeModalFirst": "Chiudi prima un'altra finestra.",
+        "duplicateExact": "Non puoi creare un contatto con dati identici",
+        "duplicateNumberWarning": "Attenzione: un contatto con questo numero esiste già! (Contatto aggiunto)",
+        "successAdd": "Contatto aggiunto con successo!",
+        "failedAdd": "Impossibile aggiungere il contatto.",
+        "closeModalBeforeAdding": "Chiudi la finestra attuale prima di aggiungere un altro contatto!",
+        "cantAddWhileEditing": "Non puoi aggiungere un contatto durante la modifica!",
+        "closeModalBeforeDeleting": "Chiudi la finestra attuale prima di eliminare tutti i contatti!",
+        "cantDeleteWhileEditing": "Non puoi eliminare tutti i contatti durante la modifica!",
+        "allDeleted": "Tutti i contatti sono stati eliminati!",
+        "failedDeleteAll": "Impossibile eliminare tutti i contatti."
+      },
+      "deleteAllModal": {
+        "confirmText1": "Sei sicuro di voler eliminare",
+        "all": "TUTTI I",
+        "confirmText2": "contatti?",
+        "warningText": "Non potrai recuperarli!",
+        "cancelButton": "Annulla",
+        "confirmButton": "Conferma"
+      },
+      "list": {
+        "loading": "Caricamento..."
+      }
+    },
+    "searchBox": {
+      "searchByName": "Trova un contatto per nome",
+      "searchByNumber": "Trova un contatto per numero",
+      "placeholderByName": "Cerca per nome",
+      "placeholderByNumber": "Cerca per numero",
+      "toastModalSearch": "Chiudi la finestra corrente prima di cercare!",
+      "toastEditingSearch": "Non puoi cercare altri contatti mentre ne modifichi uno!",
+      "toastSuggestName": "Sembra che volessi cercare per nome.",
+      "toastSuggestNumber": "Sembra che volessi cercare per numero.",
+      "toastModalSwitch": "Chiudi la finestra corrente prima di cambiare modalità di ricerca!",
+      "toastEditingSwitch": "Non puoi cambiare il metodo di ricerca durante la modifica!"
+    },
+    "sortControl": {
+      "promptShow": "Vuoi ordinare i contatti?",
+      "promptHide": "Se non vuoi ordinare, clicca di nuovo!",
+      "infoSave": "(Salverà il tuo metodo di ordinamento attuale!)",
+      "optionNone": "Nessun ordinamento",
+      "optionAsc": "A-Z",
+      "optionDesc": "Z-A",
+      "toastModalToggle": "Chiudi la finestra modale prima di premere questo pulsante!",
+      "toastEditingToggle": "Non puoi premere questo pulsante mentre modifichi un contatto!",
+      "toastModalChange": "Chiudi la finestra modale prima di scegliere un metodo di ordinamento!",
+      "toastEditingChange": "Non puoi ordinare i contatti mentre ne modifichi uno!"
+    }
+  },
+  "loginPage": {
+    "title": "Accesso",
+    "labels": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "validation": {
+      "tooShort": "Troppo corto!",
+      "tooLong": "Troppo lungo!",
+      "invalidEmail": "Formato email non valido",
+      "emailRequired": "L'email è obbligatoria!",
+      "passwordRequired": "La password è obbligatoria!"
+    },
+    "buttons": {
+      "submit": "Accedi"
+    },
+    "text": {
+      "noAccount": "Non hai ancora un account?🤨",
+      "registerLink": "Registrati"
+    },
+    "toasts": {
+      "loginSuccess": "Accesso riuscito!",
+      "loginFail": "Nessuno è registrato con questi dati!",
+      "escapeTip": "Suggerimento: Tutte le modali si possono chiudere premendo Escape!"
+    },
+    "form": {
+      "showPassword": "Mostra password",
+      "hidePassword": "Nascondi password"
+    }
+  },
+  "registerPage": {
+    "title": "Registrati",
+    "labels": {
+      "name": "Nome",
+      "email": "Email",
+      "password": "Password"
+    },
+    "validation": {
+      "tooShort": "Troppo corto!",
+      "tooLong": "Troppo lungo!",
+      "nameRequired": "Nome utente richiesto!",
+      "emailRequired": "Email richiesta!",
+      "invalidEmail": "Formato email non valido",
+      "passwordRequired": "Password richiesta!"
+    },
+    "buttons": {
+      "submit": "Iscriviti"
+    },
+    "text": {
+      "haveAccount": "Hai già un account?😱",
+      "loginLink": "Accedi"
+    },
+    "toasts": {
+      "success": "Registrazione completata con successo!",
+      "escapeTip": "Suggerimento: Tutte le modali possono essere chiuse premendo Escape!",
+      "error": "Alcuni dati sono già stati utilizzati da un altro utente!"
+    },
+    "form": {
+      "showPassword": "Mostra password",
+      "hidePassword": "Nascondi password"
+    }
+  },
+  "app": {
+    "loading": "🤚Caricamento...🤚",
+    "languageSelector": {
+      "prompt": "Scegli una lingua?",
+      "selectLanguage": "Seleziona lingua",
+      "fallback": "Seleziona lingua",
+      "toastModal": "Chiudi il modal corrente prima di cambiare lingua!",
+      "toastEditing": "Non puoi cambiare lingua durante la modifica!"
+    },
+    "layout": {
+      "loading": "Caricamento..."
+    },
+    "navigation": {
+      "home": "Home",
+      "contacts": "Contatti"
+    }
+  },
+  "languages": {
+    "en": "English (Inglese)",
+    "de": "Deutsch (Tedesco)",
+    "fr": "Français (Francese)",
+    "es": "Español (Spagnolo)",
+    "uk": "Українська (Ucraino)",
+    "pt": "Português (Portoghese)",
+    "ru": "Русский (Russo)",
+    "it": "Italiano"
+  },
+  "authNav": {
+    "register": "Registrati",
+    "login": "Accedi"
+  },
+  "contact": {
+    "namePlaceholder": "Inserisci nome",
+    "numberPlaceholder": "Inserisci numero di telefono",
+    "invalidPhoneCharacters": "Consentiti solo cifre, spazi, '+', '-'",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "save": "Salva",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "errorModalOpen": "Impossibile eseguire l'azione mentre un'altra finestra è aperta",
+    "errorEditingOther": "Impossibile eseguire l'azione mentre si modifica un altro contatto",
+    "confirmDelete": "Sei sicuro di voler eliminare \"{{name}}\"?",
+    "confirmDeleteEmpty": "Nome e numero non possono essere entrambi vuoti. Vuoi eliminare il contatto?",
+    "deletedSuccess": "Contatto eliminato con successo",
+    "deletedEmptyFields": "Contatto eliminato a causa di campi vuoti",
+    "updatedSuccess": "Contatto aggiornato con successo",
+    "nothingToChange": "Nessuna modifica da salvare",
+    "unsavedChanges": "Hai modifiche non salvate. Sei sicuro di voler uscire?"
+  },
+  "themeToggle": {
+    "infoText": "Puoi anche cambiare il tuo tema!",
+    "ariaLabel": "Attiva/disattiva modalità scura",
+    "errors": {
+      "closeModalFirst": "Chiudi la finestra modale corrente prima di cambiare tema!",
+      "cannotChangeWhileEditing": "Non puoi cambiare il tema mentre stai modificando!"
+    }
+  },
+  "userMenu": {
+    "welcome": "Benvenuto, {{name}}! 🗿",
+    "logoutButton": "Disconnettiti!",
+    "modalText": "Sei sicuro di voler <1>disconnetterti</1>?",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "errors": {
+      "editing": "Non puoi disconnetterti mentre stai modificando un contatto!",
+      "modalOpen": "Chiudi il modal corrente prima di disconnetterti!"
+    }
+  }
+}

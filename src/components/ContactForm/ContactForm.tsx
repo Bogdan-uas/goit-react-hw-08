@@ -16,6 +16,8 @@ import { openModal, closeModal } from "../../redux/ui/modalSlice";
 import type { Contact } from "../../redux/contacts/types";
 import type { AppDispatch } from '../../redux/store'; 
 
+import { useTranslation } from "react-i18next";
+
 interface FormValues {
   name: string;
   number: string;
@@ -26,17 +28,9 @@ const initialValues: FormValues = {
   number: "",
 };
 
-const FeedbackSchema = Yup.object().shape({
-  name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
-  number: Yup.string().min(9, "Must be a valid number!").required("Required"),
-});
-
-const normalizeIntlNumber = (number: string): string => {
-  const parsed = parsePhoneNumberFromString(number);
-  return parsed ? parsed.number : number;
-};
-
 export default function ContactForm(): React.ReactElement {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch<AppDispatch>();
 
   const isModalOpen = useSelector(selectIsModalOpen);
@@ -54,14 +48,36 @@ export default function ContactForm(): React.ReactElement {
   const nameFieldId = useId();
   const numberFieldId = useId();
 
+  const toastOptions = {
+    duration: 4000,
+    style: {
+      borderRadius: "10px",
+      textAlign: "center" as "center",
+    },
+  };
+
+  const FeedbackSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, t("contactsPage.form.validation.nameTooShort"))
+      .max(50, t("contactsPage.form.validation.nameTooLong"))
+      .required(t("contactsPage.form.validation.required")),
+    number: Yup.string()
+      .min(9, t("contactsPage.form.validation.invalidNumber"))
+      .required(t("contactsPage.form.validation.required")),
+  });
+
+  const normalizeIntlNumber = (number: string): string => {
+    const parsed = parsePhoneNumberFromString(number);
+    return parsed ? parsed.number : number;
+  };
+
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     if (isLocked) {
       toast.error(
-        isModalOpen ? "Close the modal first." : "You can't add while editing.",
-        {
-          duration: 4000,
-          style: { borderRadius: "10px", textAlign: "center" },
-        }
+        isModalOpen
+          ? t("contactsPage.form.toast.closeModalFirst")
+          : t("contactsPage.form.toast.cantAddWhileEditing"),
+        toastOptions
       );
       return;
     }
@@ -80,10 +96,11 @@ export default function ContactForm(): React.ReactElement {
     );
 
     if (isExactDuplicate) {
-      toast.error("You can't create a contact with identical data", {
+      toast.error(t("contactsPage.form.toast.duplicateExact"), {
+        ...toastOptions,
         duration: 5000,
-        style: { borderRadius: "10px", textAlign: "center" },
       });
+      actions.resetForm();
       return;
     }
 
@@ -91,27 +108,21 @@ export default function ContactForm(): React.ReactElement {
       .unwrap()
       .then(() => {
         if (isNumberDuplicate) {
-          toast(
-            "Warning: A contact with this phone number already exists! (A contact was still successfully added!)",
-            {
-              icon: "❗",
-              duration: 8000,
-              style: { borderRadius: "10px", textAlign: "center" },
-            }
-          );
-        } else {
-          toast.success("Successfully added a contact!", {
-            duration: 4000,
-            style: { borderRadius: "10px", textAlign: "center" },
+          toast(t("contactsPage.form.toast.duplicateNumberWarning"), {
+            icon: "❗",
+            duration: 8000,
+            style: {
+              borderRadius: "10px",
+              textAlign: "center" as "center",
+            },
           });
+        } else {
+          toast.success(t("contactsPage.form.toast.successAdd"), toastOptions);
         }
         actions.resetForm();
       })
       .catch(() => {
-        toast.error("Failed to add contact.", {
-          duration: 4000,
-          style: { borderRadius: "10px", textAlign: "center" },
-        });
+        toast.error(t("contactsPage.form.toast.failedAdd"), toastOptions);
       });
   };
 
@@ -127,18 +138,12 @@ export default function ContactForm(): React.ReactElement {
     dispatch(deleteAllContacts())
       .unwrap()
       .then(() => {
-        toast.success("All contacts deleted!", {
-          duration: 4000,
-          style: { borderRadius: "10px", textAlign: "center" },
-        });
+        toast.success(t("contactsPage.form.toast.allDeleted"), toastOptions);
         dispatch(closeModal());
         setShowDeleteAllModal(false);
       })
       .catch(() => {
-        toast.error("Failed to delete all contacts.", {
-          duration: 4000,
-          style: { borderRadius: "10px", textAlign: "center" },
-        });
+        toast.error(t("contactsPage.form.toast.failedDeleteAll"), toastOptions);
       });
   };
 
@@ -170,9 +175,14 @@ export default function ContactForm(): React.ReactElement {
           <Form className={style.form} onSubmit={handleSubmit}>
             <div className={style.name_number_container}>
               <label htmlFor={nameFieldId} className={style.label}>
-                Name
+                {t("contactsPage.form.nameLabel")}
               </label>
-              <Field type="text" name="name" id={nameFieldId} className={style.input} />
+              <Field
+                type="text"
+                name="name"
+                id={nameFieldId}
+                className={style.input}
+              />
               <ErrorMessage
                 className={style.error_message}
                 name="name"
@@ -181,9 +191,14 @@ export default function ContactForm(): React.ReactElement {
             </div>
             <div className={style.name_number_container}>
               <label htmlFor={numberFieldId} className={style.label}>
-                Number
+                {t("contactsPage.form.numberLabel")}
               </label>
-              <Field type="text" name="number" id={numberFieldId} className={style.input} />
+              <Field
+                type="text"
+                name="number"
+                id={numberFieldId}
+                className={style.input}
+              />
               <ErrorMessage
                 className={style.error_message}
                 name="number"
@@ -198,17 +213,14 @@ export default function ContactForm(): React.ReactElement {
                   e.preventDefault();
                   toast.error(
                     isModalOpen
-                      ? "Close the current modal before adding another contact!"
-                      : "You can't add another contact while editing!",
-                    {
-                      duration: 4000,
-                      style: { borderRadius: "10px", textAlign: "center" },
-                    }
+                      ? t("contactsPage.form.toast.closeModalBeforeAdding")
+                      : t("contactsPage.form.toast.cantAddWhileEditing"),
+                    toastOptions
                   );
                 }
               }}
             >
-              Add contact
+              {t("contactsPage.form.addButton")}
             </button>
           </Form>
         )}
@@ -225,12 +237,9 @@ export default function ContactForm(): React.ReactElement {
             if (isLocked) {
               toast.error(
                 isModalOpen
-                  ? "Close the current modal before deleting all contacts!"
-                  : "You can't delete all contacts while editing!",
-                {
-                  duration: 4000,
-                  style: { borderRadius: "10px", textAlign: "center" },
-                }
+                  ? t("contactsPage.form.toast.closeModalBeforeDeleting")
+                  : t("contactsPage.form.toast.cantDeleteWhileEditing"),
+                toastOptions
               );
             } else {
               dispatch(openModal());
@@ -238,7 +247,7 @@ export default function ContactForm(): React.ReactElement {
             }
           }}
         >
-          Delete all contacts
+          {t("contactsPage.form.deleteAllButton")}
         </button>
       )}
 
@@ -252,17 +261,19 @@ export default function ContactForm(): React.ReactElement {
           className={css.confirm_modal}
         >
           <p id="deleteAllTitle" className={css.info_text}>
-            Are you sure you want to delete <b>ALL</b> contacts?
+            {t("contactsPage.form.deleteAllModal.confirmText1")}
+            {" "}<b>{t("contactsPage.form.deleteAllModal.all")}</b>{" "}
+            {t("contactsPage.form.deleteAllModal.confirmText2")}
           </p>
           <span className={css.info_text}>
-            You won't be able to restore them!
+            {t("contactsPage.form.deleteAllModal.warningText")}
           </span>
           <div className={css.deletion_confirmation_button_group}>
             <button className={css.save_button} onClick={cancelDeleteAll}>
-              Cancel
+              {t("contactsPage.form.deleteAllModal.cancelButton")}
             </button>
             <button className={css.cancel_button} onClick={confirmDeleteAll}>
-              Confirm
+              {t("contactsPage.form.deleteAllModal.confirmButton")}
             </button>
           </div>
         </div>

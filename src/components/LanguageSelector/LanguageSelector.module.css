@@ -1,0 +1,124 @@
+.nativeSelect {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(100%) !important;
+    white-space: nowrap !important; 
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-left: 128px; 
+}
+
+.choice_text {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text);
+}
+
+.toggleButton {
+    appearance: none;
+    background-color: var(--bg);
+    border: 1px solid #ccc;
+    color: var(--text);
+    padding: 4px 36px 4px 8px;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    width: 219px;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: all 500ms ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggleButton:hover,
+.toggleButton:focus {
+    border-color: #0d6aff;
+    box-shadow: 0 0 3px #0d6aff;
+}
+
+.arrow {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    pointer-events: none;
+}
+
+.dropdownList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--custom_bg);
+    border: var(--hover);
+    border-radius: 8px;
+    width: 219px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    list-style: none;
+
+    opacity: 0;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.dropdownList.open {
+    opacity: 1;
+    transform: scaleY(1);
+    pointer-events: auto;
+}
+
+.dropdownList::-webkit-scrollbar {
+    display: none;
+}
+
+.option {
+    padding: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 500ms ease-in-out;
+}
+
+.option:hover,
+.option:focus {
+    background-color: #0d6aff;
+    color: var(--text);
+    outline: none;
+}
+
+.selected {
+    font-weight: 600;
+    background-color: #0d6aff;
+    color: var(--text); 
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
