@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 const languageCodes = ["en", "de", "fr", "es", "uk", "pt", "ru", "it"];
+const LOCAL_STORAGE_KEY = "languageSelectorHidden";
 
 export default function LanguageSelector() {
     const { t, i18n } = useTranslation();
@@ -16,13 +17,21 @@ export default function LanguageSelector() {
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
     const isLocked = isModalOpen || isEditingGlobal;
 
+    const [hidden, setHidden] = useState(() => {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        return saved === "true";
+    });
+
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_KEY, hidden.toString());
+    }, [hidden]);
+
     const dropdownRef = useRef<HTMLUListElement>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [dropdownCoords, setDropdownCoords] = useState({ top: 0, left: 0, width: 0 });
 
     const [showHidePrompt, setShowHidePrompt] = useState(false);
-    const [hidden, setHidden] = useState(false);
     const [interacted, setInteracted] = useState(false);
     const promptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -174,7 +183,11 @@ export default function LanguageSelector() {
 
     if (hidden) {
         return (
-            <button className={css.another_language_button} type="button" onClick={() => setHidden(false)}>
+            <button
+                className={css.another_language_button}
+                type="button"
+                onClick={() => setHidden(false)}
+            >
                 {t("app.languageSelector.anotherLanguage")}
             </button>
         );
