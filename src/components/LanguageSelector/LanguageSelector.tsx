@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch ,useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { createPortal } from "react-dom";
-import {
-    selectIsModalOpen,
-    selectIsEditingGlobal,
-} from "../../redux/ui/selectors";
+import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import css from "./LanguageSelector.module.css";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -12,7 +9,6 @@ import { useTranslation } from "react-i18next";
 const languageCodes = ["en", "de", "fr", "es", "uk", "pt", "ru", "it"];
 
 export default function LanguageSelector() {
-    const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(i18n.language || "en");
@@ -23,14 +19,37 @@ export default function LanguageSelector() {
     const dropdownRef = useRef<HTMLUListElement>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [dropdownCoords, setDropdownCoords] = useState<{ top: number; left: number; width: number }>({
-        top: 0,
-        left: 0,
-        width: 0,
-    });
+    const [dropdownCoords, setDropdownCoords] = useState({ top: 0, left: 0, width: 0 });
+
+    const [showHidePrompt, setShowHidePrompt] = useState(false);
+    const [hidden, setHidden] = useState(false);
+    const [interacted, setInteracted] = useState(false);
+    const promptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const startPromptTimer = (delay: number) => {
+        if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+        promptTimerRef.current = setTimeout(() => {
+            if (!interacted) setShowHidePrompt(true);
+        }, delay);
+    };
 
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
+        setInteracted(false);
+        startPromptTimer(5000);
+        return () => {
+            if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+        };
+    }, []);
+
+    const markInteraction = () => {
+        if (!interacted) {
+            setInteracted(true);
+            if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+        }
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
             if (
                 dropdownRef.current &&
                 !dropdownRef.current.contains(event.target as Node) &&
@@ -39,13 +58,13 @@ export default function LanguageSelector() {
             ) {
                 setOpen(false);
             }
-        }
+        };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     useEffect(() => {
-        function updateDropdownPosition() {
+        const updateDropdownPosition = () => {
             if (open && buttonRef.current) {
                 const rect = buttonRef.current.getBoundingClientRect();
                 setDropdownCoords({
@@ -54,15 +73,14 @@ export default function LanguageSelector() {
                     width: rect.width,
                 });
             }
-        }
-    
+        };
+
         updateDropdownPosition();
-    
         if (open) {
             window.addEventListener("scroll", updateDropdownPosition);
             window.addEventListener("resize", updateDropdownPosition);
         }
-    
+
         return () => {
             window.removeEventListener("scroll", updateDropdownPosition);
             window.removeEventListener("resize", updateDropdownPosition);
@@ -70,38 +88,30 @@ export default function LanguageSelector() {
     }, [open]);
 
     useEffect(() => {
-        function handleKeyDown(event: KeyboardEvent) {
-            if (event.key === "Escape") {
-                setOpen(false);
-            }
-        }
-    
-        if (open) {
-            document.addEventListener("keydown", handleKeyDown);
-        }
-    
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setOpen(false);
         };
+        if (open) document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
     }, [open]);
 
     const onNativeSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const code = e.target.value;
-        setSelected(code);
-        i18n.changeLanguage(code);
+        markInteraction();
+        setSelected(e.target.value);
+        i18n.changeLanguage(e.target.value);
+        setOpen(false);
     };
 
     const toggleOpen = (e?: React.MouseEvent<HTMLButtonElement>) => {
+        markInteraction();
+
         if (isLocked) {
             e?.preventDefault();
             toast.error(
                 isModalOpen
                     ? t("app.languageSelector.toastModal")
                     : t("app.languageSelector.toastEditing"),
-                {
-                    duration: 4000,
-                    style: { borderRadius: "10px", textAlign: "center" },
-                }
+                { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
             );
             return;
         }
@@ -109,14 +119,14 @@ export default function LanguageSelector() {
     };
 
     const onSelectLanguage = (code: string) => {
+        markInteraction();
         setSelected(code);
         i18n.changeLanguage(code);
         setOpen(false);
 
         if (selectRef.current) {
             selectRef.current.value = code;
-            const event = new Event("change", { bubbles: true });
-            selectRef.current.dispatchEvent(event);
+            selectRef.current.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
         if (isLocked) {
@@ -124,12 +134,8 @@ export default function LanguageSelector() {
                 isModalOpen
                     ? t("app.languageSelector.toastModal")
                     : t("app.languageSelector.toastEditing"),
-                {
-                    duration: 4000,
-                    style: { borderRadius: "10px", textAlign: "center" },
-                }
+                { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
             );
-            return;
         }
     };
 
@@ -142,7 +148,7 @@ export default function LanguageSelector() {
             tabIndex={-1}
             className={`${css.dropdownList} ${open ? css.open : ""}`}
             style={{
-                position: 'absolute',
+                position: "absolute",
                 top: dropdownCoords.top,
                 left: dropdownCoords.left,
                 width: dropdownCoords.width,
@@ -157,9 +163,7 @@ export default function LanguageSelector() {
                     className={`${css.option} ${selected === code ? css.selected : ""}`}
                     onClick={() => onSelectLanguage(code)}
                     onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                            onSelectLanguage(code);
-                        }
+                        if (e.key === "Enter" || e.key === " ") onSelectLanguage(code);
                     }}
                 >
                     {t(`languages.${code}`)}
@@ -167,6 +171,14 @@ export default function LanguageSelector() {
             ))}
         </ul>
     );
+
+    if (hidden) {
+        return (
+            <button className={css.another_language_button} type="button" onClick={() => setHidden(false)}>
+                {t("app.languageSelector.anotherLanguage")}
+            </button>
+        );
+    }
 
     return (
         <div className={css.container}>
@@ -201,6 +213,37 @@ export default function LanguageSelector() {
             </button>
 
             {open && createPortal(dropdownElement, document.body)}
+
+            {showHidePrompt && (
+                <div className={css.promptOverlay}>
+                    <div className={css.promptBox}>
+                        <p className={css.promptText}>{t("app.languageSelector.hidePrompt")}</p>
+                        <div className={css.promptButtons}>
+                            <button
+                                type="button"
+                                className={css.promptButtonConfirm}
+                                onClick={() => {
+                                    setHidden(true);
+                                    setShowHidePrompt(false);
+                                    markInteraction();
+                                }}
+                            >
+                                ✔
+                            </button>
+                            <button
+                                type="button"
+                                className={css.promptButtonCancel}
+                                onClick={() => {
+                                    setShowHidePrompt(false);
+                                    startPromptTimer(20000);
+                                }}
+                            >
+                                ✖
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

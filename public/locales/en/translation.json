@@ -142,10 +142,12 @@
       "loading": "🤚Loading...🤚",
       "languageSelector": {
         "prompt": "Choose a language?",
-        "selectLanguage": "Select Language",
-        "fallback": "Select language",
-        "toastModal": "Close the current modal before changing the language!",
-        "toastEditing": "You can't change the language while editing!"
+        "hidePrompt": "Hide it?",
+        "anotherLanguage": "Another language?",
+        "toastModal": "You cannot change language while a modal is open.",
+        "toastEditing": "You cannot change language while editing a contact.",
+        "fallback": "Language",
+        "selectLanguage": "Select language"
       },
       "layout": {
         "loading": "Loading..."

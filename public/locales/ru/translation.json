@@ -141,11 +141,13 @@
   "app": {
     "loading": "🤚Загрузка...🤚",
     "languageSelector": {
-      "prompt": "Выберите язык?",
-      "selectLanguage": "Выбрать язык",
-      "fallback": "Выбрать язык",
-      "toastModal": "Закройте текущее окно перед сменой языка!",
-      "toastEditing": "Вы не можете изменить язык во время редактирования!"
+      "prompt": "Выбрать язык?",
+      "hidePrompt": "Скрыть?",
+      "anotherLanguage": "Другой язык?",
+      "toastModal": "Нельзя изменить язык, пока открыто окно.",
+      "toastEditing": "Нельзя изменить язык при редактировании контакта.",
+      "fallback": "Язык",
+      "selectLanguage": "Выбрать язык"
     },
     "layout": {
       "loading": "Загрузка..."

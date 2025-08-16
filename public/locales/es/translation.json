@@ -141,11 +141,13 @@
   "app": {
     "loading": "🤚Cargando...🤚",
     "languageSelector": {
-      "prompt": "¿Elige un idioma?",
-      "selectLanguage": "Seleccionar idioma",
-      "fallback": "Seleccionar idioma",
-      "toastModal": "¡Cierra el modal actual antes de cambiar el idioma!",
-      "toastEditing": "¡No puedes cambiar el idioma mientras editas!"
+      "prompt": "¿Elegir un idioma?",
+      "hidePrompt": "¿Ocultarlo?",
+      "anotherLanguage": "¿Otro idioma?",
+      "toastModal": "No puede cambiar el idioma mientras haya una ventana abierta.",
+      "toastEditing": "No puede cambiar el idioma mientras edita un contacto.",
+      "fallback": "Idioma",
+      "selectLanguage": "Seleccionar idioma"
     },
     "layout": {
       "loading": "Cargando..."

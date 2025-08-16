@@ -8,7 +8,7 @@
     overflow: hidden !important;
     clip: rect(0 0 0 0) !important;
     clip-path: inset(100%) !important;
-    white-space: nowrap !important; 
+    white-space: nowrap !important;
 }
 
 .container {
@@ -17,7 +17,7 @@
     flex-direction: row;
     align-items: center;
     gap: 16px;
-    margin-left: 128px; 
+    margin-left: 128px;
 }
 
 .choice_text {
@@ -65,23 +65,19 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
-    background: var(--custom_bg);
-    border: var(--hover);
-    border-radius: 8px;
     width: 219px;
+    background: var(--bg);
+    border: 1px solid var(--hover);
+    border-radius: 8px;
     margin-top: 4px;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 0;
     list-style: none;
 
     opacity: 0;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
     transform: scaleY(0);
     transform-origin: top;
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -102,7 +98,7 @@
     padding: 8px;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 500ms ease-in-out;
+    transition: all 300ms ease-in-out;
 }
 
 .option:hover,
@@ -115,10 +111,88 @@
 .selected {
     font-weight: 600;
     background-color: #0d6aff;
-    color: var(--text); 
+    color: var(--text);
 }
 
 .disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.another_language_button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #747bff;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    transition: all 500ms ease-in-out;
+}
+
+.another_language_button:hover {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.promptBox {
+    position: absolute;
+    background: var(--bg);
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-width: 200px;
+}
+
+.promptText {
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.promptButtons {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+.promptButtonConfirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #747bff;
+    color: #f1f4fd;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    transition: all 500ms ease-in-out;
+}
+
+.promptButtonConfirm:hover {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.promptButtonCancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fa5256;
+    color: #f1f4fd;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    transition: all 500ms ease-in-out;
+}
+
+.promptButtonCancel:hover {
+    background-color: red;
+    color: #fff;
 }

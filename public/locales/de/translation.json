@@ -141,11 +141,13 @@
   "app": {
     "loading": "🤚Lädt...🤚",
     "languageSelector": {
-      "prompt": "Eine Sprache wählen?",
-      "selectLanguage": "Sprache auswählen",
-      "fallback": "Sprache auswählen",
-      "toastModal": "Schließe das aktuelle Modal, bevor du die Sprache änderst!",
-      "toastEditing": "Du kannst die Sprache während des Bearbeitens nicht ändern!"
+      "prompt": "Sprache wählen?",
+      "hidePrompt": "Verbergen?",
+      "anotherLanguage": "Andere Sprache?",
+      "toastModal": "Sie können die Sprache nicht ändern, während ein Modal geöffnet ist.",
+      "toastEditing": "Sie können die Sprache nicht ändern, während Sie einen Kontakt bearbeiten.",
+      "fallback": "Sprache",
+      "selectLanguage": "Sprache auswählen"
     },
     "layout": {
       "loading": "Wird geladen..."

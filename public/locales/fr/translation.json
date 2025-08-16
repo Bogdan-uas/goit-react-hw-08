@@ -141,11 +141,13 @@
   "app": {
     "loading": "🤚Chargement...🤚",
     "languageSelector": {
-      "prompt": "Choisissez une langue ?",
-      "selectLanguage": "Choisir la langue",
-      "fallback": "Choisir la langue",
-      "toastModal": "Fermez la fenêtre modale actuelle avant de changer de langue !",
-      "toastEditing": "Vous ne pouvez pas changer de langue pendant l'édition !"
+      "prompt": "Choisir une langue ?",
+      "hidePrompt": "Masquer ?",
+      "anotherLanguage": "Une autre langue ?",
+      "toastModal": "Vous ne pouvez pas changer de langue pendant qu'une fenêtre est ouverte.",
+      "toastEditing": "Vous ne pouvez pas changer de langue en éditant un contact.",
+      "fallback": "Langue",
+      "selectLanguage": "Sélectionner une langue"
     },
     "layout": {
       "loading": "Chargement..."
