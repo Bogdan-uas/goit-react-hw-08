@@ -8,14 +8,12 @@ export default function HomePage() {
     const { t } = useTranslation();
 
     return (
-        <div>
+        <div className={css.home_container}>
             <Suspense fallback={null}>
                 <PageTitleSetter title={t("home.title")} />
             </Suspense>
 
-            <h1 className={css.main_title}>
-                {t("home.description")}
-            </h1>
+            <h1 className={css.main_title}>{t("home.description")}</h1>
             <p className={css.emoji}>🥸</p>
         </div>
     );

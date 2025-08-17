@@ -1,4 +1,11 @@
-import React, { useEffect, lazy, Suspense, ReactElement } from "react";
+import React, {
+  lazy,
+  Suspense,
+  ReactElement,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
@@ -27,33 +34,43 @@ function App(): ReactElement {
 
     useEffect(() => {
         dispatch(apiRefreshUser());
-    }, [dispatch]);
+    }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         document.body.classList.toggle("dark", darkMode);
     }, [darkMode]);
 
     useEffect(() => {
-        import("../../pages/LoginPage/LoginPage");
-        import("../../pages/RegistrationPage/RegistrationPage");
+        if ("requestIdleCallback" in window) {
+            (window as any).requestIdleCallback(() => {
+                import("../../pages/LoginPage/LoginPage");
+                import("../../pages/RegistrationPage/RegistrationPage");
+            });
+        }
     }, []);
 
-    const toasterOptions = {
-        reverseOrder: true,
-        toastOptions: {
-            style: {
-                background: "var(--modal_bg)",
-                color: "var(--text)",
-                borderRadius: "10px",
-                boxShadow: "var(--shadow)",
+    const toasterOptions = useMemo(
+        () => ({
+            reverseOrder: true,
+            toastOptions: {
+                style: {
+                    background: "var(--modal_bg)",
+                    color: "var(--text)",
+                    borderRadius: "10px",
+                    boxShadow: "var(--shadow)",
+                },
             },
-        },
-    };
+        }),
+        []
+    );
 
-    const toasterPosition = isAnyModalOpen ? "top-right" : "top-center";
+    const toasterPosition = useMemo(
+        () => (isAnyModalOpen ? "top-right" : "top-center"),
+        [isAnyModalOpen]
+    );
 
     return (
-        <Suspense fallback={<div>{t("app.loading")}</div>}>
+        <Suspense fallback={<div className="suspense-fallback">{t("app.loading")}</div>}>
             <Layout>
                 <Toaster position={toasterPosition} {...toasterOptions} />
 

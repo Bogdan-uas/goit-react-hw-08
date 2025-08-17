@@ -1,6 +1,6 @@
 import style from "../../components/ContactForm/ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import { useId, useState, lazy, Suspense } from "react";
+import { useId, useState, lazy, Suspense, memo } from "react";
 import * as Yup from "yup";
 import type { AppDispatch } from '../../redux/store';
 import { useDispatch } from "react-redux";
@@ -9,11 +9,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-const AnimatedEyeIcon = lazy(() => import("../AnimatedEyeIcon/AnimatedEyeIcon"));
+const AnimatedEyeIcon = memo(lazy(() => import("../AnimatedEyeIcon/AnimatedEyeIcon")));
 
 interface LoginValues {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 export default function LoginForm() {
@@ -23,8 +23,9 @@ export default function LoginForm() {
     const emailFieldId = useId();
     const passwordFieldId = useId();
     const [showPassword, setShowPassword] = useState(false);
-    const [passwordValue, setPasswordValue] = useState("");
     const navigate = useNavigate();
+
+    const toastOptions = { duration: 6000, style: { borderRadius: "10px", textAlign: "center" as React.CSSProperties["textAlign"] } };
 
     const LoginSchema = Yup.object().shape({
         email: Yup.string()
@@ -38,17 +39,12 @@ export default function LoginForm() {
             .required(t("loginPage.validation.passwordRequired")),
     });
 
-    const handleSubmit = async (
-        values: LoginValues,
-        actions: FormikHelpers<LoginValues>
-    ) => {
+    const handleSubmit = async (values: LoginValues, actions: FormikHelpers<LoginValues>) => {
         try {
             await dispatch(apiLogin(values)).unwrap();
             actions.resetForm();
-            toast.success(t("loginPage.toasts.loginSuccess"), {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+            toast.success(t("loginPage.toasts.loginSuccess"), toastOptions);
+
             setTimeout(() => {
                 toast(t("loginPage.toasts.escapeTip"), {
                     icon: "🗿",
@@ -56,11 +52,8 @@ export default function LoginForm() {
                     style: { borderRadius: "10px", textAlign: "center" },
                 });
             }, 4000);
-        } catch (error) {
-            toast.error(t("loginPage.toasts.loginFail"), {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+        } catch {
+            toast.error(t("loginPage.toasts.loginFail"), toastOptions);
             navigate("/register");
         }
     };
@@ -79,23 +72,11 @@ export default function LoginForm() {
                         <label htmlFor={emailFieldId} className={style.label}>
                             {t("loginPage.labels.email")}
                         </label>
-                        <Field
-                            type="email"
-                            name="email"
-                            id={emailFieldId}
-                            className={style.input}
-                        />
-                        <ErrorMessage
-                            className={style.error_message}
-                            name="email"
-                            component="span"
-                        />
+                        <Field type="email" name="email" id={emailFieldId} className={style.input} />
+                        <ErrorMessage name="email" component="span" className={style.error_message} />
                     </div>
 
-                    <div
-                        className={style.name_number_container}
-                        style={{ position: "relative" }}
-                    >
+                    <div className={style.name_number_container} style={{ position: "relative" }}>
                         <label htmlFor={passwordFieldId} className={style.label}>
                             {t("loginPage.labels.password")}
                         </label>
@@ -104,38 +85,28 @@ export default function LoginForm() {
                             name="password"
                             id={passwordFieldId}
                             value={values.password}
-                            onChange={(e) => {
-                                handleChange(e);
-                                setPasswordValue(e.target.value);
-                            }}
+                            onChange={handleChange}
                             className={style.input}
                         />
-                        {passwordValue && (
+                        {values.password && (
                             <button
                                 type="button"
-                                onClick={() => setShowPassword((prev) => !prev)}
+                                onClick={() => setShowPassword(prev => !prev)}
                                 className={style.eye_button}
-                                aria-label={
-                                    showPassword
-                                        ? t("loginPage.form.hidePassword")
-                                        : t("loginPage.form.showPassword")
-                                }
+                                aria-label={showPassword ? t("loginPage.form.hidePassword") : t("loginPage.form.showPassword")}
                             >
                                 <Suspense fallback={null}>
                                     <AnimatedEyeIcon active={showPassword} />
                                 </Suspense>
                             </button>
                         )}
-                        <ErrorMessage
-                            className={style.error_message}
-                            name="password"
-                            component="span"
-                        />
+                        <ErrorMessage name="password" component="span" className={style.error_message} />
                     </div>
 
                     <button type="submit" className={style.button}>
                         {t("loginPage.buttons.submit")}
                     </button>
+
                     <p className={style.no_account_text}>{t("loginPage.text.noAccount")}</p>
                     <NavLink className={style.to_register_link} to="/register">
                         {t("loginPage.text.registerLink")}

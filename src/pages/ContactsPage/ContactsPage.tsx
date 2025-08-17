@@ -30,7 +30,7 @@ export default function ContactsPage() {
                 <PageTitleSetter title={t("contactsPage.title")} />
                 <ContactForm />
                 {hasContacts && <SearchBox />}
-                <SortControl />
+                {hasContacts && <SortControl />}
                 <ContactList />
             </Suspense>
             {isLoading && <p className={css.loading_text}>{t("contactsPage.loading")}</p>}

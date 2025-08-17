@@ -18,20 +18,20 @@ export default function UserMenu() {
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-    const onLogoutClick = () => {
-        if (isEditingGlobal) {
-            toast.error(t("userMenu.errors.editing"), {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
-            return;
-        }
+    const isLocked = isAnyModalOpen || isEditingGlobal;
 
-        if (isAnyModalOpen) {
-            toast.error(t("userMenu.errors.modalOpen"), {
-                duration: 6000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+    const showLockedToast = () => {
+        toast.error(
+            isEditingGlobal
+                ? t("userMenu.errors.editing")
+                : t("userMenu.errors.modalOpen"),
+            { duration: 6000, style: { borderRadius: "10px", textAlign: "center" } }
+        );
+    };
+
+    const onLogoutClick = () => {
+        if (isLocked) {
+            showLockedToast();
             return;
         }
 
@@ -51,9 +51,9 @@ export default function UserMenu() {
     };
 
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isLogoutModalOpen) return;
+        if (!isLogoutModalOpen) return;
 
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
                 e.preventDefault();
                 cancelLogout();
@@ -71,7 +71,7 @@ export default function UserMenu() {
         <div className={css.userMenu}>
             <p className={css.userdata}>{t("userMenu.welcome", { name: user.name })}</p>
             <button
-                className={`${css.button} ${(isAnyModalOpen || isEditingGlobal) ? css.disabled : ""}`}
+                className={`${css.button} ${isLocked ? css.disabled : ""}`}
                 type="button"
                 onClick={onLogoutClick}
             >

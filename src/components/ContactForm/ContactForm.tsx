@@ -4,18 +4,16 @@ import css from "../Contact/Contact.module.css";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import toast from "react-hot-toast";
+import toast, { ToastOptions } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectContacts } from "../../redux/contacts/selectors";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
-
 import { addContact, deleteAllContacts } from "../../redux/contacts/operations";
 import { openModal, closeModal } from "../../redux/ui/modalSlice";
 
 import type { Contact } from "../../redux/contacts/types";
 import type { AppDispatch } from '../../redux/store'; 
-
 import { useTranslation } from "react-i18next";
 
 interface FormValues {
@@ -23,37 +21,32 @@ interface FormValues {
   number: string;
 }
 
-const initialValues: FormValues = {
-  name: "",
-  number: "",
-};
+const initialValues: FormValues = { name: "", number: "" };
 
 export default function ContactForm(): React.ReactElement {
   const { t } = useTranslation();
-
   const dispatch = useDispatch<AppDispatch>();
 
+  const contacts = useSelector(selectContacts);
   const isModalOpen = useSelector(selectIsModalOpen);
   const isEditingGlobal = useSelector(selectIsEditingGlobal);
   const isLocked = isModalOpen || isEditingGlobal;
 
-  const contacts = useSelector(selectContacts);
-  const hasContacts = contacts.length > 0;
-
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
-
   const deleteAllButtonRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const nameFieldId = useId();
   const numberFieldId = useId();
 
-  const toastOptions = {
+  const toastOptions: ToastOptions = {
     duration: 4000,
-    style: {
-      borderRadius: "10px",
-      textAlign: "center" as "center",
-    },
+    style: { borderRadius: "10px", textAlign: "center" },
+  };
+
+  const showToast = (message: string, isError = true, options?: ToastOptions) => {
+    if (isError) toast.error(message, { ...toastOptions, ...options });
+    else toast.success(message, { ...toastOptions, ...options });
   };
 
   const FeedbackSchema = Yup.object().shape({
@@ -66,40 +59,33 @@ export default function ContactForm(): React.ReactElement {
       .required(t("contactsPage.form.validation.required")),
   });
 
-  const normalizeIntlNumber = (number: string): string => {
-    const parsed = parsePhoneNumberFromString(number);
-    return parsed ? parsed.number : number;
-  };
+  const normalizeNumber = (num: string) => parsePhoneNumberFromString(num)?.number || num;
 
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     if (isLocked) {
-      toast.error(
+      showToast(
         isModalOpen
           ? t("contactsPage.form.toast.closeModalFirst")
-          : t("contactsPage.form.toast.cantAddWhileEditing"),
-        toastOptions
+          : t("contactsPage.form.toast.cantAddWhileEditing")
       );
       return;
     }
 
     const inputName = values.name.trim().toLowerCase();
-    const inputNumber = normalizeIntlNumber(values.number);
+    const inputNumber = normalizeNumber(values.number);
 
     const isExactDuplicate = contacts.some(
-      (contact: Contact) =>
-        contact.name.trim().toLowerCase() === inputName &&
-        normalizeIntlNumber(contact.number) === inputNumber
+      (c: Contact) =>
+        c.name.trim().toLowerCase() === inputName &&
+        normalizeNumber(c.number) === inputNumber
     );
 
     const isNumberDuplicate = contacts.some(
-      (contact: Contact) => normalizeIntlNumber(contact.number) === inputNumber
+      (c: Contact) => normalizeNumber(c.number) === inputNumber
     );
 
     if (isExactDuplicate) {
-      toast.error(t("contactsPage.form.toast.duplicateExact"), {
-        ...toastOptions,
-        duration: 5000,
-      });
+      showToast(t("contactsPage.form.toast.duplicateExact"), true, { duration: 5000 });
       actions.resetForm();
       return;
     }
@@ -111,53 +97,38 @@ export default function ContactForm(): React.ReactElement {
           toast(t("contactsPage.form.toast.duplicateNumberWarning"), {
             icon: "❗",
             duration: 8000,
-            style: {
-              borderRadius: "10px",
-              textAlign: "center" as "center",
-            },
+            style: { borderRadius: "10px", textAlign: "center" },
           });
         } else {
-          toast.success(t("contactsPage.form.toast.successAdd"), toastOptions);
+          showToast(t("contactsPage.form.toast.successAdd"), false);
         }
         actions.resetForm();
       })
-      .catch(() => {
-        toast.error(t("contactsPage.form.toast.failedAdd"), toastOptions);
-      });
+      .catch(() => showToast(t("contactsPage.form.toast.failedAdd")));
   };
 
   const cancelDeleteAll = () => {
     dispatch(closeModal());
     setShowDeleteAllModal(false);
-    if (deleteAllButtonRef.current) {
-      deleteAllButtonRef.current.focus();
-    }
+    deleteAllButtonRef.current?.focus();
   };
 
   const confirmDeleteAll = () => {
     dispatch(deleteAllContacts())
       .unwrap()
       .then(() => {
-        toast.success(t("contactsPage.form.toast.allDeleted"), toastOptions);
-        dispatch(closeModal());
-        setShowDeleteAllModal(false);
+        showToast(t("contactsPage.form.toast.allDeleted"), false);
+        cancelDeleteAll();
       })
-      .catch(() => {
-        toast.error(t("contactsPage.form.toast.failedDeleteAll"), toastOptions);
-      });
+      .catch(() => showToast(t("contactsPage.form.toast.failedDeleteAll")));
   };
 
   useEffect(() => {
     if (!showDeleteAllModal) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        cancelDeleteAll();
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        confirmDeleteAll();
-      }
+      if (e.key === "Escape") cancelDeleteAll();
+      else if (e.key === "Enter") confirmDeleteAll();
     };
 
     window.addEventListener("keydown", handleKeyDown as any);
@@ -166,56 +137,30 @@ export default function ContactForm(): React.ReactElement {
 
   return (
     <div className={style.main_container}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={FeedbackSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} validationSchema={FeedbackSchema} onSubmit={handleSubmit}>
         {({ handleSubmit }) => (
           <Form className={style.form} onSubmit={handleSubmit}>
-            <div className={style.name_number_container}>
-              <label htmlFor={nameFieldId} className={style.label}>
-                {t("contactsPage.form.nameLabel")}
-              </label>
-              <Field
-                type="text"
-                name="name"
-                id={nameFieldId}
-                className={style.input}
-              />
-              <ErrorMessage
-                className={style.error_message}
-                name="name"
-                component="span"
-              />
-            </div>
-            <div className={style.name_number_container}>
-              <label htmlFor={numberFieldId} className={style.label}>
-                {t("contactsPage.form.numberLabel")}
-              </label>
-              <Field
-                type="text"
-                name="number"
-                id={numberFieldId}
-                className={style.input}
-              />
-              <ErrorMessage
-                className={style.error_message}
-                name="number"
-                component="span"
-              />
-            </div>
+            {["name", "number"].map((field, i) => {
+              const id = field === "name" ? nameFieldId : numberFieldId;
+              const label = field === "name" ? t("contactsPage.form.nameLabel") : t("contactsPage.form.numberLabel");
+              return (
+                <div key={i} className={style.name_number_container}>
+                  <label htmlFor={id} className={style.label}>{label}</label>
+                  <Field type="text" name={field} id={id} className={style.input} />
+                  <ErrorMessage className={style.error_message} name={field} component="span" />
+                </div>
+              );
+            })}
             <button
               type="submit"
               className={`${style.button} ${isLocked ? style.disabled : ""}`}
               onClick={(e) => {
                 if (isLocked) {
                   e.preventDefault();
-                  toast.error(
+                  showToast(
                     isModalOpen
                       ? t("contactsPage.form.toast.closeModalBeforeAdding")
-                      : t("contactsPage.form.toast.cantAddWhileEditing"),
-                    toastOptions
+                      : t("contactsPage.form.toast.cantAddWhileEditing")
                   );
                 }
               }}
@@ -226,20 +171,17 @@ export default function ContactForm(): React.ReactElement {
         )}
       </Formik>
 
-      {hasContacts && (
+      {contacts.length > 0 && (
         <button
           ref={deleteAllButtonRef}
           type="button"
-          className={`${css.delete_button} ${style.delete_button} ${
-            isLocked ? style.disabled : ""
-          }`}
+          className={`${css.delete_button} ${style.delete_button} ${isLocked ? style.disabled : ""}`}
           onClick={() => {
             if (isLocked) {
-              toast.error(
+              showToast(
                 isModalOpen
                   ? t("contactsPage.form.toast.closeModalBeforeDeleting")
-                  : t("contactsPage.form.toast.cantDeleteWhileEditing"),
-                toastOptions
+                  : t("contactsPage.form.toast.cantDeleteWhileEditing")
               );
             } else {
               dispatch(openModal());
@@ -252,22 +194,11 @@ export default function ContactForm(): React.ReactElement {
       )}
 
       {showDeleteAllModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="deleteAllTitle"
-          tabIndex={-1}
-          ref={modalRef}
-          className={css.confirm_modal}
-        >
+        <div role="dialog" aria-modal="true" aria-labelledby="deleteAllTitle" tabIndex={-1} ref={modalRef} className={css.confirm_modal}>
           <p id="deleteAllTitle" className={css.info_text}>
-            {t("contactsPage.form.deleteAllModal.confirmText1")}
-            {" "}<b>{t("contactsPage.form.deleteAllModal.all")}</b>{" "}
-            {t("contactsPage.form.deleteAllModal.confirmText2")}
+            {t("contactsPage.form.deleteAllModal.confirmText1")} <b>{t("contactsPage.form.deleteAllModal.all")}</b> {t("contactsPage.form.deleteAllModal.confirmText2")}
           </p>
-          <span className={css.info_text}>
-            {t("contactsPage.form.deleteAllModal.warningText")}
-          </span>
+          <span className={css.info_text}>{t("contactsPage.form.deleteAllModal.warningText")}</span>
           <div className={css.deletion_confirmation_button_group}>
             <button className={css.save_button} onClick={cancelDeleteAll}>
               {t("contactsPage.form.deleteAllModal.cancelButton")}

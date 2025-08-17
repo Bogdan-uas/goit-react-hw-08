@@ -13,24 +13,26 @@ interface ContactType {
     number: string;
 }
 
-export default function ContactList() {
+const ContactList: React.FC = () => {
     const { t } = useTranslation();
     const filteredContacts = useSelector<RootState, ContactType[]>(selectFilteredContacts);
     const [contactIdToDelete, setContactIdToDelete] = useState<string | null>(null);
 
     return (
-        <ul className={style.list}>
-            {filteredContacts.map((contact) => (
-                <li className={style.item} key={contact.id}>
-                    <Suspense fallback={<div>{t("contactsPage.list.loading")}</div>}>
+        <Suspense fallback={<div>{t("contactsPage.list.loading")}</div>}>
+            <ul className={style.list}>
+                {filteredContacts.map((contact) => (
+                    <li className={style.item} key={contact.id}>
                         <Contact
                             contact={contact}
                             contactIdToDelete={contactIdToDelete}
                             setContactIdToDelete={setContactIdToDelete}
                         />
-                    </Suspense>
-                </li>
-            ))}
-        </ul>
+                    </li>
+                ))}
+            </ul>
+        </Suspense>
     );
-}
+};
+
+export default ContactList;

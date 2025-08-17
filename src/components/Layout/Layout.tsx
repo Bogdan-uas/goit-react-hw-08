@@ -1,8 +1,8 @@
-import { ReactNode, lazy, Suspense } from "react";
+import { ReactNode, lazy, Suspense, memo } from "react";
 import { useTranslation } from "react-i18next";
 import css from "./Layout.module.css";
 
-const AppBar = lazy(() => import("../AppBar/AppBar"));
+const AppBar = memo(lazy(() => import("../AppBar/AppBar")));
 
 interface LayoutProps {
     children: ReactNode;
@@ -13,11 +13,13 @@ export default function Layout({ children }: LayoutProps) {
 
     return (
         <div className={css.container}>
-            <Suspense fallback={<div>{t("layout.loading")}</div>}>
+            <Suspense fallback={<div className={css.loading}>{t("layout.loading")}</div>}>
                 <AppBar />
             </Suspense>
             <main className={css.main}>
-                {children}
+                <Suspense fallback={<div className={css.loading}>{t("layout.loading")}</div>}>
+                    {children}
+                </Suspense>
             </main>
         </div>
     );

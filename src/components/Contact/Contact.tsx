@@ -1,38 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import style from "./Contact.module.css";
 import { BsPersonFill, BsTelephoneFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import type { AppDispatch } from "../../redux/store";
-import { deleteContact, updateContact } from "../../redux/contacts/operations.js";
-import { openModal, closeModal } from "../../redux/ui/modalSlice.js";
-import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice.js";
-import {
-    selectIsModalOpen,
-    selectIsEditingGlobal,
-    selectEditingId,
-} from "../../redux/ui/selectors.js";
 import { useTranslation } from "react-i18next";
 
+import type { AppDispatch } from "../../redux/store";
+import { deleteContact, updateContact } from "../../redux/contacts/operations";
+import { openModal, closeModal } from "../../redux/ui/modalSlice";
+import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice";
+import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId } from "../../redux/ui/selectors";
+
 interface ContactProps {
-contact: {
-    id: string;
-    name: string;
-    number: string;
-};
-contactIdToDelete: string | null;
-setContactIdToDelete: React.Dispatch<React.SetStateAction<string | null>>;
+    contact: { id: string; name: string; number: string };
+    contactIdToDelete: string | null;
+    setContactIdToDelete: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function Contact({
-    contact,
-    contactIdToDelete,
-    setContactIdToDelete,
-}: ContactProps) {
+export default function Contact({ contact, contactIdToDelete, setContactIdToDelete }: ContactProps) {
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
+
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
     const [isEmptyDeleteModalOpen, setIsEmptyDeleteModalOpen] = useState(false);
@@ -47,39 +37,41 @@ export default function Contact({
     const isEditing = globalEditingId === contact.id;
     const isDeletionModalOpen = contactIdToDelete === contact.id;
 
-    const contactSchema = Yup.object().shape({
-        name: Yup.string()
-            .min(3, t("contactsPage.validation.nameTooShort"))
-            .max(50, t("contactsPage.validation.nameTooLong"))
-            .required(t("contactsPage.validation.nameRequired")),
-        number: Yup.string()
-            .matches(/^\+?[0-9\s-]{3,}$/, t("contactsPage.validation.invalidNumber"))
-            .min(9, t("contactsPage.validation.numberTooShort"))
-            .required(t("contactsPage.validation.numberRequired")),
-        });
+    const contactSchema = useMemo(
+        () =>
+            Yup.object().shape({
+                name: Yup.string()
+                    .min(3, t("contactsPage.validation.nameTooShort"))
+                    .max(50, t("contactsPage.validation.nameTooLong"))
+                    .required(t("contactsPage.validation.nameRequired")),
+                number: Yup.string()
+                    .matches(/^\+?[0-9\s-]{3,}$/, t("contactsPage.validation.invalidNumber"))
+                    .min(9, t("contactsPage.validation.numberTooShort"))
+                    .required(t("contactsPage.validation.numberRequired")),
+            }),
+        [t]
+    );
 
-    const hasChanges = () =>
-        editedName.trim() !== contact.name || editedNumber.trim() !== contact.number;
+    const validateNumberInput = useCallback((value: string) => /^[0-9+\-\s]*$/.test(value), []);
 
-    const validateNumberInput = (value: string) =>
-        /^[0-9+\-\s]*$/.test(value);
+    const hasChanges = useCallback(
+        () => editedName.trim() !== contact.name || editedNumber.trim() !== contact.number,
+        [editedName, editedNumber, contact.name, contact.number]
+    );
 
-    const confirmDelete = () => {
+    const confirmDelete = useCallback(() => {
         dispatch(deleteContact(contact.id));
-        toast.success(t("contact.deletedSuccess"), {
-            duration: 4000,
-            style: { borderRadius: "10px", textAlign: "center" },
-        });
+        toast.success(t("contact.deletedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
         dispatch(closeModal());
         setContactIdToDelete(null);
-    };
+    }, [contact.id, dispatch, setContactIdToDelete, t]);
 
-    const cancelDelete = () => {
+    const cancelDelete = useCallback(() => {
         dispatch(closeModal());
         setContactIdToDelete(null);
-    };
+    }, [dispatch, setContactIdToDelete]);
 
-    const onSave = async () => {
+    const onSave = useCallback(async () => {
         const trimmedName = editedName.trim();
         const trimmedNumber = editedNumber.trim();
 
@@ -88,73 +80,40 @@ export default function Contact({
             setIsEmptyDeleteModalOpen(true);
             return;
         }
-
-        if (
-            trimmedName === contact.name &&
-            trimmedNumber === contact.number
-        ) {
-            toast(t("contact.nothingToChange"), {
-                icon: "❗",
-                duration: 4000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
+        if (trimmedName === contact.name && trimmedNumber === contact.number) {
+            toast(t("contact.nothingToChange"), { icon: "❗", duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
             return;
         }
 
         try {
-            await contactSchema.validate(
-                { name: trimmedName, number: trimmedNumber },
-                { abortEarly: false }
-            );
+            await contactSchema.validate({ name: trimmedName, number: trimmedNumber }, { abortEarly: false });
 
             let formattedNumber = trimmedNumber;
-            const parsedPhone = parsePhoneNumberFromString(
-                trimmedNumber,
-                "US"
-            );
-            if (parsedPhone?.isValid()) {
-                formattedNumber = parsedPhone.format("E.164");
-            }
+            const parsedPhone = parsePhoneNumberFromString(trimmedNumber, "US");
+            if (parsedPhone?.isValid()) formattedNumber = parsedPhone.format("E.164");
 
-            dispatch(
-                updateContact({
-                    contactId: contact.id,
-                    updates: { name: trimmedName, number: formattedNumber },
-                })
-            )
-                .unwrap()
-                .then(() => {
-                    toast.success(t("contact.updatedSuccess"), {
-                        duration: 4000,
-                        style: { borderRadius: "10px", textAlign: "center" },
-                    });
-                    dispatch(stopEditing());
-                    dispatch(setUnsavedChanges(false));
-                });
+            await dispatch(updateContact({ contactId: contact.id, updates: { name: trimmedName, number: formattedNumber } })).unwrap();
+            toast.success(t("contact.updatedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+            dispatch(stopEditing());
+            dispatch(setUnsavedChanges(false));
         } catch (err: any) {
             if (err.inner) {
                 err.inner.forEach((validationError: any) => {
-                    toast.error(validationError.message, {
-                        duration: 4000,
-                        style: { borderRadius: "10px", textAlign: "center" },
-                    });
+                    toast.error(validationError.message, { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
                 });
             }
         }
-    };
+    }, [editedName, editedNumber, contact.name, contact.number, contact.id, contactSchema, dispatch, t]);
 
     useEffect(() => {
-        if (isEditing && nameInputRef.current) {
-            nameInputRef.current.focus();
-        }
+        if (isEditing && nameInputRef.current) nameInputRef.current.focus();
     }, [isEditing]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
-                if (isDeletionModalOpen) {
-                    cancelDelete();
-                } else if (isEmptyDeleteModalOpen) {
+                if (isDeletionModalOpen) cancelDelete();
+                else if (isEmptyDeleteModalOpen) {
                     setEditedName(contact.name);
                     setEditedNumber(contact.number);
                     dispatch(closeModal());
@@ -163,19 +122,12 @@ export default function Contact({
                     dispatch(closeModal());
                     setShowExitConfirmModal(false);
                 } else if (isEditing) {
-                    if (hasChanges()) {
-                        dispatch(openModal());
-                        setShowExitConfirmModal(true);
-                    } else {
-                        dispatch(stopEditing());
-                    }
+                    hasChanges() ? (dispatch(openModal()), setShowExitConfirmModal(true)) : dispatch(stopEditing());
                 }
             }
-
             if (e.key === "Enter") {
-                if (isDeletionModalOpen) {
-                    confirmDelete();
-                } else if (isEmptyDeleteModalOpen) {
+                if (isDeletionModalOpen) confirmDelete();
+                else if (isEmptyDeleteModalOpen) {
                     dispatch(deleteContact(contact.id));
                     toast.success(t("contact.deletedEmptyFields"));
                     dispatch(closeModal());
@@ -191,27 +143,13 @@ export default function Contact({
                 }
             }
         };
-
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [
-        isEditing,
-        editedName,
-        editedNumber,
-        isDeletionModalOpen,
-        isEmptyDeleteModalOpen,
-        showExitConfirmModal,
-        contact.name,
-        contact.number,
-        dispatch,
-    ]);
+    }, [isEditing, hasChanges, confirmDelete, cancelDelete, isDeletionModalOpen, isEmptyDeleteModalOpen, showExitConfirmModal, contact.name, contact.number, dispatch, t]);
 
     useEffect(() => {
-        const hasChanged =
-            editedName.trim() !== contact.name ||
-            editedNumber.trim() !== contact.number;
-        dispatch(setUnsavedChanges(isEditing && hasChanged));
-    }, [editedName, editedNumber, isEditing, contact.name, contact.number, dispatch]);
+        dispatch(setUnsavedChanges(isEditing && hasChanges()));
+    }, [editedName, editedNumber, isEditing, hasChanges, dispatch]);
 
     useEffect(() => {
         if (!isEditing) {
