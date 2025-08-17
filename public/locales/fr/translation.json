@@ -214,5 +214,9 @@
       "closeModalFirst": "Veuillez d'abord fermer la fenêtre modale.",
       "cannotNavigateWhileEditing": "Terminez l'édition avant de naviguer."
     }
+  },
+  "footer": {
+    "madeBy": "Site web réalisé par",
+    "repository": "Référentiel"
   }
 }

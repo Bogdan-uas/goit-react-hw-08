@@ -84,6 +84,7 @@
 }
 
 .register_login_form {
+    margin-top: 256px;
     padding: 28px;
     display: flex;
     flex-direction: column;

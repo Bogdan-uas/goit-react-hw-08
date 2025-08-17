@@ -1,0 +1,40 @@
+.footer {
+    position: relative;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 128px;
+    padding: 32px;
+    background-color: var(--bg);
+    border-top: solid 1px var(--text);
+}
+
+.cont {
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.text {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text);
+}
+
+.link {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--link);
+}
+
+.link:hover {
+    color: var(--link-hover);
+}
+
+.svg {
+    margin-bottom: -2px;
+}

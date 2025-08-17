@@ -214,5 +214,9 @@
       "closeModalFirst": "Сначала закройте открытое окно.",
       "cannotNavigateWhileEditing": "Завершите редактирование перед переходом."
     }
+  },
+  "footer": {
+    "madeBy": "Веб-сайт создан",
+    "repository": "Репозиторий"
   }
 }

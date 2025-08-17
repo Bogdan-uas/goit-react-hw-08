@@ -214,5 +214,9 @@
       "closeModalFirst": "Спочатку закрийте відкрите вікно.",
       "cannotNavigateWhileEditing": "Завершіть редагування перед переходом."
     }
+  },
+  "footer": {
+    "madeBy": "Вебсайт створено",
+    "repository": "Репозиторій"
   }
 }

@@ -214,5 +214,9 @@
       "closeModalFirst": "Bitte schließen Sie zuerst das geöffnete Modal.",
       "cannotNavigateWhileEditing": "Beenden Sie die Bearbeitung, bevor Sie navigieren."
     }
+  },
+  "footer": {
+    "madeBy": "Website erstellt von",
+    "repository": "Repository"
   }
 }

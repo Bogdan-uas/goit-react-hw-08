@@ -1,6 +1,7 @@
 import { ReactNode, lazy, Suspense, memo } from "react";
 import { useTranslation } from "react-i18next";
 import css from "./Layout.module.css";
+import Footer from "../Footer/Footer";
 
 const AppBar = memo(lazy(() => import("../AppBar/AppBar")));
 
@@ -21,6 +22,9 @@ export default function Layout({ children }: LayoutProps) {
                     {children}
                 </Suspense>
             </main>
+            <Suspense fallback={<div className={css.loading}>{t("layout.loading")}</div>}>
+                <Footer />
+            </Suspense>
         </div>
     );
 }
