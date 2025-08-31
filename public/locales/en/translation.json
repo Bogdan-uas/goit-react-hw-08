@@ -216,7 +216,12 @@
       }
     },
     "footer": {
-    "madeBy": "Website made by",
-    "repository": "Repository"
+      "madeBy": "Website made by",
+      "repository": "Repository"
+    },
+    "error": {
+      "title": "Something went wrong!",
+      "defaultMessage": "An unexpected error occurred.",
+      "retryButton": "Try Again"
     }
 }

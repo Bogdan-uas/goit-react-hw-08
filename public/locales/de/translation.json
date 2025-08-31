@@ -218,5 +218,10 @@
   "footer": {
     "madeBy": "Website erstellt von",
     "repository": "Repository"
+  },
+  "error": {
+    "title": "Etwas ist schief gelaufen!",
+    "defaultMessage": "Ein unerwarteter Fehler ist aufgetreten.",
+    "retryButton": "Erneut versuchen"
   }
 }

@@ -218,5 +218,10 @@
   "footer": {
     "madeBy": "Sitio web hecho por",
     "repository": "Repositorio"
+  },
+  "error": {
+    "title": "¡Algo salió mal!",
+    "defaultMessage": "Ocurrió un error inesperado.",
+    "retryButton": "Intentar de nuevo"
   }
 }

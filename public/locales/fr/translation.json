@@ -218,5 +218,10 @@
   "footer": {
     "madeBy": "Site web réalisé par",
     "repository": "Référentiel"
+  },
+  "error": {
+    "title": "Quelque chose a mal tourné!",
+    "defaultMessage": "Une erreur inattendue s'est produite.",
+    "retryButton": "Réessayer"
   }
 }
