@@ -8,7 +8,7 @@ interface RestrictedRouteProps {
 }
 
 export default function RestrictedRoute({ children }: RestrictedRouteProps) {
-const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     return isLoggedIn ? <Navigate to="/contacts" replace /> : <>{children}</>;
 }

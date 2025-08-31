@@ -1,20 +1,22 @@
 import React, {
-  lazy,
-  Suspense,
-  ReactElement,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
+    lazy,
+    Suspense,
+    ReactElement,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
 } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import { useTranslation } from "react-i18next";
 
 import { selectIsModalOpen, selectDarkMode } from "../../redux/ui/selectors";
+import { selectIsLoading } from "../../redux/contacts/selectors";
 import { apiRefreshUser } from "../../redux/auth/operations";
 
 import type { AppDispatch } from "../../redux/store";
+
+import Loader from "../Loader/Loader";
 
 import "./App.css";
 
@@ -26,11 +28,11 @@ const Layout = lazy(() => import("../Layout/Layout"));
 const RestrictedRoute = lazy(() => import("../RestrictedRoute/RestrictedRoute"));
 const PrivateRoute = lazy(() => import("../PrivateRoute/PrivateRoute"));
 
-function App(): ReactElement {
+function App(): React.ReactElement {
     const dispatch = useDispatch<AppDispatch>();
     const isAnyModalOpen = useSelector(selectIsModalOpen);
     const darkMode = useSelector(selectDarkMode);
-    const { t } = useTranslation();
+    const isLoading = useSelector(selectIsLoading);
 
     useEffect(() => {
         dispatch(apiRefreshUser());
@@ -70,10 +72,11 @@ function App(): ReactElement {
     );
 
     return (
-        <Suspense fallback={<div className="suspense-fallback">{t("app.loading")}</div>}>
-            <Layout>
-                <Toaster position={toasterPosition} {...toasterOptions} />
-
+        <>
+            {isLoading && <Loader />}
+            <Suspense fallback={<Loader />}>
+                <Layout>
+                    <Toaster position={toasterPosition} {...toasterOptions} />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route
@@ -103,8 +106,9 @@ function App(): ReactElement {
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </Layout>
-        </Suspense>
+            </Suspense>
+            </>
     );
-}
+};
 
 export default App;

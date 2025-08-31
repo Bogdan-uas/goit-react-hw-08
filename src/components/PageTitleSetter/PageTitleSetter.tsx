@@ -5,9 +5,9 @@ interface PageTitleSetterProps {
 }
 
 export default function PageTitleSetter({ title }: PageTitleSetterProps): null {
-useEffect(() => {
-    document.title = title;
-}, [title]);
+    useEffect(() => {
+        document.title = title;
+    }, [title]);
 
     return null;
 }

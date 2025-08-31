@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { selectFilteredContacts } from "../../redux/contacts/selectors";
 import { useState, lazy, Suspense } from "react";
-import { useTranslation } from "react-i18next";
+import Loader from "../Loader/Loader";
 
 const Contact = lazy(() => import("../Contact/Contact"));
 
@@ -14,12 +14,11 @@ interface ContactType {
 }
 
 const ContactList: React.FC = () => {
-    const { t } = useTranslation();
     const filteredContacts = useSelector<RootState, ContactType[]>(selectFilteredContacts);
     const [contactIdToDelete, setContactIdToDelete] = useState<string | null>(null);
 
     return (
-        <Suspense fallback={<div>{t("contactsPage.list.loading")}</div>}>
+        <Suspense fallback={<Loader />}>
             <ul className={style.list}>
                 {filteredContacts.map((contact) => (
                     <li className={style.item} key={contact.id}>

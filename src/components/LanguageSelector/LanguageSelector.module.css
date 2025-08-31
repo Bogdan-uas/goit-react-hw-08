@@ -62,9 +62,7 @@
 }
 
 .dropdownList {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
     width: 219px;
     background: var(--bg);
     border: 1px solid var(--hover);
@@ -76,7 +74,6 @@
     box-shadow: var(--shadow);
     padding: 0;
     list-style: none;
-
     opacity: 0;
     transform: scaleY(0);
     transform-origin: top;
@@ -151,9 +148,7 @@
 }
 
 .anotherDropdownList {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
     width: 219px;
     background: var(--bg);
     border: 1px solid var(--hover);

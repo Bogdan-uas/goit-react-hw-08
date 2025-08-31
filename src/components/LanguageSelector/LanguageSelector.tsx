@@ -62,8 +62,8 @@ export default function LanguageSelector() {
         if (open && buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
             dropdownCoords.current = {
-                top: rect.bottom + window.scrollY,
-                left: rect.left + window.scrollX,
+                top: rect.bottom,
+                left: rect.left,
                 width: rect.width,
             };
         }
@@ -104,7 +104,7 @@ export default function LanguageSelector() {
                 ref={dropdownRef}
                 role="listbox"
                 className={`${css.dropdownList} ${open ? css.open : ""}`}
-                style={{ position: "absolute", ...dropdownCoords.current }}
+                style={{ position: "fixed", ...dropdownCoords.current }}
             >
                 {languageCodes.map((code) => (
                     <li
@@ -129,7 +129,7 @@ export default function LanguageSelector() {
                 ref={anotherDropdownRef}
                 role="listbox"
                 className={`${css.anotherDropdownList} ${open ? css.open : ""}`}
-                style={{ position: "absolute", ...dropdownCoords.current }}
+                style={{ position: "fixed", ...dropdownCoords.current }}
             >
                 <li
                     role="option"
@@ -189,7 +189,7 @@ export default function LanguageSelector() {
                 <span className={css.arrow} />
             </button>
 
-            {open && createPortal(dropdownElement, document.body)}
+            {open && dropdownElement}
         </div>
     );
 }
