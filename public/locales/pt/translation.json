@@ -154,7 +154,8 @@
     },
     "navigation": {
       "home": "Início",
-      "contacts": "Contatos"
+      "contacts": "Contatos",
+      "settings": "Configurações"
     }
   },
   "languages": {
@@ -223,5 +224,10 @@
     "title": "Algo deu errado!",
     "defaultMessage": "Ocorreu um erro inesperado.",
     "retryButton": "Tentar novamente"
+  },
+  "settingsPage": {
+    "title": "Configurações",
+    "description": "Gerencie suas preferências aqui.",
+    "goBack": "Voltar"
   }
 }

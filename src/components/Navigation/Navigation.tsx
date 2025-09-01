@@ -22,6 +22,7 @@ export default function Navigation(): React.ReactElement {
     const links: LinkItem[] = [
         { to: "/", labelKey: "app.navigation.home" },
         { to: "/contacts", labelKey: "app.navigation.contacts", requiresAuth: true },
+        { to: "/settings", labelKey: "app.navigation.settings" },
     ];
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

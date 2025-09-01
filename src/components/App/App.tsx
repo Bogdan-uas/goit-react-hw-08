@@ -27,8 +27,9 @@ const Layout = lazy(() => import("../Layout/Layout"));
 const RestrictedRoute = lazy(() => import("../RestrictedRoute/RestrictedRoute"));
 const PrivateRoute = lazy(() => import("../PrivateRoute/PrivateRoute"));
 const ErrorPage = lazy(() => import("../../pages/ErrorPage/ErrorPage"));
+const SettingsPage = lazy(() => import("../../pages/SettingsPage/SettingsPage"));
 
-function App(): React.ReactElement {
+const App = (): React.ReactElement => {
     const dispatch = useDispatch<AppDispatch>();
     const isAnyModalOpen = useSelector(selectIsModalOpen);
     const darkMode = useSelector(selectDarkMode);
@@ -81,6 +82,7 @@ function App(): React.ReactElement {
                     <Toaster position={toasterPosition} {...toasterOptions} />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                     <Route
                         path="/contacts"
                         element={

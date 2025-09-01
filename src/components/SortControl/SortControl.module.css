@@ -119,6 +119,7 @@ input[type="radio"]:checked+.span::after {
     color: #f1f4fd;
     border-radius: 8px;
     border: none;
+    margin-inline: auto;
     transition: all 500ms ease-in-out;
 }
 

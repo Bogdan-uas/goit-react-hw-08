@@ -2,10 +2,8 @@ import { memo } from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import Navigation from "../Navigation/Navigation";
-import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import AuthNav from "../AuthNav/AuthNav";
 import UserMenu from "../UserMenu/UserMenu";
-import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import css from "./AppBar.module.css";
 
 function AppBar(): React.ReactElement {
@@ -14,8 +12,6 @@ function AppBar(): React.ReactElement {
     return (
         <header className={css.header}>
             <Navigation />
-            <LanguageSelector />
-            <ThemeToggle />
             {isLoggedIn ? <UserMenu /> : <AuthNav />}
         </header>
     );

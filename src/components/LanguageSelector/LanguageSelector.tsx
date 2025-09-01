@@ -1,13 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { createPortal } from "react-dom";
+import { useSelector } from "react-redux";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import css from "./LanguageSelector.module.css";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 const languageCodes = ["en", "de", "fr", "es", "uk", "pt", "ru", "it"];
-const LOCAL_STORAGE_KEY = "languageSelectorHidden";
 
 export default function LanguageSelector() {
     const { t, i18n } = useTranslation();
@@ -17,10 +15,8 @@ export default function LanguageSelector() {
 
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(i18n.language || "en");
-    const [hidden, setHidden] = useState(() => localStorage.getItem(LOCAL_STORAGE_KEY) === "true");
 
     const dropdownRef = useRef<HTMLUListElement>(null);
-    const anotherDropdownRef = useRef<HTMLUListElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const dropdownCoords = useRef({ top: 0, left: 0, width: 0 });
 
@@ -37,16 +33,10 @@ export default function LanguageSelector() {
     }, [isLocked, isModalOpen, t]);
 
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, hidden.toString());
-    }, [hidden]);
-
-    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 dropdownRef.current &&
                 !dropdownRef.current.contains(event.target as Node) &&
-                anotherDropdownRef.current &&
-                !anotherDropdownRef.current.contains(event.target as Node) &&
                 buttonRef.current &&
                 !buttonRef.current.contains(event.target as Node)
             ) {
@@ -99,66 +89,31 @@ export default function LanguageSelector() {
     const selectedLabel = t(`languages.${selected}`) || t("app.languageSelector.fallback");
 
     const dropdownElement = (
-        <>
-            <ul
-                ref={dropdownRef}
-                role="listbox"
-                className={`${css.dropdownList} ${open ? css.open : ""}`}
-                style={{ position: "fixed", ...dropdownCoords.current }}
-            >
-                {languageCodes.map((code) => (
-                    <li
-                        key={code}
-                        role="option"
-                        aria-selected={selected === code}
-                        tabIndex={0}
-                        className={`${css.option} ${selected === code ? css.selected : ""}`}
-                        onClick={() => !handleLockedAction() && changeLanguage(code)}
-                        onKeyDown={(e) =>
-                            (e.key === "Enter" || e.key === " ") &&
-                            !handleLockedAction() &&
-                            changeLanguage(code)
-                        }
-                    >
-                        {t(`languages.${code}`)}
-                    </li>
-                ))}
-            </ul>
-
-            <ul
-                ref={anotherDropdownRef}
-                role="listbox"
-                className={`${css.anotherDropdownList} ${open ? css.open : ""}`}
-                style={{ position: "fixed", ...dropdownCoords.current }}
-            >
+        <ul
+            ref={dropdownRef}
+            role="listbox"
+            className={`${css.dropdownList} ${open ? css.open : ""}`}
+            style={{ position: "fixed", ...dropdownCoords.current }}
+        >
+            {languageCodes.map((code) => (
                 <li
+                    key={code}
                     role="option"
+                    aria-selected={selected === code}
                     tabIndex={0}
-                    className={`${css.option} ${css.hideOption}`}
-                    onClick={() => !handleLockedAction() && setHidden(true)}
+                    className={`${css.option} ${selected === code ? css.selected : ""}`}
+                    onClick={() => !handleLockedAction() && changeLanguage(code)}
                     onKeyDown={(e) =>
                         (e.key === "Enter" || e.key === " ") &&
                         !handleLockedAction() &&
-                        setHidden(true)
+                        changeLanguage(code)
                     }
                 >
-                    {t("app.languageSelector.hidePrompt")}
+                    {t(`languages.${code}`)}
                 </li>
-            </ul>
-        </>
+            ))}
+        </ul>
     );
-
-    if (hidden) {
-        return (
-            <button
-                className={`${css.another_language_button} ${isLocked ? css.disabled : ""}`}
-                type="button"
-                onClick={() => !handleLockedAction() && setHidden(false)}
-            >
-                {t("app.languageSelector.anotherLanguage")}
-            </button>
-        );
-    }
 
     return (
         <div className={css.container}>

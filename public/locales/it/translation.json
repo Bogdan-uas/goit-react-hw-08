@@ -154,7 +154,8 @@
     },
     "navigation": {
       "home": "Home",
-      "contacts": "Contatti"
+      "contacts": "Contatti",
+      "settings": "Impostazioni"
     }
   },
   "languages": {
@@ -223,5 +224,10 @@
     "title": "Qualcosa è andato storto",
     "defaultMessage": "Si è verificato un errore imprevisto.",
     "retryButton": "Riprova"
+  },
+  "settingsPage": {
+    "title": "Impostazioni",
+    "description": "Gestisci le tue preferenze qui.",
+    "goBack": "Torna indietro"
   }
 }

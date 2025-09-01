@@ -7,8 +7,43 @@
 }
 
 .main_title {
+    display: block;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 40px;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--text);
+    margin-bottom: 24px;
+}
+
+.button_container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #747bff;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    transition: all 500ms ease-in-out;
+}
+
+.button:hover {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.main_description {
+    font-weight: 700;
+    font-size: 28px;
     line-height: 1.11;
     text-align: center;
     width: 1000px;

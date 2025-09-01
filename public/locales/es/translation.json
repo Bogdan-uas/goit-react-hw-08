@@ -154,7 +154,8 @@
     },
     "navigation": {
       "home": "Inicio",
-      "contacts": "Contactos"
+      "contacts": "Contactos",
+      "settings": "Configuraciones"
     }
   },
   "languages": {
@@ -223,5 +224,10 @@
     "title": "¡Algo salió mal!",
     "defaultMessage": "Ocurrió un error inesperado.",
     "retryButton": "Intentar de nuevo"
+  },
+  "settingsPage": {
+    "title": "Configuraciones",
+    "description": "Administra tus preferencias aquí.",
+    "goBack": "Regresar"
   }
 }

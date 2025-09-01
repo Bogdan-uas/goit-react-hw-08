@@ -136,79 +136,81 @@ export default function ContactForm(): React.ReactElement {
   }, [showDeleteAllModal]);
 
   return (
-    <div className={style.main_container}>
-      <Formik initialValues={initialValues} validationSchema={FeedbackSchema} onSubmit={handleSubmit}>
-        {({ handleSubmit }) => (
-          <Form className={style.form} onSubmit={handleSubmit}>
-            {["name", "number"].map((field, i) => {
-              const id = field === "name" ? nameFieldId : numberFieldId;
-              const label = field === "name" ? t("contactsPage.form.nameLabel") : t("contactsPage.form.numberLabel");
-              return (
-                <div key={i} className={style.name_number_container}>
-                  <label htmlFor={id} className={style.label}>{label}</label>
-                  <Field type="text" name={field} id={id} className={style.input} />
-                  <ErrorMessage className={style.error_message} name={field} component="span" />
-                </div>
-              );
-            })}
-            <button
-              type="submit"
-              className={`${style.button} ${isLocked ? style.disabled : ""}`}
-              onClick={(e) => {
-                if (isLocked) {
-                  e.preventDefault();
-                  showToast(
-                    isModalOpen
-                      ? t("contactsPage.form.toast.closeModalBeforeAdding")
-                      : t("contactsPage.form.toast.cantAddWhileEditing")
-                  );
-                }
-              }}
-            >
-              {t("contactsPage.form.addButton")}
-            </button>
-          </Form>
+    <>
+      <div className={style.main_container}>
+        <Formik initialValues={initialValues} validationSchema={FeedbackSchema} onSubmit={handleSubmit}>
+          {({ handleSubmit }) => (
+            <Form className={style.form} onSubmit={handleSubmit}>
+              {["name", "number"].map((field, i) => {
+                const id = field === "name" ? nameFieldId : numberFieldId;
+                const label = field === "name" ? t("contactsPage.form.nameLabel") : t("contactsPage.form.numberLabel");
+                return (
+                  <div key={i} className={style.name_number_container}>
+                    <label htmlFor={id} className={style.label}>{label}</label>
+                    <Field type="text" name={field} id={id} className={style.input} />
+                    <ErrorMessage className={style.error_message} name={field} component="span" />
+                  </div>
+                );
+              })}
+              <button
+                type="submit"
+                className={`${style.button} ${isLocked ? style.disabled : ""}`}
+                onClick={(e) => {
+                  if (isLocked) {
+                    e.preventDefault();
+                    showToast(
+                      isModalOpen
+                        ? t("contactsPage.form.toast.closeModalBeforeAdding")
+                        : t("contactsPage.form.toast.cantAddWhileEditing")
+                    );
+                  }
+                }}
+              >
+                {t("contactsPage.form.addButton")}
+              </button>
+            </Form>
+          )}
+        </Formik>
+
+        {contacts.length > 0 && (
+          <button
+            ref={deleteAllButtonRef}
+            type="button"
+            className={`${css.delete_button} ${style.delete_button} ${isLocked ? style.disabled : ""}`}
+            onClick={() => {
+              if (isLocked) {
+                showToast(
+                  isModalOpen
+                    ? t("contactsPage.form.toast.closeModalBeforeDeleting")
+                    : t("contactsPage.form.toast.cantDeleteWhileEditing")
+                );
+              } else {
+                dispatch(openModal());
+                setShowDeleteAllModal(true);
+              }
+            }}
+          >
+            {t("contactsPage.form.deleteAllButton")}
+          </button>
         )}
-      </Formik>
 
-      {contacts.length > 0 && (
-        <button
-          ref={deleteAllButtonRef}
-          type="button"
-          className={`${css.delete_button} ${style.delete_button} ${isLocked ? style.disabled : ""}`}
-          onClick={() => {
-            if (isLocked) {
-              showToast(
-                isModalOpen
-                  ? t("contactsPage.form.toast.closeModalBeforeDeleting")
-                  : t("contactsPage.form.toast.cantDeleteWhileEditing")
-              );
-            } else {
-              dispatch(openModal());
-              setShowDeleteAllModal(true);
-            }
-          }}
-        >
-          {t("contactsPage.form.deleteAllButton")}
-        </button>
-      )}
-
-      {showDeleteAllModal && (
-        <div role="dialog" aria-modal="true" aria-labelledby="deleteAllTitle" tabIndex={-1} ref={modalRef} className={css.confirm_modal}>
-          <p id="deleteAllTitle" className={css.info_text}>
-            {t("contactsPage.form.deleteAllModal.confirmText1")} <b>{t("contactsPage.form.deleteAllModal.all")}</b> {t("contactsPage.form.deleteAllModal.confirmText2")}
-          </p>
-          <span className={css.info_text}>{t("contactsPage.form.deleteAllModal.warningText")}</span>
-          <div className={css.deletion_confirmation_button_group}>
-            <button className={css.save_button} onClick={cancelDeleteAll}>
-              {t("contactsPage.form.deleteAllModal.cancelButton")}
-            </button>
-            <button className={css.cancel_button} onClick={confirmDeleteAll}>
-              {t("contactsPage.form.deleteAllModal.confirmButton")}
-            </button>
+        {showDeleteAllModal && (
+          <div role="dialog" aria-modal="true" aria-labelledby="deleteAllTitle" tabIndex={-1} ref={modalRef} className={css.confirm_modal}>
+            <p id="deleteAllTitle" className={css.info_text}>
+              {t("contactsPage.form.deleteAllModal.confirmText1")} <b>{t("contactsPage.form.deleteAllModal.all")}</b> {t("contactsPage.form.deleteAllModal.confirmText2")}
+            </p>
+            <span className={css.info_text}>{t("contactsPage.form.deleteAllModal.warningText")}</span>
+            <div className={css.deletion_confirmation_button_group}>
+              <button className={css.save_button} onClick={cancelDeleteAll}>
+                {t("contactsPage.form.deleteAllModal.cancelButton")}
+              </button>
+              <button className={css.cancel_button} onClick={confirmDeleteAll}>
+                {t("contactsPage.form.deleteAllModal.confirmButton")}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

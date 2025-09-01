@@ -1,0 +1,58 @@
+.settingsPage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 180px;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 768px;
+    margin-bottom: 64px;
+}
+
+.main_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.save_button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #747bff;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    transition: all 500ms ease-in-out;
+}
+
+.save_button:hover {
+    background-color: #0d6aff;
+    color: #fff;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.2;
+    text-transform: capitalize;
+    text-align: center;
+    color: var(--text);
+}
+
+.description {
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text);
+}

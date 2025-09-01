@@ -154,7 +154,8 @@
     },
     "navigation": {
       "home": "Startseite",
-      "contacts": "Kontakte"
+      "contacts": "Kontakte",
+      "settings": "Einstellungen"
     }
   },
   "languages": {
@@ -223,5 +224,10 @@
     "title": "Etwas ist schief gelaufen!",
     "defaultMessage": "Ein unerwarteter Fehler ist aufgetreten.",
     "retryButton": "Erneut versuchen"
+  },
+  "settingsPage": {
+    "title": "Einstellungen",
+    "description": "Verwalten Sie hier Ihre Präferenzen.",
+    "goBack": "Zurück"
   }
 }

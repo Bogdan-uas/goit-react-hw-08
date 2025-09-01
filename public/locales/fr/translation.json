@@ -154,7 +154,8 @@
     },
     "navigation": {
       "home": "Accueil",
-      "contacts": "Contacts"
+      "contacts": "Contacts",
+      "settings": "Paramètres"
     }
   },
   "languages": {
@@ -223,5 +224,10 @@
     "title": "Quelque chose a mal tourné!",
     "defaultMessage": "Une erreur inattendue s'est produite.",
     "retryButton": "Réessayer"
+  },
+  "settingsPage": {
+    "title": "Paramètres",
+    "description": "Gérez vos préférences ici.",
+    "goBack": "Retour"
   }
 }
