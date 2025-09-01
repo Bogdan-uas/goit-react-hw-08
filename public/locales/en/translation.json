@@ -4,7 +4,7 @@
       "description": "A simple phone book, where you can add new contacts, delete them, look for or edit a specific one."
     },
     "contactsPage": {
-      "title": "Contacts Page",
+      "title": "Contacts",
       "loadingPage": "🤚Loading page...🤚",
       "loading": "✋Loading...🤚",
       "validation": {
