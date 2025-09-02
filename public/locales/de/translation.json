@@ -228,6 +228,11 @@
   "settingsPage": {
     "title": "Einstellungen",
     "description": "Verwalten Sie hier Ihre Präferenzen.",
-    "goBack": "Zurück"
+    "goBack": "Zurück",
+    "resetButton": "Einstellungen zurücksetzen",
+    "toast": {
+      "alreadyReset": "Die Einstellungen sind bereits zurückgesetzt",
+      "resetSuccess": "Einstellungen wurden zurückgesetzt"
+    }
   }
 }

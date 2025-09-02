@@ -56,3 +56,29 @@
     letter-spacing: 0.04em;
     color: var(--text);
 }
+
+.reset_button {
+    display: flex;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    background-color: #fa5256;
+    color: #f1f4fd;
+    border-radius: 8px;
+    border: none;
+    margin-top: 48px;
+    transition: all 500ms ease-in-out;
+}
+
+.reset_button:hover {
+    background-color: red;
+    color: #fff;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: #dadde1;
+    margin-top: 48px;
+}

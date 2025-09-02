@@ -228,6 +228,11 @@
   "settingsPage": {
     "title": "Configuraciones",
     "description": "Administra tus preferencias aquí.",
-    "goBack": "Regresar"
+    "goBack": "Regresar",
+    "resetButton": "Restablecer configuración",
+    "toast": {
+      "alreadyReset": "La configuración ya está restablecida",
+      "resetSuccess": "La configuración ha sido restablecida"
+    }
   }
 }

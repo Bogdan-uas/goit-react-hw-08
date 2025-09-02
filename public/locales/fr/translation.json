@@ -228,6 +228,11 @@
   "settingsPage": {
     "title": "Paramètres",
     "description": "Gérez vos préférences ici.",
-    "goBack": "Retour"
+    "goBack": "Retour",
+    "resetButton": "Réinitialiser les paramètres",
+    "toast": {
+      "alreadyReset": "Les paramètres sont déjà réinitialisés",
+      "resetSuccess": "Les paramètres ont été réinitialisés"
+    }
   }
 }

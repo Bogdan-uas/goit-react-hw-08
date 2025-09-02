@@ -228,6 +228,11 @@
     "settingsPage": {
       "title": "Settings",
       "description": "Manage your preferences here.",
-      "goBack": "Go Back"
+      "goBack": "Go Back",
+      "resetButton": "Reset Settings",
+      "toast": {
+        "alreadyReset": "Settings are already reset",
+        "resetSuccess": "Settings have been reset successfully"
+      }
     }
 }
