@@ -20,6 +20,10 @@ export default function LanguageSelector() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const dropdownCoords = useRef({ top: 0, left: 0, width: 0 });
 
+    useEffect(() => {
+        setSelected(i18n.language || "en");
+    }, [i18n.language]);
+
     const handleLockedAction = useCallback(() => {
         if (isLocked) {
             toast.error(
