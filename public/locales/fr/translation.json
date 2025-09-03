@@ -232,7 +232,9 @@
     "resetButton": "Réinitialiser les paramètres",
     "toast": {
       "alreadyReset": "Les paramètres sont déjà réinitialisés",
-      "resetSuccess": "Les paramètres ont été réinitialisés"
+      "resetSuccess": "Les paramètres ont été réinitialisés",
+      "editingLocked": "Vous ne pouvez pas effectuer cette action pendant la modification d'un autre élément.",
+      "modalOpenLocked": "Veuillez fermer la fenêtre modale ouverte avant de continuer."
     }
   }
 }

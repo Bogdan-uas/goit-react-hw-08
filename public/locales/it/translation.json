@@ -232,7 +232,9 @@
     "resetButton": "Reimposta impostazioni",
     "toast": {
       "alreadyReset": "Le impostazioni sono già state reimpostate",
-      "resetSuccess": "Le impostazioni sono state reimpostate"
+      "resetSuccess": "Le impostazioni sono state reimpostate",
+      "editingLocked": "Non puoi eseguire questa azione mentre modifichi un altro elemento.",
+      "modalOpenLocked": "Chiudi il modal aperto prima di continuare."
     }
   }
 }

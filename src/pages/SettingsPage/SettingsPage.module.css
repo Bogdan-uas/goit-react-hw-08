@@ -82,3 +82,8 @@
     background-color: #dadde1;
     margin-top: 48px;
 }
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

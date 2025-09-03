@@ -232,7 +232,9 @@
     "resetButton": "Redefinir configurações",
     "toast": {
       "alreadyReset": "As configurações já foram redefinidas",
-      "resetSuccess": "Configurações redefinidas"
+      "resetSuccess": "Configurações redefinidas",
+      "editingLocked": "Não é possível realizar esta ação enquanto outro item está sendo editado.",
+      "modalOpenLocked": "Feche o modal aberto antes de continuar."
     }
   }
 }

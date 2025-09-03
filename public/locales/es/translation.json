@@ -232,7 +232,9 @@
     "resetButton": "Restablecer configuración",
     "toast": {
       "alreadyReset": "La configuración ya está restablecida",
-      "resetSuccess": "La configuración ha sido restablecida"
+      "resetSuccess": "La configuración ha sido restablecida",
+      "editingLocked": "No puede realizar esta acción mientras edita otro elemento.",
+      "modalOpenLocked": "Cierre el modal abierto antes de continuar."
     }
   }
 }

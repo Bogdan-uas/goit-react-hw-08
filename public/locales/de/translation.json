@@ -232,7 +232,9 @@
     "resetButton": "Einstellungen zurücksetzen",
     "toast": {
       "alreadyReset": "Die Einstellungen sind bereits zurückgesetzt",
-      "resetSuccess": "Einstellungen wurden zurückgesetzt"
+      "resetSuccess": "Einstellungen wurden zurückgesetzt",
+      "editingLocked": "Sie können diese Aktion nicht ausführen, während Sie einen anderen Eintrag bearbeiten.",
+      "modalOpenLocked": "Bitte schließen Sie zuerst das geöffnete Modal, bevor Sie fortfahren."
     }
   }
 }
