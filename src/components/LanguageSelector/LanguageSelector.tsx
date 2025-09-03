@@ -36,6 +36,21 @@ export default function LanguageSelector() {
         return isLocked;
     }, [isLocked, isModalOpen, t]);
 
+    const toggleDropdown = () => {
+        if (handleLockedAction()) return;
+
+        if (!open && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            dropdownCoords.current = {
+                top: rect.bottom,
+                left: rect.left,
+                width: rect.width,
+            };
+        }
+
+        setOpen((prev) => !prev);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -47,7 +62,6 @@ export default function LanguageSelector() {
                 setOpen(false);
             }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
@@ -64,7 +78,6 @@ export default function LanguageSelector() {
     }, [open]);
 
     useEffect(() => {
-        updateDropdownPosition();
         if (!open) return;
         window.addEventListener("scroll", updateDropdownPosition);
         window.addEventListener("resize", updateDropdownPosition);
@@ -86,38 +99,11 @@ export default function LanguageSelector() {
             await i18n.changeLanguage(code);
             setOpen(false);
         } catch (err) {
-            console.error("Failed to change language or refresh user:", err);
+            console.error("Failed to change language:", err);
         }
     };
 
     const selectedLabel = t(`languages.${selected}`) || t("app.languageSelector.fallback");
-
-    const dropdownElement = (
-        <ul
-            ref={dropdownRef}
-            role="listbox"
-            className={`${css.dropdownList} ${open ? css.open : ""}`}
-            style={{ position: "fixed", ...dropdownCoords.current }}
-        >
-            {languageCodes.map((code) => (
-                <li
-                    key={code}
-                    role="option"
-                    aria-selected={selected === code}
-                    tabIndex={0}
-                    className={`${css.option} ${selected === code ? css.selected : ""}`}
-                    onClick={() => !handleLockedAction() && changeLanguage(code)}
-                    onKeyDown={(e) =>
-                        (e.key === "Enter" || e.key === " ") &&
-                        !handleLockedAction() &&
-                        changeLanguage(code)
-                    }
-                >
-                    {t(`languages.${code}`)}
-                </li>
-            ))}
-        </ul>
-    );
 
     return (
         <div className={css.container}>
@@ -139,7 +125,7 @@ export default function LanguageSelector() {
             <button
                 type="button"
                 className={`${css.toggleButton} ${isLocked ? css.disabled : ""}`}
-                onClick={() => !handleLockedAction() && setOpen((prev) => !prev)}
+                onClick={toggleDropdown}
                 ref={buttonRef}
                 aria-haspopup="listbox"
                 aria-expanded={open}
@@ -148,7 +134,32 @@ export default function LanguageSelector() {
                 <span className={css.arrow} />
             </button>
 
-            {open && dropdownElement}
+            {open && (
+                <ul
+                    ref={dropdownRef}
+                    role="listbox"
+                    className={`${css.dropdownList} ${open ? css.open : ""}`}
+                    style={{ position: "fixed", ...dropdownCoords.current }}
+                >
+                    {languageCodes.map((code) => (
+                        <li
+                            key={code}
+                            role="option"
+                            aria-selected={selected === code}
+                            tabIndex={0}
+                            className={`${css.option} ${selected === code ? css.selected : ""}`}
+                            onClick={() => !handleLockedAction() && changeLanguage(code)}
+                            onKeyDown={(e) =>
+                                (e.key === "Enter" || e.key === " ") &&
+                                !handleLockedAction() &&
+                                changeLanguage(code)
+                            }
+                        >
+                            {t(`languages.${code}`)}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }
