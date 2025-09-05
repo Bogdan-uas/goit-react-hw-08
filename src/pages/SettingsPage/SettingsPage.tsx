@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../../redux/ui/themeSlice";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import css from './SettingsPage.module.css';
 import LanguageSelector from "../../components/LanguageSelector/LanguageSelector";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import { Link } from "react-router-dom";
-import { selectDarkMode } from "../../redux/ui/selectors";
-import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
+import { selectDarkMode, selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 
 const SettingsPage = () => {
     const dispatch = useDispatch();
@@ -34,18 +33,49 @@ const SettingsPage = () => {
         }
 
         if (!darkMode && i18n.language === "en") {
-            toast.error(
-                t("settingsPage.toast.alreadyReset"),
-                { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
-            );
+            toast.error(t("settingsPage.toast.alreadyReset"), {
+                duration: 4000,
+                style: { borderRadius: "10px", textAlign: "center" },
+            });
             return;
         }
 
+        const prevDarkMode = darkMode;
+        const prevLang = i18n.language;
+
         dispatch(setDarkMode(false));
         i18n.changeLanguage("en");
-        toast.success(
-            t("settingsPage.toast.resetSuccess"),
-            { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
+
+        toast.custom(
+            (tObj) => {
+                if (tObj.visible) {
+                    setTimeout(() => toast.dismiss(tObj.id), tObj.duration);
+                }
+
+                return (
+                    <div className={css.undoToast}>
+                        <span className={css.undoText}>{t("settingsPage.toast.resetSuccess")}</span>
+                        <button
+                            onClick={() => {
+                                dispatch(setDarkMode(prevDarkMode));
+                                i18n.changeLanguage(prevLang);
+                                toast.dismiss(tObj.id);
+                            }}
+                            className={css.undoButton}
+                        >
+                            {t("settingsPage.toast.undo")}
+                        </button>
+                        <div
+                            className={css.undoProgress}
+                            style={{
+                                animationDuration: `${tObj.duration}ms`,
+                                animationPlayState: "running",
+                            }}
+                        />
+                    </div>
+                );
+            },
+            { duration: 5000, position: "bottom-center" }
         );
     };
 

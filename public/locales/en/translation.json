@@ -234,7 +234,8 @@
         "alreadyReset": "Settings are already reset",
         "resetSuccess": "Settings have been reset successfully",
         "editingLocked": "You cannot perform this action while editing another item.",
-        "modalOpenLocked": "Please close the open modal before performing this action."
+        "modalOpenLocked": "Please close the open modal before performing this action.",
+        "undo": "Undo"
       }
     }
 }

@@ -104,7 +104,7 @@
 .to_register_link {
     font-weight: 500;
     font-size: 16px;
-    color: #747bff;
+    color: var(--link);
     line-height: 1.5;
     margin-bottom: 360px;
     letter-spacing: 0.04em;
@@ -113,7 +113,7 @@
 }
 
 .to_register_link:hover {
-    color: #0d6aff;
+    color: var(--link-hover);
 }
 
 .eye_button {
