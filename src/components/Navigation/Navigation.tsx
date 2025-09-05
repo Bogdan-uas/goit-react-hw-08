@@ -6,7 +6,7 @@ import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 interface LinkItem {
     to: string;
@@ -43,7 +43,7 @@ export default function Navigation(): React.ReactElement {
         }
     };
 
-    const updateUnderline = () => {
+    const updateUnderline = useCallback(() => {
         if (!containerRef.current) return;
         const activeLink = containerRef.current.querySelector<HTMLAnchorElement>(
             `a[href="${location.pathname}"]`
@@ -58,13 +58,25 @@ export default function Navigation(): React.ReactElement {
         } else {
             setUnderlineCoords({ left: 0, width: 0 });
         }
-    };
+    }, [location.pathname]);
 
     useEffect(() => {
         updateUnderline();
-        window.addEventListener("resize", updateUnderline);
-        return () => window.removeEventListener("resize", updateUnderline);
-    }, [location]);
+
+        let timeoutId: number;
+        const handleResize = () => {
+            clearTimeout(timeoutId);
+            timeoutId = window.setTimeout(() => {
+                updateUnderline();
+            }, 50);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearTimeout(timeoutId);
+        };
+    }, [updateUnderline, t]);
 
     return (
         <nav className={css.nav} ref={containerRef}>
