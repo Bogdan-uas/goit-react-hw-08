@@ -132,6 +132,27 @@
     animation-timing-function: linear;
 }
 
+.closeButton {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.closeButton:hover {
+    color: var(--link-hover);
+}
+
 @keyframes shrink {
     from {
         width: 100%;

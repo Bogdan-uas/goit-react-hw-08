@@ -53,7 +53,13 @@ const SettingsPage = () => {
                 }
 
                 return (
-                    <div className={css.undoToast}>
+                    <div className={css.undoToast} style={{ position: "relative" }}>
+                        <button
+                            onClick={() => toast.dismiss(tObj.id)}
+                            className={css.closeButton}
+                        >
+                            ✕
+                        </button>
                         <span className={css.undoText}>{t("settingsPage.toast.resetSuccess")}</span>
                         <button
                             onClick={() => {
