@@ -76,7 +76,7 @@ export default function Navigation(): React.ReactElement {
             window.removeEventListener("resize", handleResize);
             clearTimeout(timeoutId);
         };
-    }, [updateUnderline, t]);
+    }, [updateUnderline, t, isLoggedIn]);
 
     return (
         <nav className={css.nav} ref={containerRef}>
