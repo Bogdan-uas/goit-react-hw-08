@@ -126,9 +126,8 @@
     left: 0;
     height: 3px;
     width: 100%;
-    background-color: #0d6aff;
     border-radius: 2px;
-    animation-name: shrink;
+    animation-name: shrinkAndColor;
     animation-timing-function: linear;
 }
 
@@ -153,12 +152,14 @@
     color: var(--link-hover);
 }
 
-@keyframes shrink {
-    from {
+@keyframes shrinkAndColor {
+    0% {
         width: 100%;
+        background-color: #0d6aff;
     }
 
-    to {
+    100% {
         width: 0%;
+        background-color: #fa5256;
     }
 }
