@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { setDarkMode } from "../../redux/ui/themeSlice";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom"; // ✅ add this
 import toast from "react-hot-toast";
 import css from "../../pages/SettingsPage/SettingsPage.module.css";
 
@@ -18,6 +19,7 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
     const { i18n, t } = useTranslation();
     const isModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
+    const location = useLocation(); // ✅ track current route
 
     const isLocked = isModalOpen || isEditingGlobal;
 
@@ -28,6 +30,12 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
             toast.dismiss(id);
         }
     }, [isLocked, id]);
+
+    useEffect(() => {
+        if (location.pathname !== "/settings") {
+            toast.dismiss(id);
+        }
+    }, [location, id]);
 
     useEffect(() => {
         if (isLocked) return;
@@ -49,7 +57,10 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
 
     return (
         <div className={css.undoToast}>
-            <button onClick={() => toast.dismiss(id)} className={`${css.closeButton} ${isLocked ? css.disabled : ""}`}>
+            <button
+                onClick={() => toast.dismiss(id)}
+                className={`${css.closeButton} ${isLocked ? css.disabled : ""}`}
+            >
                 ✕
             </button>
             <span className={css.undoText}>{t("settingsPage.toast.resetSuccess")}</span>
@@ -66,7 +77,7 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
             <div
                 className={css.undoProgress}
                 style={{
-                    animationDuration: `${duration}ms`
+                    animationDuration: `${duration}ms`,
                 }}
             >
                 <span className={css.timer}>{timeLeft}s</span>
