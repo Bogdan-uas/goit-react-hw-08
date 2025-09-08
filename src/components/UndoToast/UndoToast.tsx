@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { setDarkMode } from "../../redux/ui/themeSlice";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom"; // ✅ add this
+import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import css from "../../pages/SettingsPage/SettingsPage.module.css";
 
@@ -19,7 +19,7 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
     const { i18n, t } = useTranslation();
     const isModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
-    const location = useLocation(); // ✅ track current route
+    const location = useLocation();
 
     const isLocked = isModalOpen || isEditingGlobal;
 
