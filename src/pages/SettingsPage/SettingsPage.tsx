@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { setDarkMode } from "../../redux/ui/themeSlice";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
@@ -27,39 +28,44 @@ const SettingsPage = () => {
         );
     };
 
-    const resetSettings = () => {
-        if (isLocked) {
-            showLockedToast();
-            return;
-        }
+const resetSettings = () => {
+    if (isLocked) {
+        showLockedToast();
+        return;
+    }
 
-        if (!darkMode && i18n.language === "en") {
-            toast.error(t("settingsPage.toast.alreadyReset"), {
-                duration: 4000,
-                style: { borderRadius: "10px", textAlign: "center" },
-            });
-            return;
-        }
+    if (!darkMode && i18n.language === "en") {
+        toast.error(t("settingsPage.toast.alreadyReset"), {
+            duration: 4000,
+            style: { borderRadius: "10px", textAlign: "center" },
+        });
+        return;
+    }
 
-        const prevDarkMode = darkMode;
-        const prevLang = i18n.language;
+    const prevDarkMode = darkMode;
+    const prevLang = i18n.language;
 
-        dispatch(setDarkMode(false));
-        i18n.changeLanguage("en");
+    dispatch(setDarkMode(false));
+    i18n.changeLanguage("en");
 
-        const duration = 5000;
-        toast.custom(
-            (tObj) => (
-                <UndoToast
-                    id={tObj.id}
-                    duration={duration}
-                    prevDarkMode={prevDarkMode}
-                    prevLang={prevLang}
-                />
-            ),
-            { duration, position: "bottom-center"}
-        );
-    };
+    const duration = 5000;
+
+    toast.dismiss();
+
+    const toastId = `undo-toast-${uuidv4()}`;
+
+    toast.custom(
+        () => (
+            <UndoToast
+                id={toastId}
+                duration={duration}
+                prevDarkMode={prevDarkMode}
+                prevLang={prevLang}
+            />
+        ),
+        { id: toastId, duration: Infinity, position: "bottom-center" }
+    );
+};
 
     const onGoBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isLocked) {
