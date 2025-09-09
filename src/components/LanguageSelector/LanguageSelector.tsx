@@ -2,13 +2,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import css from "./LanguageSelector.module.css";
-import toast from "react-hot-toast";
+import { useNotify } from "../../helpers/useNotify";
 import { useTranslation } from "react-i18next";
 
 const languageCodes = ["en", "de", "fr", "es", "uk", "pt", "ru", "it"];
 
 export default function LanguageSelector() {
     const { t, i18n } = useTranslation();
+    const notify = useNotify();
     const isModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
     const isLocked = isModalOpen || isEditingGlobal;
@@ -26,7 +27,7 @@ export default function LanguageSelector() {
 
     const handleLockedAction = useCallback(() => {
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contact.errorModalOpen")
                     : t("contact.errorEditingOther"),

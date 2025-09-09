@@ -1,26 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setDarkMode } from "../../redux/ui/themeSlice";
+import { setNotifications } from "../../redux/ui/notificationsSlice";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
 import css from './SettingsPage.module.css';
 import LanguageSelector from "../../components/LanguageSelector/LanguageSelector";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import { Link } from "react-router-dom";
-import { selectDarkMode, selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
+import toast from "react-hot-toast";
+import { selectDarkMode, selectIsModalOpen, selectIsEditingGlobal, selectNotificationsEnabled } from "../../redux/ui/selectors";
 import { UndoToast } from "../../components/UndoToast/UndoToast";
+import NotificationToggle from "../../components/NotificationToggle/NotificationToggle";
+import { useNotify } from "../../helpers/useNotify";
 
 const SettingsPage = () => {
     const dispatch = useDispatch();
     const { i18n, t } = useTranslation();
+    const notify = useNotify();
     const darkMode = useSelector(selectDarkMode);
+    const notificationsEnabled = useSelector(selectNotificationsEnabled);
     const isModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
 
     const isLocked = isModalOpen || isEditingGlobal;
 
     const showLockedToast = () => {
-        toast.error(
+        notify.error(
             isEditingGlobal
                 ? t("settingsPage.toast.editingLocked")
                 : t("settingsPage.toast.modalOpenLocked"),
@@ -28,44 +33,45 @@ const SettingsPage = () => {
         );
     };
 
-const resetSettings = () => {
-    if (isLocked) {
-        showLockedToast();
-        return;
-    }
+    const resetSettings = () => {
+        if (isLocked) {
+            showLockedToast();
+            return;
+        }
 
-    if (!darkMode && i18n.language === "en") {
-        toast.error(t("settingsPage.toast.alreadyReset"), {
-            duration: 4000,
-            style: { borderRadius: "10px", textAlign: "center" },
-        });
-        return;
-    }
+        if (!darkMode && i18n.language === "en" && notificationsEnabled) {
+            notify.error(t("settingsPage.toast.alreadyReset"), {
+                duration: 4000,
+                style: { borderRadius: "10px", textAlign: "center" },
+            });
+            return;
+        }
 
-    const prevDarkMode = darkMode;
-    const prevLang = i18n.language;
+        const prevDarkMode = darkMode;
+        const prevLang = i18n.language;
+        const prevNotifications = notificationsEnabled;
 
-    dispatch(setDarkMode(false));
-    i18n.changeLanguage("en");
+        dispatch(setDarkMode(false));
+        dispatch(setNotifications(true));
+        i18n.changeLanguage("en");
 
-    const duration = 5000;
+        const duration = 5000;
 
-    toast.dismiss();
+        notify.dismiss();
 
-    const toastId = `undo-toast-${uuidv4()}`;
+        const toastId = `undo-toast-${uuidv4()}`;
 
-    toast.custom(
-        () => (
+        toast.custom(
             <UndoToast
                 id={toastId}
                 duration={duration}
                 prevDarkMode={prevDarkMode}
                 prevLang={prevLang}
-            />
-        ),
-        { id: toastId, duration: Infinity, position: "bottom-center" }
-    );
-};
+                prevNotifications={prevNotifications}
+            />,
+            { id: toastId, duration: Infinity, position: "bottom-center" }
+        );
+    };
 
     const onGoBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isLocked) {
@@ -91,6 +97,7 @@ const resetSettings = () => {
             </div>
             <LanguageSelector />
             <ThemeToggle />
+            <NotificationToggle />
             <div className={css.divider} />
             <button
                 onClick={resetSettings}

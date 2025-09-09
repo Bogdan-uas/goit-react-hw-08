@@ -7,11 +7,12 @@ import { apiLogout } from "../../redux/auth/operations";
 import { openModal, closeModal } from "../../redux/ui/modalSlice";
 import type { AppDispatch } from '../../redux/store';
 import { CiLogout } from "react-icons/ci";
-import toast from "react-hot-toast";
 import css from "./UserMenu.module.css";
+import { useNotify } from "../../helpers/useNotify";
 
 export default function UserMenu() {
     const { t } = useTranslation();
+    const notify = useNotify();
     const dispatch = useDispatch<AppDispatch>();
     const user = useSelector(selectUser);
     const isAnyModalOpen = useSelector(selectIsModalOpen);
@@ -21,7 +22,7 @@ export default function UserMenu() {
     const isLocked = isAnyModalOpen || isEditingGlobal;
 
     const showLockedToast = () => {
-        toast.error(
+        notify.error(
             isEditingGlobal
                 ? t("userMenu.errors.editing")
                 : t("userMenu.errors.modalOpen"),

@@ -6,8 +6,8 @@ import type { AppDispatch } from '../../redux/store';
 import { useDispatch } from "react-redux";
 import { apiRegister } from "../../redux/auth/operations";
 import { NavLink, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useNotify } from "../../helpers/useNotify";
 
 const AnimatedEyeIcon = lazy(() => import("../AnimatedEyeIcon/AnimatedEyeIcon"));
 
@@ -19,13 +19,14 @@ interface RegisterFormValues {
 
 export default function RegistrationForm() {
     const { t } = useTranslation();
+    const notify = useNotify();
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
     const toastConfig = (type: "success" | "error", message: string, duration = 6000) =>
-        toast[type](message, {
+        notify[type](message, {
             duration,
             style: { borderRadius: "10px", textAlign: "center" },
         });
@@ -58,7 +59,7 @@ export default function RegistrationForm() {
             toastConfig("success", t("registerPage.toasts.success"));
 
             setTimeout(() => {
-                toast(t("registerPage.toasts.escapeTip"), {
+                notify.normal(t("registerPage.toasts.escapeTip"), {
                     icon: "🗿",
                     duration: 4000,
                     style: { borderRadius: "10px", textAlign: "center" },

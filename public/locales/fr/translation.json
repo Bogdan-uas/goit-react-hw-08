@@ -237,5 +237,17 @@
       "modalOpenLocked": "Veuillez fermer la fenêtre modale ouverte avant de continuer.",
       "undo": "Annuler"
     }
+  },
+  "notificationToggle": {
+    "infoText": "Désactiver toutes les notifications?",
+    "ariaLabel": "Activer ou désactiver les notifications",
+    "errors": {
+      "cannotChangeWhileEditing": "Impossible de modifier les notifications pendant la modification d'un contact.",
+      "closeModalFirst": "Veuillez fermer la fenêtre modale ouverte avant de modifier les notifications."
+    },
+    "toasts": {
+      "disabledAll": "Toutes les notifications sont désactivées",
+      "enabledAll": "Toutes les notifications activées"
+    }
   }
 }

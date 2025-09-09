@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
 import css from "./Navigation.module.css";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useNotify } from "../../helpers/useNotify";
 
 interface LinkItem {
     to: string;
@@ -21,6 +21,7 @@ export default function Navigation(): React.ReactElement {
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const { t } = useTranslation();
     const location = useLocation();
+    const notify = useNotify();
 
     const [underlineCoords, setUnderlineCoords] = useState({ left: 0, width: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,7 @@ export default function Navigation(): React.ReactElement {
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isLocked) {
             e.preventDefault();
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("navigation.errors.closeModalFirst")
                     : t("navigation.errors.cannotNavigateWhileEditing"),

@@ -5,3 +5,4 @@ export const selectIsEditingGlobal = (state: RootState): boolean => state.edit.i
 export const selectEditingId = (state: RootState): string | null => state.edit.editingId;
 export const selectModal = (state: RootState): any => state.modal.isModalOpen;
 export const selectDarkMode = (state: RootState): boolean => state.theme.darkMode;
+export const selectNotificationsEnabled = (state: RootState) => state.notifications.enabled;

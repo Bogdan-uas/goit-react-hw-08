@@ -8,12 +8,13 @@ import {
 import { LuSun } from "react-icons/lu";
 import { IoMdMoon } from "react-icons/io";
 import { useEffect, ChangeEvent } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import css from "./ThemeToggle.module.css";
+import { useNotify } from "../../helpers/useNotify";
 
 export default function ThemeToggle() {
     const dispatch = useDispatch();
+    const notify = useNotify();
     const darkMode = useSelector(selectDarkMode);
     const isModalOpen = useSelector(selectIsModalOpen);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
@@ -31,7 +32,7 @@ export default function ThemeToggle() {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (isLocked) {
             e.preventDefault();
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("themeToggle.errors.closeModalFirst")
                     : t("themeToggle.errors.cannotChangeWhileEditing"),

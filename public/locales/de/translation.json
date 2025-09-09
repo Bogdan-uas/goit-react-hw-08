@@ -237,5 +237,17 @@
       "modalOpenLocked": "Bitte schließen Sie zuerst das geöffnete Modal, bevor Sie fortfahren.",
       "undo": "Rückgängig"
     }
+  },
+  "notificationToggle": {
+    "infoText": "Alle Benachrichtigungen deaktivieren?",
+    "ariaLabel": "Benachrichtigungen ein- oder ausschalten",
+    "errors": {
+      "cannotChangeWhileEditing": "Benachrichtigungen können während der Bearbeitung eines Kontakts nicht geändert werden.",
+      "closeModalFirst": "Bitte schließen Sie das offene Modal, bevor Sie die Benachrichtigungen ändern."
+    },
+    "toasts": {
+      "disabledAll": "Alle Benachrichtigungen deaktiviert",
+      "enabledAll": "Alle Benachrichtigungen aktiviert"
+    }
   }
 }

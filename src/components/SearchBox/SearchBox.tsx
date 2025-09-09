@@ -4,11 +4,12 @@ import { setFilter, setSearchBy } from "../../redux/filters/slice";
 import { selectFilter, selectSearchBy } from "../../redux/filters/selectors";
 import { selectIsEditingGlobal, selectIsModalOpen } from "../../redux/ui/selectors";
 import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useNotify } from "../../helpers/useNotify";
 
 export default function SearchBox() {
     const dispatch = useDispatch();
+    const notify = useNotify();
     const filter = useSelector(selectFilter);
     const searchBy = useSelector(selectSearchBy);
     const isEditingGlobal = useSelector(selectIsEditingGlobal);
@@ -27,7 +28,7 @@ export default function SearchBox() {
         setInputValue(value);
 
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contactsPage.searchBox.toastModalSearch")
                     : t("contactsPage.searchBox.toastEditingSearch"),
@@ -40,7 +41,7 @@ export default function SearchBox() {
         }
 
         if (searchBy === "number" && /[a-zA-Z]/.test(value)) {
-            toast(t("contactsPage.searchBox.toastSuggestName"), {
+            notify.normal(t("contactsPage.searchBox.toastSuggestName"), {
                 icon: "❗",
                 duration: 6000,
                 style: { borderRadius: "10px", textAlign: "center" },
@@ -50,7 +51,7 @@ export default function SearchBox() {
         }
 
         if (searchBy === "name" && /\d/.test(value)) {
-            toast(t("contactsPage.searchBox.toastSuggestNumber"), {
+            notify.normal(t("contactsPage.searchBox.toastSuggestNumber"), {
                 icon: "❗",
                 duration: 6000,
                 style: { borderRadius: "10px", textAlign: "center" },
@@ -64,7 +65,7 @@ export default function SearchBox() {
 
     const handleSearchByChange = (value: "name" | "number") => {
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contactsPage.searchBox.toastModalSwitch")
                     : t("contactsPage.searchBox.toastEditingSwitch"),
@@ -83,7 +84,7 @@ export default function SearchBox() {
 
     const handleInputWrapperClick = () => {
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contactsPage.searchBox.toastModalSearch")
                     : t("contactsPage.searchBox.toastEditingSearch"),

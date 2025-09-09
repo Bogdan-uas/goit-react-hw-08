@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsModalOpen, selectIsEditingGlobal } from "../../redux/ui/selectors";
 import { setDarkMode } from "../../redux/ui/themeSlice";
+import { setNotifications } from "../../redux/ui/notificationsSlice";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -12,9 +13,10 @@ interface UndoToastProps {
     duration: number;
     prevDarkMode: boolean;
     prevLang: string;
+    prevNotifications: boolean;
 }
 
-export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastProps) => {
+export const UndoToast = ({ id, duration, prevDarkMode, prevLang, prevNotifications }: UndoToastProps) => {
     const dispatch = useDispatch();
     const { i18n, t } = useTranslation();
     const isModalOpen = useSelector(selectIsModalOpen);
@@ -67,6 +69,7 @@ export const UndoToast = ({ id, duration, prevDarkMode, prevLang }: UndoToastPro
             <button
                 onClick={() => {
                     dispatch(setDarkMode(prevDarkMode));
+                    dispatch(setNotifications(prevNotifications));
                     i18n.changeLanguage(prevLang);
                     toast.dismiss(id);
                 }}

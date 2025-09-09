@@ -17,6 +17,7 @@ import { authReducer } from "./auth/slice";
 import modalReducer from "./ui/modalSlice";
 import editReducer from "./ui/editSlice";
 import themeReducer from "./ui/themeSlice";
+import notificationsReducer from "./ui/notificationsSlice";
 
 import type { PersistPartial } from "redux-persist/es/persistReducer";
 
@@ -38,21 +39,32 @@ const persistedAuthReducer: Reducer<AuthState & PersistPartial> = persistReducer
     authReducer
 );
 
+const notificationsPersistConfig = {
+    key: "notifications",
+    storage,
+};
+
+const persistedNotificationsReducer = persistReducer(
+    notificationsPersistConfig,
+    notificationsReducer
+);
+
 export const store = configureStore({
-reducer: {
-    phonebook: contactsReducer,
-    filters: filtersReducer,
-    auth: persistedAuthReducer,
-    modal: modalReducer,
-    edit: editReducer,
-    theme: themeReducer,
-},
-middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-    serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    reducer: {
+        phonebook: contactsReducer,
+        filters: filtersReducer,
+        auth: persistedAuthReducer,
+        modal: modalReducer,
+        edit: editReducer,
+        theme: themeReducer,
+        notifications: persistedNotificationsReducer,
     },
-    }),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 });
 
 export const persistor = persistStore(store);

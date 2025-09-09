@@ -6,8 +6,8 @@ import type { AppDispatch } from '../../redux/store';
 import { useDispatch } from "react-redux";
 import { apiLogin } from "../../redux/auth/operations";
 import { NavLink, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useNotify } from "../../helpers/useNotify";
 
 const AnimatedEyeIcon = memo(lazy(() => import("../AnimatedEyeIcon/AnimatedEyeIcon")));
 
@@ -18,6 +18,7 @@ interface LoginValues {
 
 export default function LoginForm() {
     const { t } = useTranslation();
+    const notify = useNotify();
 
     const dispatch = useDispatch<AppDispatch>();
     const emailFieldId = useId();
@@ -43,17 +44,17 @@ export default function LoginForm() {
         try {
             await dispatch(apiLogin(values)).unwrap();
             actions.resetForm();
-            toast.success(t("loginPage.toasts.loginSuccess"), toastOptions);
+            notify.success(t("loginPage.toasts.loginSuccess"), toastOptions);
 
             setTimeout(() => {
-                toast(t("loginPage.toasts.escapeTip"), {
+                notify.normal(t("loginPage.toasts.escapeTip"), {
                     icon: "🗿",
                     duration: 4000,
                     style: { borderRadius: "10px", textAlign: "center" },
                 });
             }, 4000);
         } catch {
-            toast.error(t("loginPage.toasts.loginFail"), toastOptions);
+            notify.error(t("loginPage.toasts.loginFail"), toastOptions);
             navigate("/register");
         }
     };

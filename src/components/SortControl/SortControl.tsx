@@ -6,13 +6,14 @@ import { selectContacts } from "../../redux/contacts/selectors";
 import { setSortOrder } from "../../redux/filters/slice";
 import { selectSortOrder } from "../../redux/filters/selectors";
 import { selectIsEditingGlobal, selectIsModalOpen } from "../../redux/ui/selectors";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useNotify } from "../../helpers/useNotify";
 
 type SortOrder = "default" | "asc" | "desc";
 
 export default function SortControl() {
     const { t } = useTranslation();
+    const notify = useNotify();
     const contacts = useSelector(selectContacts);
     const sortOrder = useSelector(selectSortOrder);
     const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +25,7 @@ export default function SortControl() {
 
     const handleToggle = () => {
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contactsPage.sortControl.toastModalToggle")
                     : t("contactsPage.sortControl.toastEditingToggle"),
@@ -40,7 +41,7 @@ export default function SortControl() {
 
     const handleSortChange = (order: SortOrder) => {
         if (isLocked) {
-            toast.error(
+            notify.error(
                 isModalOpen
                     ? t("contactsPage.sortControl.toastModalChange")
                     : t("contactsPage.sortControl.toastEditingChange"),

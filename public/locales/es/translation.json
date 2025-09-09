@@ -237,5 +237,17 @@
       "modalOpenLocked": "Cierre el modal abierto antes de continuar.",
       "undo": "Deshacer"
     }
+  },
+  "notificationToggle": {
+    "infoText": "¿Desactivar todas las notificaciones?",
+    "ariaLabel": "Activar o desactivar las notificaciones",
+    "errors": {
+      "cannotChangeWhileEditing": "No se pueden cambiar las notificaciones mientras se edita un contacto.",
+      "closeModalFirst": "Cierre primero la ventana modal antes de cambiar las notificaciones."
+    },
+    "toasts": {
+      "disabledAll": "Todas las notificaciones desactivadas",
+      "enabledAll": "Todas las notificaciones activadas"
+    }
   }
 }

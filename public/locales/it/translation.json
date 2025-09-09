@@ -237,5 +237,17 @@
       "modalOpenLocked": "Chiudi il modal aperto prima di continuare.",
       "undo": "Annulla"
     }
+  },
+  "notificationToggle": {
+    "infoText": "Disattivare tutte le notifiche?",
+    "ariaLabel": "Attiva o disattiva le notifiche",
+    "errors": {
+      "cannotChangeWhileEditing": "Impossibile modificare le notifiche durante la modifica di un contatto.",
+      "closeModalFirst": "Chiudi prima la finestra modale aperta prima di modificare le notifiche."
+    },
+    "toasts": {
+      "disabledAll": "Tutte le notifiche sono disattivate",
+      "enabledAll": "Tutte le notifiche attivate"
+    }
   }
 }

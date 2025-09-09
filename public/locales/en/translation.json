@@ -237,5 +237,17 @@
         "modalOpenLocked": "Please close the open modal before performing this action.",
         "undo": "Undo"
       }
+    },
+    "notificationToggle": {
+      "infoText": "Disable all notifications?",
+      "ariaLabel": "Toggle notifications on or off",
+      "errors": {
+        "cannotChangeWhileEditing": "Cannot change notifications while editing a contact.",
+        "closeModalFirst": "Please close the open modal before changing notifications."
+      },
+      "toasts": {
+        "disabledAll": "All notifications disabled",
+        "enabledAll": "All notifications enabled"
+      }
     }
 }

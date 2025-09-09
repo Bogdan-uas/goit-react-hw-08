@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import style from "./Contact.module.css";
 import { BsPersonFill, BsTelephoneFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { useTranslation } from "react-i18next";
@@ -12,6 +11,7 @@ import { deleteContact, updateContact } from "../../redux/contacts/operations";
 import { openModal, closeModal } from "../../redux/ui/modalSlice";
 import { startEditing, stopEditing, setUnsavedChanges } from "../../redux/ui/editSlice";
 import { selectIsModalOpen, selectIsEditingGlobal, selectEditingId } from "../../redux/ui/selectors";
+import { useNotify } from "../../helpers/useNotify";
 
 interface ContactProps {
     contact: { id: string; name: string; number: string };
@@ -22,6 +22,7 @@ interface ContactProps {
 export default function Contact({ contact, contactIdToDelete, setContactIdToDelete }: ContactProps) {
     const { t } = useTranslation();
     const dispatch = useDispatch<AppDispatch>();
+    const notify = useNotify();
 
     const [editedName, setEditedName] = useState(contact.name);
     const [editedNumber, setEditedNumber] = useState(contact.number);
@@ -61,7 +62,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
 
     const confirmDelete = useCallback(() => {
         dispatch(deleteContact(contact.id));
-        toast.success(t("contact.deletedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+        notify.success(t("contact.deletedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
         dispatch(closeModal());
         setContactIdToDelete(null);
     }, [contact.id, dispatch, setContactIdToDelete, t]);
@@ -81,7 +82,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
             return;
         }
         if (trimmedName === contact.name && trimmedNumber === contact.number) {
-            toast(t("contact.nothingToChange"), { icon: "❗", duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+            notify.error(t("contact.nothingToChange"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
             return;
         }
 
@@ -93,17 +94,17 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
             if (parsedPhone?.isValid()) formattedNumber = parsedPhone.format("E.164");
 
             await dispatch(updateContact({ contactId: contact.id, updates: { name: trimmedName, number: formattedNumber } })).unwrap();
-            toast.success(t("contact.updatedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+            notify.success(t("contact.updatedSuccess"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
             dispatch(stopEditing());
             dispatch(setUnsavedChanges(false));
         } catch (err: any) {
             if (err.inner) {
                 err.inner.forEach((validationError: any) => {
-                    toast.error(validationError.message, { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+                    notify.error(validationError.message, { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
                 });
             }
         }
-    }, [editedName, editedNumber, contact.name, contact.number, contact.id, contactSchema, dispatch, t]);
+    }, [editedName, editedNumber, contact.name, contact.number, contact.id, contactSchema, dispatch, t, notify]);
 
     useEffect(() => {
         if (isEditing && nameInputRef.current) nameInputRef.current.focus();
@@ -129,7 +130,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                 if (isDeletionModalOpen) confirmDelete();
                 else if (isEmptyDeleteModalOpen) {
                     dispatch(deleteContact(contact.id));
-                    toast.success(t("contact.deletedEmptyFields"));
+                    notify.success(t("contact.deletedEmptyFields"));
                     dispatch(closeModal());
                     setIsEmptyDeleteModalOpen(false);
                     dispatch(stopEditing());
@@ -145,7 +146,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isEditing, hasChanges, confirmDelete, cancelDelete, isDeletionModalOpen, isEmptyDeleteModalOpen, showExitConfirmModal, contact.name, contact.number, dispatch, t]);
+    }, [isEditing, hasChanges, confirmDelete, cancelDelete, isDeletionModalOpen, isEmptyDeleteModalOpen, showExitConfirmModal, contact.name, contact.number, dispatch, t, notify]);
 
     useEffect(() => {
         dispatch(setUnsavedChanges(isEditing && hasChanges()));
@@ -186,7 +187,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                                 if (validateNumberInput(val)) {
                                     setEditedNumber(val);
                                 } else {
-                                    toast.error(t("contact.invalidPhoneCharacters"), {
+                                    notify.error(t("contact.invalidPhoneCharacters"), {
                                         duration: 6000,
                                         style: {
                                             borderRadius: "10px",
@@ -239,7 +240,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             onClick={(e) => {
                                 if (isAnyModalOpen || isEditingGlobal) {
                                     e.preventDefault();
-                                    toast.error(
+                                    notify.error(
                                         isAnyModalOpen
                                             ? t("contact.errorModalOpen")
                                             : t("contact.errorEditingOther"),
@@ -261,7 +262,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             onClick={(e) => {
                                 if (isAnyModalOpen || isEditingGlobal) {
                                     e.preventDefault();
-                                    toast.error(
+                                    notify.error(
                                         isAnyModalOpen
                                             ? t("contact.errorModalOpen")
                                             : t("contact.errorEditingOther"),
@@ -318,7 +319,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
                             className={style.cancel_button}
                             onClick={() => {
                                 dispatch(deleteContact(contact.id));
-                                toast.success(t("contact.deletedEmptyFields"), {
+                                notify.success(t("contact.deletedEmptyFields"), {
                                     duration: 4000,
                                     style: { borderRadius: "10px", textAlign: "center" },
                                 });

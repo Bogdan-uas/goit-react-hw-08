@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-    margin-bottom: 48px;
 }
 
 .disabled {
@@ -31,8 +30,8 @@
     width: 95px;
     height: 46px;
     border-radius: 999px;
-    background: #ebebeb;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05) inset;
+    background: var(--notification_on_bg);
+    box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.1) inset;
     position: relative;
     transition: all 500ms ease-in-out;
 }
@@ -45,9 +44,9 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: white;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1),
-        -2px -2px 8px rgba(0, 0, 0, 0.1) inset;
+    background: rgb(84, 204, 84);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5),
+        -1px -1px 4px rgba(0, 0, 0, 0.5) inset;
     position: absolute;
     top: 50%;
     left: 0%;
@@ -59,46 +58,44 @@
     transition: all 500ms ease-in-out;
 }
 
-.sun,
-.moon {
+.enabledIcon,
+.disabledIcon {
     width: 20px;
     height: 20px;
     position: absolute;
     transition: all 500ms ease-in-out;
+    color: white;
 }
 
-.sun {
-    color: #FFD600;
-    fill: #FFD600;
+.enabledIcon {
     margin-top: 0%;
     opacity: 1;
 }
 
-.moon {
+.disabledIcon {
     margin-top: -150%;
-    color: white;
     opacity: 0;
 }
 
 .input[type=checkbox]:checked+label {
-    background: #1F1F21;
+    background: var(--notification_off_bg);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5) inset;
 }
 
 .input[type=checkbox]:checked+label .circle {
     left: 100%;
     transform: translate(-110%, -50%);
-    background: #2C2C2F;
+    background: rgb(152, 51, 51);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5),
-    -2px -2px 7px rgba(0, 0, 0, 0.5) inset;
+        -2px -2px 7px rgba(0, 0, 0, 0.5) inset;
 }
 
-.input[type=checkbox]:checked+label .circle .sun {
+.input[type=checkbox]:checked+label .circle .enabledIcon {
     margin-top: 150%;
     opacity: 0;
 }
 
-.input[type=checkbox]:checked+label .circle .moon {
+.input[type=checkbox]:checked+label .circle .disabledIcon {
     margin-top: 0%;
     opacity: 1;
 }
@@ -114,13 +111,4 @@
 
 .label:hover .circle {
     width: 40px;
-}
-
-.label:hover .sun {
-    color: #dab600;
-    fill: #dab600;
-}
-
-.label:hover .moon {
-    color: #d9d9d9;
 }

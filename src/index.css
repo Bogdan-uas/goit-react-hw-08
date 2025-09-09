@@ -58,6 +58,8 @@ body {
   --link: #747bff;
   --link-hover: #0d6aff;
   --error-text: #d32f2f;
+  --notification_on_bg: #dee9de;
+  --notification_off_bg: #e8dada;
   background-color: var(--bg);
   color: var(--text);
   transition: all 500ms ease-in-out;
@@ -73,6 +75,8 @@ body.dark {
   --link-hover: #7baeff;
   --error-text: #ff6e6e;
   --shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  --notification_on_bg: #4e604e;
+  --notification_off_bg: #754545;
 }
 
 h1,
