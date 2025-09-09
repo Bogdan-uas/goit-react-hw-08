@@ -18,7 +18,7 @@ const ContactList: React.FC = () => {
     const [contactIdToDelete, setContactIdToDelete] = useState<string | null>(null);
 
     return (
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={null}>
             <ul className={style.list}>
                 {filteredContacts.map((contact) => (
                     <li className={style.item} key={contact.id}>
