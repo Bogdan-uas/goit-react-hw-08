@@ -13,6 +13,8 @@ import { useNotify } from "../../helpers/useNotify";
 import toast from "react-hot-toast";
 import css from "./NotificationToggle.module.css";
 
+const TOGGLE_TOAST_ID = "notification-toggle-toast";
+
 export default function NotificationToggle() {
     const dispatch = useDispatch();
     const notify = useNotify();
@@ -22,34 +24,36 @@ export default function NotificationToggle() {
     const isLocked = isModalOpen || isEditingGlobal;
     const { t } = useTranslation();
 
-const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (isLocked) {
-        e.preventDefault();
-        notify.error(
-            isEditingGlobal
-                ? t("notificationToggle.errors.cannotChangeWhileEditing")
-                : t("notificationToggle.errors.closeModalFirst"),
-            { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
-        );
-    } else {
-        dispatch(toggleNotifications());
-        if (notificationsEnabled) {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (isLocked) {
+            e.preventDefault();
             notify.error(
-                t("notificationToggle.toasts.disabledAll"),
-                { style: { borderRadius: "10px", textAlign: "center" } }
-            );
-            setTimeout(() => {
-                notify.dismiss();
-            }, 2000);
-        } else {
-            toast.success(
-                t("notificationToggle.toasts.enabledAll"),
+                isEditingGlobal
+                    ? t("notificationToggle.errors.cannotChangeWhileEditing")
+                    : t("notificationToggle.errors.closeModalFirst"),
                 { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } }
             );
+        } else {
+            dispatch(toggleNotifications());
+
+            if (notificationsEnabled) {
+                notify.error(t("notificationToggle.toasts.disabledAll"), {
+                    id: TOGGLE_TOAST_ID,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                });
+                setTimeout(() => {
+                    toast.dismiss(TOGGLE_TOAST_ID);
+                }, 2000);
+            } else {
+                toast.success(t("notificationToggle.toasts.enabledAll"), {
+                    id: TOGGLE_TOAST_ID,
+                    duration: 4000,
+                    style: { borderRadius: "10px", textAlign: "center" },
+                });
+            }
         }
-    }
-};
-    
+    };
+
     return (
         <div className={css.main_container}>
             <p className={css.info_text}>{t("notificationToggle.infoText")}</p>
