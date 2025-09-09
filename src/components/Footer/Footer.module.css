@@ -1,7 +1,4 @@
 .footer {
-    position: relative;
-    left: 0;
-    right: 0;
     width: 100vw;
     height: 72px;
     display: flex;
@@ -9,6 +6,7 @@
     justify-content: center;
     gap: 128px;
     padding: 32px;
+    margin-top: 48px;
     background-color: var(--bg);
     border-top: solid 1px var(--text);
 }
