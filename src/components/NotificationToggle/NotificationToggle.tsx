@@ -71,8 +71,19 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
                     aria-checked={notificationsEnabled}
                 >
                     <div className={css.circle}>
-                        <AnimatedCheckIcon className={css.enabledIcon} aria-hidden="true" />
-                        <AnimatedCrossIcon className={css.disabledIcon} aria-hidden="true" />
+                        {notificationsEnabled ? (
+                            <AnimatedCheckIcon
+                                key="enabled"
+                                className={css.enabledIcon}
+                                aria-hidden="true"
+                            />
+                        ) : (
+                            <AnimatedCrossIcon
+                                key="disabled"
+                                className={css.disabledIcon}
+                                aria-hidden="true"
+                            />
+                        )}
                     </div>
                 </label>
             </div>
