@@ -82,7 +82,7 @@ export default function Contact({ contact, contactIdToDelete, setContactIdToDele
             return;
         }
         if (trimmedName === contact.name && trimmedNumber === contact.number) {
-            notify.error(t("contact.nothingToChange"), { duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
+            notify.normal(t("contact.nothingToChange"), { icon: '❗', duration: 4000, style: { borderRadius: "10px", textAlign: "center" } });
             return;
         }
 
